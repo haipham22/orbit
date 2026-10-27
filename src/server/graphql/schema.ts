@@ -2,9 +2,11 @@ import { builder } from "./builder";
 import { requireContextUser } from "./require-context-user";
 import "./types/people";
 import "./types/journal";
+import "./types/tasks";
 import "./people-fields";
 import "./people-mutations";
 import "./journal-fields";
+import "./tasks-fields";
 
 builder.queryType({
   fields: (t) => ({

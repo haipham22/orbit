@@ -35,7 +35,10 @@ export type PersonDetailData = {
   notes: string | null;
   contactMethods: { type: string; value: string }[];
   labels: LabelRow[];
-  links: { journalEntries: { id: string; title: string; entryDate: string }[] };
+  links: {
+    journalEntries: { id: string; title: string; entryDate: string }[];
+    tasks: { id: string; title: string; status: string }[];
+  };
 };
 
 const UPDATE_PERSON = `
@@ -56,6 +59,12 @@ const UNASSIGN_LABEL = `
     unassignPersonLabel(personId: $personId, labelId: $labelId) { id }
   }
 `;
+
+const STATUS_LABELS: Record<string, string> = {
+  todo: "Chưa làm",
+  in_progress: "Đang làm",
+  done: "Xong",
+};
 
 export function PersonDetail({ person, allLabels }: { person: PersonDetailData; allLabels: LabelRow[] }) {
   const router = useRouter();
@@ -177,8 +186,13 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
               📔 {entry.title} <span className="text-muted-foreground">({entry.entryDate})</span>
             </Link>
           ))}
-          {person.links.journalEntries.length === 0 && (
-            <p className="text-muted-foreground">Chưa có nhật ký nào gắn với người này.</p>
+          {person.links.tasks.map((task) => (
+            <Link key={task.id} href={`/tasks/${task.id}`} className="underline-offset-4 hover:underline">
+              ✅ {task.title} <span className="text-muted-foreground">({STATUS_LABELS[task.status] ?? task.status})</span>
+            </Link>
+          ))}
+          {person.links.journalEntries.length === 0 && person.links.tasks.length === 0 && (
+            <p className="text-muted-foreground">Chưa có gì gắn với người này.</p>
           )}
         </CardContent>
       </Card>

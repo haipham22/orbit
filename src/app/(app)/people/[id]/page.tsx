@@ -22,7 +22,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
         notes: person.notes,
         contactMethods: person.contactMethods,
         labels: person.labels,
-        links: { journalEntries: links.journalEntries },
+        links: { journalEntries: links.journalEntries, tasks: links.tasks },
       }}
       allLabels={labels}
     />
