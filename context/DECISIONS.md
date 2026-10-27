@@ -23,6 +23,8 @@ last_reviewed: "2026-10-27"
 |---|---|---|---|---|
 | (template) | Log decisions in this file | Small solo product, needs to ship within a week to test the response | Scope can be locked within 2 hours | Yes — switch to a heavier process if that limit is exceeded |
 | 2026-10-27 | Pothos resolvers gọi service layer trực tiếp, không wire @pothos/plugin-drizzle cho CRUD | RC risk + n+1 xử lý ở service (batch labels); plugin cài sẵn, wire lại khi cần relational queries | Có — thêm plugin không đổi schema |
+| 2026-10-27 | Env thật ở `deployment/local/.env`, KHÔNG file/symlink env nào ở root; `scripts/run-with-env.mjs` preload env cho next dev/build/start, script tsx tự config({path}) | Root sạch theo pack convention; dotenv không ghi đè process env sẵn có → production k8s inject Secret vào env, loader tự no-op | Có — trả file về root bất cứ lúc nào |
+| 2026-10-27 | Root `Makefile` là command contract (make dev/check/test/migrate/deploy/doctor), pnpm scripts là implementation | Contract thống nhất theo pack convention; db startup thuộc dev command (compose up --wait), user không chạy compose tay | Có — đổi target make không đụng code |
 
 <!-- The seed row above deliberately carries the date "(template)" so it does NOT count as a decision —
      a decision only counts when it has an ISO date logged by this project itself. -->

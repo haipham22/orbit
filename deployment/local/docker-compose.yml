@@ -1,3 +1,5 @@
+name: orbit-workspace
+
 services:
   db:
     image: postgres:18

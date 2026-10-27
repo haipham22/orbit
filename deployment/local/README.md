@@ -3,18 +3,19 @@
 Everything needed to run the whole system on one machine, and nothing else:
 
 - `docker-compose.yml` — local database (service `db`, Postgres 18); Temporal services sẽ thêm sau dưới profile `temporal`
-- Env file thực tế KHÔNG ở đây — nằm ở repo root `.env.local` (Next.js đọc native, git-ignored). Copy từ `../.env.example`
+- `.env` — env file THẬT, copy từ `../.env.example` rồi fill (git-ignored). Root `.env.local` là symlink trỏ vào đây để Next.js đọc native
 - `init.sql` / seed data — khi cần, từ sample-data section của `context/PRD.md`
 - `Dockerfile.dev` / start script — chỉ nếu stack cần
 
 ## Chạy local
 
 ```
-cp deployment/.env.example .env.local   # rồi fill giá trị
-docker compose -f deployment/local/docker-compose.yml up -d db
-pnpm db:migrate
-pnpm dev
+cp deployment/.env.example deployment/local/.env   # rồi fill giá trị
+make doctor                                         # check env + db
+make dev                                            # db + migrate + app
 ```
+
+Mọi lệnh app (`pnpm dev/build/start`) preload env từ file này qua `scripts/run-with-env.mjs` — root repo không có file env nào.
 
 ## Three things easy to forget
 

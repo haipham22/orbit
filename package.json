@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node scripts/run-with-env.mjs next dev",
+    "build": "node scripts/run-with-env.mjs next build",
+    "start": "node scripts/run-with-env.mjs next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test": "echo 'vitest chua cai — Phase 10' && exit 1",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/db-migrate.ts",
     "set-password": "tsx scripts/set-password.ts"

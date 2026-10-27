@@ -3,8 +3,7 @@ import { readFile } from "node:fs/promises";
 import { stdout } from "node:process";
 
 async function main() {
-  config({ path: ".env.local", quiet: true });
-  config({ quiet: true });
+  config({ path: "deployment/local/.env", quiet: true });
 
   const { db, sql } = await import("@/server/db/client");
   const { migrate } = await import("drizzle-orm/postgres-js/migrator");

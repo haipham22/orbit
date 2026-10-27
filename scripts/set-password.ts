@@ -3,12 +3,11 @@ import { createInterface } from "node:readline/promises";
 import { stdin, stdout, stderr } from "node:process";
 
 async function main() {
-  config({ path: ".env.local", quiet: true });
-  config({ quiet: true });
+  config({ path: "deployment/local/.env", quiet: true });
 
   const email = process.env.ORBIT_USER_EMAIL;
   if (!email) {
-    stderr.write("ORBIT_USER_EMAIL chưa đặt trong .env.local\n");
+    stderr.write("ORBIT_USER_EMAIL chưa đặt trong deployment/local/.env\n");
     process.exit(1);
   }
 

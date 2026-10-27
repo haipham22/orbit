@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPerson, listLabels } from "@/features/people/queries";
+import { getPersonLinksSummary } from "@/features/links/queries";
 import { PersonDetail } from "@/features/people/components/person-detail";
 
 export const metadata = { title: "Người — orbit" };
@@ -9,7 +10,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
   const person = await getPerson(id).catch(() => null);
   if (!person) notFound();
 
-  const labels = await listLabels();
+  const [labels, links] = await Promise.all([listLabels(), getPersonLinksSummary(person.id)]);
 
   return (
     <PersonDetail
@@ -21,6 +22,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
         notes: person.notes,
         contactMethods: person.contactMethods,
         labels: person.labels,
+        links: { journalEntries: links.journalEntries },
       }}
       allLabels={labels}
     />

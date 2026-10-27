@@ -58,21 +58,21 @@ node 24 · pnpm 11.28.8 (mise.toml + packageManager)
 
 ## 5. Command contract
 
-Repo không dùng Makefile — contract là pnpm scripts (root command duy nhất, dispatch nội bộ):
+Root `Makefile` là contract duy nhất; pnpm scripts là implementation bên trong:
 
 | Command | What it does | Working? |
 |---|---|---|
-| `pnpm dev` | Run locally (app; db qua `docker compose -f deployment/local/docker-compose.yml up -d db`) | ☑ |
-| `pnpm lint && pnpm typecheck && pnpm build` | Lint + typecheck + build | ☑ |
-| `pnpm test` | Smoke + critical flows (vitest) | ☐ planned |
-| `pnpm db:migrate` | Versioned DB migration (`drizzle-kit generate` để tạo) | ☑ |
-| (deploy) | Docker image standalone → k8s manifests thuộc infra user | ☐ planned |
-| `curl /api/health` | Check env + connections | ☑ (db check) |
+| `make dev` | db (wait healthy) + migrate + app | ☑ |
+| `make check` | Lint + typecheck + build | ☑ |
+| `make test` | Smoke + critical flows (vitest) | ☐ placeholder đến Phase 10 |
+| `make migrate` | db (wait healthy) + versioned migrations | ☑ |
+| `make deploy` | Docker image standalone → k8s (Dockerfile Phase 10) | ☐ placeholder |
+| `make doctor` | Check env + db connection (+ SESSION_SECRET, TEMPORAL khi bật) | ☑ |
 
 ## 6. Environment variables
 
 Full list in `deployment/.env.example`. Never commit a real `.env` —
-the local filled-in copy lives at repo root `.env.local` (Next.js reads native; git-ignored).
+the real filled-in copy lives at `deployment/local/.env`; root `.env.local` is a symlink to it (Next.js reads native).
 
 | Variable | Used for | Target | Required? |
 |---|---|---|---|

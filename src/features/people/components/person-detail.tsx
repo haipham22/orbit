@@ -35,6 +35,7 @@ export type PersonDetailData = {
   notes: string | null;
   contactMethods: { type: string; value: string }[];
   labels: LabelRow[];
+  links: { journalEntries: { id: string; title: string; entryDate: string }[] };
 };
 
 const UPDATE_PERSON = `
@@ -163,6 +164,22 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
             </ul>
           </div>
           <div><span className="text-muted-foreground">Ghi chú:</span> {person.notes ?? "—"}</div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Liên quan</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2 text-sm">
+          {person.links.journalEntries.map((entry) => (
+            <Link key={entry.id} href={`/journal/${entry.id}`} className="underline-offset-4 hover:underline">
+              📔 {entry.title} <span className="text-muted-foreground">({entry.entryDate})</span>
+            </Link>
+          ))}
+          {person.links.journalEntries.length === 0 && (
+            <p className="text-muted-foreground">Chưa có nhật ký nào gắn với người này.</p>
+          )}
         </CardContent>
       </Card>
 
