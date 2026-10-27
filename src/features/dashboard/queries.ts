@@ -1,4 +1,4 @@
-import { and, count, desc, eq, isNotNull, lte, ne, sql } from "drizzle-orm";
+import { and, count, desc, isNotNull, lte, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/server/db/client";
 import { journalEntries, people, tasks } from "@/server/db/schema";

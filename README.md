@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# orbit
 
-## Getting Started
+Personal management system: people/journal + tasks + dashboard, agent-ready qua Temporal.
 
-First, run the development server:
+## Quickstart (2 lệnh, zero SaaS)
+
+Yêu cầu: Docker, mise (`mise install` tự setup node 24 + pnpm 11).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp deployment/.env.example deployment/local/.env   # rồi điền SESSION_SECRET (≥32 ký tự) + ORBIT_USER_EMAIL
+make dev                                           # db + migrate + next dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở http://localhost:3000 → đăng nhập bằng email trong `ORBIT_USER_EMAIL`. Đặt mật khẩu:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm set-password
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Providers (opt-in, default zero infra)
 
-## Learn More
+| Env | Giá trị | Cần gì thêm |
+|---|---|---|
+| `AUTH_PROVIDER` | `local` (default) — iron-session + Argon2id | chỉ Postgres |
+| | `clerk` — Clerk keys + `ORBIT_USER_EMAIL` gate | Clerk account |
+| `JOBS_PROVIDER` | `none` (default) — birthday tính trực tiếp từ DB, trigger route chạy inline | chỉ Postgres |
+| | `temporal` — schedules daily, workflow runs | Temporal server + worker process |
+| `CACHE_PROVIDER` | `memory` (default) | không gì |
+| | `redis` | Redis server (chưa wire module) |
 
-To learn more about Next.js, take a look at the following resources:
+## Lệnh
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+make dev            # db (wait) + migrate + next dev
+make check          # lint + typecheck + build
+make test           # vitest
+pnpm set-password   # đặt mật khẩu cho ORBIT_USER_EMAIL (local auth)
+docker compose -f deployment/local/docker-compose.yml --profile temporal up -d   # Temporal + UI (:8080)
+pnpm worker         # orbit-worker (chỉ khi JOBS_PROVIDER=temporal)
+pnpm schedules      # đăng ký birthday-check-daily schedule
+curl -X POST localhost:3000/api/jobs/birthday-check   # manual trigger
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Kiến trúc
 
-## Deploy on Vercel
+- `src/app/` — thin route adapters; `src/features/*/queries.ts` — service layer (Drizzle + zod)
+- `src/server/` — pure Node (auth/jobs/db/graphql/cache), không import `next/*` — Temporal worker dùng chung được
+- RSC gọi service trực tiếp; client mutate qua `src/lib/gql-client.ts` → `/api/graphql` (GraphQL Yoga + Pothos)
+- Person/journal/task link nhau qua bảng `links` polymorphic; journal search dùng Postgres FTS (`websearch_to_tsquery` + `ts_rank`), people search dùng pg_trgm
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Chi tiết: `context/ARCHITECTURE.md`, quyết định: `context/DECISIONS.md`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy (k8s)
+
+`next.config.ts` dùng `output: standalone`. Build image:
+
+```bash
+docker build -t orbit .
+docker run -p 3000:3000 \
+  -e DATABASE_URL=... -e AUTH_PROVIDER=... -e SESSION_SECRET=... -e ORBIT_USER_EMAIL=... \
+  orbit
+```
+
+- `orbit-web` deployment luôn có. `orbit-worker` deployment chỉ khi `JOBS_PROVIDER=temporal` (cùng image, entrypoint `pnpm worker`)
+- Manifests k8s thuộc infra của bạn — repo chỉ cung cấp image

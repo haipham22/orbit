@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTask, listProjects } from "@/features/tasks/queries";
 import { listPeople } from "@/features/people/queries";
-import { TaskForm } from "@/features/tasks/components/task-form";
 import { TaskPeopleCard, TaskDeleteButton } from "@/features/tasks/components/task-detail";
 import { UpdateTaskForm } from "@/features/tasks/components/update-task-form";
 
