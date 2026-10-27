@@ -5,6 +5,9 @@ import { stdout } from "node:process";
 async function main() {
   config({ path: "deployment/local/.env", quiet: true });
 
+  const { validateEnv } = await import("@/server/env");
+  validateEnv();
+
   const { db, sql } = await import("@/server/db/client");
   const { migrate } = await import("drizzle-orm/postgres-js/migrator");
 

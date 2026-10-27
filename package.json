@@ -11,7 +11,9 @@
     "test": "echo 'vitest chua cai — Phase 10' && exit 1",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx scripts/db-migrate.ts",
-    "set-password": "tsx scripts/set-password.ts"
+    "set-password": "tsx scripts/set-password.ts",
+    "worker": "tsx scripts/worker.ts",
+    "schedules": "tsx scripts/register-schedules.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^7.9.20",
@@ -19,6 +21,12 @@
     "@node-rs/argon2": "^2.2.2",
     "@pothos/core": "^4.16.0",
     "@pothos/plugin-drizzle": "^0.20.1",
+    "@temporalio/activity": "^1.24.0",
+    "@temporalio/client": "^1.24.0",
+    "@temporalio/common": "^1.24.0",
+    "@temporalio/proto": "^1.24.0",
+    "@temporalio/worker": "^1.24.0",
+    "@temporalio/workflow": "^1.24.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.0",
     "dotenv": "^18.0.9",

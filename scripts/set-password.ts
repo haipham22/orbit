@@ -5,9 +5,12 @@ import { stdin, stdout, stderr } from "node:process";
 async function main() {
   config({ path: "deployment/local/.env", quiet: true });
 
-  const email = process.env.ORBIT_USER_EMAIL;
+  const { validateEnv } = await import("@/server/env");
+  const env = validateEnv();
+
+  const email = env.ORBIT_USER_EMAIL;
   if (!email) {
-    stderr.write("ORBIT_USER_EMAIL chưa đặt trong deployment/local/.env\n");
+    stderr.write("set-password chỉ dùng cho AUTH_PROVIDER=local — ORBIT_USER_EMAIL chưa đặt\n");
     process.exit(1);
   }
 
