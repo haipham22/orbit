@@ -29,12 +29,11 @@ function CardLabel({ icon: Icon, children }: { icon: LucideIcon; children: strin
 }
 
 /** Empty state theo Comp_EmptyState (khuôn dashed, copy nguyên văn DS). */
-async function EmptyBlock({ icon: Icon }: { icon: LucideIcon }) {
+async function EmptyBlock() {
   const t = await getTranslations("dashboard");
   return (
-    <div className="flex items-center gap-2 rounded-md border border-dashed p-4 text-[length:var(--type-size-sm)] text-muted-foreground">
-      <Icon className="size-4" aria-hidden />
-      <span>{t("empty")}</span>
+    <div className="rounded-md border border-dashed p-4 text-[length:var(--type-size-sm)] text-muted-foreground">
+      {t("empty")}
     </div>
   );
 }
@@ -71,7 +70,7 @@ export async function BirthdaysCard({ people }: { people: BirthdayRow[] }) {
             </span>
           </div>
         ))}
-        {people.length === 0 && <EmptyBlock icon={Cake} />}
+        {people.length === 0 && <EmptyBlock />}
       </CardContent>
     </CardShell>
   );
@@ -105,7 +104,7 @@ export async function UpcomingTasksCard({ tasks }: { tasks: UpcomingTaskRow[] })
             </div>
           </div>
         ))}
-        {tasks.length === 0 && <EmptyBlock icon={AlarmClock} />}
+        {tasks.length === 0 && <EmptyBlock />}
       </CardContent>
     </CardShell>
   );
@@ -134,7 +133,7 @@ export async function RecentJournalCard({
             <p className="line-clamp-1 text-muted-foreground">{entry.body}</p>
           </div>
         ))}
-        {entries.length === 0 && <EmptyBlock icon={BookOpen} />}
+        {entries.length === 0 && <EmptyBlock />}
       </CardContent>
     </CardShell>
   );

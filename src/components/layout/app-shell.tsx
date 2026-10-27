@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { Separator } from "@/components/ui/separator";
+import { BottomNav } from "./bottom-nav";
 import { LanguageToggle } from "./language-toggle";
 import { LogoutButton } from "./logout-button";
 import { ThemeToggle } from "./theme-toggle";
@@ -18,7 +19,8 @@ export async function AppShell({ email, children }: { email: string; children: R
   const t = await getTranslations("nav");
   return (
     <div className="flex min-h-svh flex-1">
-      <aside className="flex w-56 flex-col gap-4 border-r p-4">
+      {/* Sidebar desktop (>=md) — ẩn mobile, mobile dùng BottomNav */}
+      <aside className="hidden w-56 flex-col gap-4 border-r p-4 md:flex">
         <div className="px-2 text-lg font-semibold tracking-tight">orbit</div>
         <nav className="flex flex-col gap-1">
           {NAV_ITEMS.map((item) => (
@@ -41,7 +43,19 @@ export async function AppShell({ email, children }: { email: string; children: R
           </div>
         </div>
       </aside>
-      <main className="flex-1 p-6">{children}</main>
+      {/* Topbar mobile: brand + toggles */}
+      <div className="flex min-h-svh w-full flex-col">
+        <header className="flex items-center justify-between border-b p-4 md:hidden">
+          <span className="text-lg font-semibold tracking-tight">orbit</span>
+          <div className="flex items-center gap-1">
+            <LanguageToggle />
+            <ThemeToggle />
+            {authProvider === "local" && <LogoutButton />}
+          </div>
+        </header>
+        <main className="flex-1 p-4 pb-24 md:p-6">{children}</main>
+        <BottomNav />
+      </div>
     </div>
   );
 }
