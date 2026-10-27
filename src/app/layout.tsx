@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import { authProvider } from "@/server/auth/provider";
+import { ClerkProviderWrapper } from "./clerk-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,12 +21,18 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const content =
+    authProvider === "clerk" ? <ClerkProviderWrapper>{children}</ClerkProviderWrapper> : children;
+
   return (
     <html
-      lang="en"
+      lang="vi"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {content}
+        <Toaster />
+      </body>
     </html>
   );
 }

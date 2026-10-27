@@ -1,5 +1,6 @@
 import { config } from "dotenv";
 import { readFile } from "node:fs/promises";
+import { stdout } from "node:process";
 
 async function main() {
   config({ path: ".env.local", quiet: true });
@@ -10,10 +11,10 @@ async function main() {
 
   const extensionsSql = await readFile("drizzle/0000_extensions.sql", "utf8");
   await sql.unsafe(extensionsSql);
-  console.log("extensions applied");
+  stdout.write("extensions applied\n");
 
   await migrate(db, { migrationsFolder: "./drizzle" });
-  console.log("migrations applied");
+  stdout.write("migrations applied\n");
 
   await sql.end();
 }

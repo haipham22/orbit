@@ -15,6 +15,7 @@ const eslintConfig = defineConfig([
   ]),
   {
     files: ["src/server/**/*.ts"],
+    ignores: ["src/server/auth/**"],
     rules: {
       // src/server dùng chung với Temporal worker — worker process không có next/*
       "no-restricted-imports": [
