@@ -62,7 +62,7 @@ Repo không dùng Makefile — contract là pnpm scripts (root command duy nhấ
 
 | Command | What it does | Working? |
 |---|---|---|
-| `pnpm dev` | Run locally (app; db qua `docker compose up -d db`) | ☑ |
+| `pnpm dev` | Run locally (app; db qua `docker compose -f deployment/local/docker-compose.yml up -d db`) | ☑ |
 | `pnpm lint && pnpm typecheck && pnpm build` | Lint + typecheck + build | ☑ |
 | `pnpm test` | Smoke + critical flows (vitest) | ☐ planned |
 | `pnpm db:migrate` | Versioned DB migration (`drizzle-kit generate` để tạo) | ☑ |
@@ -72,7 +72,7 @@ Repo không dùng Makefile — contract là pnpm scripts (root command duy nhấ
 ## 6. Environment variables
 
 Full list in `deployment/.env.example`. Never commit a real `.env` —
-the local filled-in copy lives at `deployment/local/.env` (blocked by `.gitignore`).
+the local filled-in copy lives at repo root `.env.local` (Next.js reads native; git-ignored).
 
 | Variable | Used for | Target | Required? |
 |---|---|---|---|
