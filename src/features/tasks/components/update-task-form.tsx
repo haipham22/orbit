@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { gql } from "@/lib/gql-client";
 import { TaskForm, type TaskFormValues } from "./task-form";
@@ -22,6 +23,7 @@ export function UpdateTaskForm({
   defaultValues: Partial<TaskFormValues>;
   projects: ProjectRow[];
 }) {
+  const t = useTranslations("tasks");
   const router = useRouter();
   const [pending, setPending] = useState(false);
 
@@ -37,14 +39,14 @@ export function UpdateTaskForm({
         dueDate: values.dueDate || null,
         projectId: values.projectId,
       });
-      toast.success("Đã cập nhật");
+      toast.success(t("updated"));
       router.refresh();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Lỗi không xác định");
+      toast.error(err instanceof Error ? err.message : t("unknownError"));
     } finally {
       setPending(false);
     }
   }
 
-  return <TaskForm defaultValues={defaultValues} projects={projects} onSubmit={onSubmit} submitLabel="Cập nhật" pending={pending} />;
+  return <TaskForm defaultValues={defaultValues} projects={projects} onSubmit={onSubmit} submitLabel={t("update")} pending={pending} />;
 }

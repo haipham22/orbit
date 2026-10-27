@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,6 +24,7 @@ const CREATE_PERSON = `
 `;
 
 export function CreatePersonDialog() {
+  const t = useTranslations("people");
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
@@ -32,10 +34,10 @@ export function CreatePersonDialog() {
     try {
       await gql(CREATE_PERSON, { input: values });
       setOpen(false);
-      toast.success("Đã thêm người");
+      toast.success(t("create.submitted"));
       router.refresh();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Lỗi không xác định");
+      toast.error(err instanceof Error ? err.message : t("form.errorUnknown"));
     } finally {
       setPending(false);
     }
@@ -44,16 +46,16 @@ export function CreatePersonDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">
-          <Plus className="size-4" /> Thêm người
+        <Button className="h-11">
+          <Plus className="size-4" /> {t("create.trigger")}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Thêm người</DialogTitle>
-          <DialogDescription>Ghi lại thông tin một người quen.</DialogDescription>
+          <DialogTitle>{t("create.title")}</DialogTitle>
+          <DialogDescription>{t("create.description")}</DialogDescription>
         </DialogHeader>
-        <PersonForm onSubmit={onSubmit} submitLabel="Lưu" pending={pending} />
+        <PersonForm onSubmit={onSubmit} submitLabel={t("form.save")} pending={pending} />
       </DialogContent>
     </Dialog>
   );

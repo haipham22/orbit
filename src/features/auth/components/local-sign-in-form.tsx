@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,24 +41,51 @@ export function LocalSignInForm() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full max-w-sm flex-col gap-4">
+    <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-4">
       <div className="flex flex-col gap-2">
         <Label htmlFor="email">{t("emailLabel")}</Label>
-        <Input id="email" type="email" autoComplete="email" {...form.register("email")} />
+        <Input
+          id="email"
+          type="email"
+          autoComplete="email"
+          aria-invalid={!!form.formState.errors.email}
+          className="h-9 rounded-sm"
+          {...form.register("email")}
+        />
         {form.formState.errors.email && (
-          <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+          <p className="text-[length:var(--type-size-sm)] text-destructive">
+            {form.formState.errors.email.message}
+          </p>
         )}
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="password">{t("passwordLabel")}</Label>
-        <Input id="password" type="password" autoComplete="current-password" {...form.register("password")} />
+        <Input
+          id="password"
+          type="password"
+          autoComplete="current-password"
+          aria-invalid={!!form.formState.errors.password}
+          className="h-9 rounded-sm"
+          {...form.register("password")}
+        />
         {form.formState.errors.password && (
-          <p className="text-sm text-red-500">{form.formState.errors.password.message}</p>
+          <p className="text-[length:var(--type-size-sm)] text-destructive">
+            {form.formState.errors.password.message}
+          </p>
         )}
       </div>
-      {formError && <p className="text-sm text-red-500">{formError}</p>}
-      <Button type="submit" disabled={form.formState.isSubmitting}>
-        {form.formState.isSubmitting ? t("submitting") : t("submit")}
+      {formError && (
+        <p className="text-[length:var(--type-size-sm)] text-destructive">{formError}</p>
+      )}
+      <Button type="submit" className="h-11 w-full" disabled={form.formState.isSubmitting}>
+        {form.formState.isSubmitting ? (
+          <>
+            <Loader2 className="animate-spin" aria-hidden />
+            {t("submitting")}
+          </>
+        ) : (
+          t("submit")
+        )}
       </Button>
     </form>
   );

@@ -1,9 +1,13 @@
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPerson, listLabels } from "@/features/people/queries";
 import { getPersonLinksSummary } from "@/features/links/queries";
 import { PersonDetail } from "@/features/people/components/person-detail";
 
-export const metadata = { title: "Người — orbit" };
+export async function generateMetadata() {
+  const t = await getTranslations("people.meta");
+  return { title: t("detailTitle") };
+}
 
 export default async function PersonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

@@ -8,10 +8,19 @@ export async function generateMetadata() {
   return { title: t("title") };
 }
 
-export default function SignInPage() {
+export default async function SignInPage() {
+  const t = await getTranslations("auth");
   return (
-    <main className="flex min-h-svh items-center justify-center p-6">
-      {authProvider === "clerk" ? <SignIn /> : <LocalSignInForm />}
+    <main className="grid min-h-svh place-items-center bg-background p-5">
+      <div className="flex w-full max-w-[400px] flex-col gap-4">
+        <header className="flex flex-col items-center gap-1 text-center">
+          {/* wordmark DS: "◍ orbit" — h1 ăn mono display từ CSS toàn cục */}
+          <h1 className="text-[length:var(--type-size-xl)]">◍ orbit</h1>
+          <p className="text-[length:var(--type-size-sm)] text-muted-foreground">{t("tagline")}</p>
+        </header>
+        {authProvider === "clerk" ? <SignIn /> : <LocalSignInForm />}
+        <p className="text-center text-[length:var(--type-size-sm)] text-muted-foreground">{t("footer")}</p>
+      </div>
     </main>
   );
 }

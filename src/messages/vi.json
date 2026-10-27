@@ -17,6 +17,190 @@
     "submitting": "Đang đăng nhập…",
     "errorInvalid": "Email hoặc mật khẩu không đúng",
     "errorEmailInvalid": "Email không hợp lệ",
-    "errorPasswordRequired": "Nhập mật khẩu"
+    "errorPasswordRequired": "Nhập mật khẩu",
+    "tagline": "Một nơi duy nhất cho người, nhật ký, việc của bạn.",
+    "footer": "Chưa có tài khoản? Đăng ký mở sau — hiện chỉ có chủ nhà."
+  },
+  "journal": {
+    "title": "Journal",
+    "metaTitle": "Journal — orbit",
+    "entryMetaTitle": "Nhật ký — orbit",
+    "writeEntry": "Viết nhật ký",
+    "writeEntryDesc": "Ghi lại điều đáng nhớ.",
+    "searchPlaceholder": "Tìm trong nhật ký…",
+    "searchLabel": "Tìm trong nhật ký",
+    "empty": "Chưa có gì ở đây cả ✌️",
+    "emptySearch": "Không tìm thấy bài nào khớp",
+    "backToList": "Quay lại nhật ký",
+    "relatedPeople": "Người liên quan",
+    "addPerson": "Gắn người",
+    "removePerson": "Gỡ {name}",
+    "peopleEmptyHint": "Thêm người ở trang People trước để gắn vào nhật ký.",
+    "save": "Lưu",
+    "saving": "Đang lưu…",
+    "close": "Đóng",
+    "edit": "Sửa",
+    "update": "Cập nhật",
+    "updated": "Đã cập nhật",
+    "delete": "Xoá",
+    "deleteConfirm": "Xoá bài nhật ký này?",
+    "unknownError": "Lỗi không xác định",
+    "titleLabel": "Tiêu đề",
+    "titleRequired": "Nhập tiêu đề",
+    "dateLabel": "Ngày",
+    "dateRequired": "Chọn ngày",
+    "bodyLabel": "Nội dung"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "metaTitle": "Tasks — orbit",
+    "taskMetaTitle": "Việc — orbit",
+    "addTask": "Thêm việc",
+    "addTaskDesc": "Ghi lại việc cần làm.",
+    "newProjectPlaceholder": "Dự án mới…",
+    "addProject": "Thêm",
+    "projectAdded": "Đã thêm dự án",
+    "deleteProject": "Xoá dự án {name}",
+    "backToBoard": "Quay lại board",
+    "deleteTask": "Xoá việc",
+    "deleteTaskConfirm": "Xoá việc này?",
+    "start": "Bắt đầu",
+    "finish": "Xong",
+    "startedToast": "Đang làm",
+    "doneToast": "Đã hoàn thành",
+    "empty": "Chưa có gì ở đây cả ✌️",
+    "columns": {
+      "todo": "Chưa làm",
+      "in_progress": "Đang làm",
+      "done": "Xong"
+    },
+    "status": {
+      "todo": "Chưa làm",
+      "in_progress": "Đang làm",
+      "done": "Xong"
+    },
+    "priority": {
+      "low": "Thấp",
+      "medium": "Vừa",
+      "high": "Cao",
+      "urgent": "Gấp"
+    },
+    "dueChip": "Hạn {date}",
+    "doneChip": "Xong {date}",
+    "overdueChip": "Quá hạn",
+    "none": "— Không —",
+    "titleLabel": "Việc cần làm",
+    "titleRequired": "Nhập việc cần làm",
+    "statusLabel": "Trạng thái",
+    "priorityLabel": "Ưu tiên",
+    "dueLabel": "Hạn",
+    "projectLabel": "Dự án",
+    "notesLabel": "Ghi chú",
+    "save": "Lưu",
+    "saving": "Đang lưu…",
+    "update": "Cập nhật",
+    "updated": "Đã cập nhật",
+    "unknownError": "Lỗi không xác định",
+    "removePerson": "Gỡ {name}",
+    "addPerson": "Gắn người",
+    "relatedPeople": "Người liên quan",
+    "peopleEmptyHint": "Thêm người ở trang People trước để gắn vào việc.",
+    "projectNameRequired": "Nhập tên dự án"
+  },
+  "people": {
+    "empty": "Chưa có gì ở đây cả ✌️",
+    "removeLabel": "Xoá nhãn {name}",
+    "meta": {
+      "listTitle": "People — orbit",
+      "detailTitle": "Người — orbit"
+    },
+    "list": {
+      "title": "People",
+      "searchPlaceholder": "Tìm người theo tên…",
+      "search": "Tìm người",
+      "noMatch": "Không tìm thấy ai khớp",
+      "labels": "Nhãn",
+      "newLabelPlaceholder": "Tên nhãn mới…",
+      "addLabel": "Thêm",
+      "labelNameRequired": "Nhập tên nhãn"
+    },
+    "create": {
+      "trigger": "Thêm người",
+      "title": "Thêm người",
+      "description": "Ghi lại thông tin một người quen.",
+      "submitted": "Đã thêm người"
+    },
+    "form": {
+      "fullName": "Tên",
+      "fullNameRequired": "Nhập tên",
+      "relationship": "Quan hệ",
+      "relationshipPlaceholder": "Bạn bè, gia đình, đồng nghiệp…",
+      "dob": "Ngày sinh",
+      "notes": "Ghi chú",
+      "contacts": "Số liên lạc",
+      "contactType": "Loại (zalo, email…)",
+      "contactValue": "Giá trị",
+      "contactTypeRequired": "Thiếu loại",
+      "contactValueRequired": "Thiếu giá trị",
+      "addContact": "Thêm số liên lạc",
+      "removeContact": "Xoá liên lạc",
+      "save": "Lưu",
+      "update": "Cập nhật",
+      "saving": "Đang lưu…",
+      "errorUnknown": "Lỗi không xác định"
+    },
+    "detail": {
+      "back": "Quay lại danh sách",
+      "info": "Thông tin",
+      "dob": "Ngày sinh",
+      "contacts": "Liên lạc",
+      "notes": "Ghi chú",
+      "related": "Liên quan",
+      "labels": "Nhãn",
+      "assignLabel": "Gắn nhãn",
+      "createLabelsHint": "Tạo nhãn ở trang People",
+      "edit": "Sửa",
+      "editTitle": "Sửa người",
+      "delete": "Xoá người",
+      "confirmDelete": "Xoá {name}?",
+      "updated": "Đã cập nhật",
+      "deleted": "Đã xoá",
+      "statusTodo": "Chưa làm",
+      "statusInProgress": "Đang làm",
+      "statusDone": "Xong",
+      "actions": "Hành động"
+    }
+  },
+  "dashboard": {
+    "metaTitle": "Dashboard — orbit",
+    "greeting": "Chào buổi chiều",
+    "tagline": "Mọi thứ của bạn nằm đây. Nhìn 1 phát là đủ.",
+    "empty": "Chưa có gì ở đây cả ✌️",
+    "day": {
+      "today": "Hôm nay",
+      "tomorrow": "Ngày mai",
+      "inDays": "{count} ngày nữa"
+    },
+    "birthdays": {
+      "title": "Sinh nhật 30 ngày"
+    },
+    "dueTasks": {
+      "title": "Tới hạn 7 ngày"
+    },
+    "journal": {
+      "title": "Nhật ký gần đây"
+    },
+    "taskSummary": {
+      "title": "Tổng quan việc",
+      "todo": "Chưa làm",
+      "inProgress": "Đang làm",
+      "done": "Xong"
+    },
+    "priority": {
+      "low": "Thấp",
+      "medium": "Trung bình",
+      "high": "Cao",
+      "urgent": "Gấp"
+    }
   }
 }

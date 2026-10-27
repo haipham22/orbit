@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,10 +22,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { X, Pencil, Trash2 } from "lucide-react";
+import { BookOpen, ChevronLeft, CircleCheck, Pencil, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
 import { gql } from "@/lib/gql-client";
 import { PersonForm, type PersonFormValues } from "./person-form";
+import { PersonAvatar } from "./person-avatar";
 import type { LabelRow } from "../queries";
 
 export type PersonDetailData = {
@@ -60,41 +62,42 @@ const UNASSIGN_LABEL = `
   }
 `;
 
-const STATUS_LABELS: Record<string, string> = {
-  todo: "Chưa làm",
-  in_progress: "Đang làm",
-  done: "Xong",
-};
-
 export function PersonDetail({ person, allLabels }: { person: PersonDetailData; allLabels: LabelRow[] }) {
+  const t = useTranslations("people");
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const unassigned = allLabels.filter((l) => !person.labels.some((p) => p.id === l.id));
+
+  const statusLabels: Record<string, string> = {
+    todo: t("detail.statusTodo"),
+    in_progress: t("detail.statusInProgress"),
+    done: t("detail.statusDone"),
+  };
 
   async function onUpdate(values: PersonFormValues) {
     setPending(true);
     try {
       await gql(UPDATE_PERSON, { id: person.id, input: values });
       setEditOpen(false);
-      toast.success("Đã cập nhật");
+      toast.success(t("detail.updated"));
       router.refresh();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Lỗi không xác định");
+      toast.error(err instanceof Error ? err.message : t("form.errorUnknown"));
     } finally {
       setPending(false);
     }
   }
 
   async function onDelete() {
-    if (!confirm(`Xoá ${person.fullName}?`)) return;
+    if (!confirm(t("detail.confirmDelete", { name: person.fullName }))) return;
     setPending(true);
     try {
       await gql(DELETE_PERSON, { id: person.id });
-      toast.success("Đã xoá");
+      toast.success(t("detail.deleted"));
       router.push("/people");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Lỗi không xác định");
+      toast.error(err instanceof Error ? err.message : t("form.errorUnknown"));
     } finally {
       setPending(false);
     }
@@ -105,7 +108,7 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
       await gql(ASSIGN_LABEL, { personId: person.id, labelId });
       router.refresh();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Lỗi không xác định");
+      toast.error(err instanceof Error ? err.message : t("form.errorUnknown"));
     }
   }
 
@@ -114,27 +117,143 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
       await gql(UNASSIGN_LABEL, { personId: person.id, labelId });
       router.refresh();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Lỗi không xác định");
+      toast.error(err instanceof Error ? err.message : t("form.errorUnknown"));
     }
   }
 
   return (
     <div className="flex max-w-2xl flex-col gap-6">
-      <div className="flex items-start justify-between gap-4">
+      <Link
+        href="/people"
+        className="inline-flex h-9 items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+      >
+        <ChevronLeft className="size-4" /> {t("detail.back")}
+      </Link>
+
+      <div className="flex items-center gap-4">
+        <PersonAvatar name={person.fullName} size="lg" />
         <div>
-          <h1 className="text-2xl font-semibold">{person.fullName}</h1>
-          <p className="text-sm text-muted-foreground">{person.relationship ?? "—"}</p>
+          <h1 className="text-2xl">{person.fullName}</h1>
+          <p className="text-sm text-muted-foreground">
+            {[person.relationship, person.dob].filter(Boolean).join(" · ") || "—"}
+          </p>
         </div>
-        <div className="flex gap-2">
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            {t("detail.labels")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-wrap items-center gap-2">
+          {person.labels.map((label) => (
+            <Badge
+              key={label.id}
+              variant="outline"
+              style={{ borderColor: label.color, color: label.color }}
+            >
+              {label.name}
+              <button
+                type="button"
+                onClick={() => unassignLabel(label.id)}
+                aria-label={t("removeLabel", { name: label.name })}
+              >
+                <X className="size-3" />
+              </button>
+            </Badge>
+          ))}
+          {unassigned.length > 0 && (
+            <Select onValueChange={assignLabel} value="">
+              <SelectTrigger className="h-9 w-44">
+                <SelectValue placeholder={t("detail.assignLabel")} />
+              </SelectTrigger>
+              <SelectContent>
+                {unassigned.map((label) => (
+                  <SelectItem key={label.id} value={label.id}>{label.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+          {allLabels.length === 0 && (
+            <p className="text-sm text-muted-foreground">
+              {t("empty")} — <Link href="/people" className="underline">{t("detail.createLabelsHint")}</Link>
+            </p>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            {t("detail.info")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2 text-sm">
+          <div><span className="text-muted-foreground">{t("detail.dob")}:</span> {person.dob ?? "—"}</div>
+          <div>
+            <span className="text-muted-foreground">{t("detail.contacts")}:</span>
+            {person.contactMethods.length === 0 && " —"}
+            <ul className="mt-1 list-inside">
+              {person.contactMethods.map((c, i) => (
+                <li key={i}>{c.type}: {c.value}</li>
+              ))}
+            </ul>
+          </div>
+          <div><span className="text-muted-foreground">{t("detail.notes")}:</span> {person.notes ?? "—"}</div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            {t("detail.related")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2 text-sm">
+          {person.links.journalEntries.map((entry) => (
+            <Link
+              key={entry.id}
+              href={`/journal/${entry.id}`}
+              className="flex items-center gap-2 underline-offset-4 hover:underline"
+            >
+              <BookOpen className="size-4 shrink-0 text-muted-foreground" />
+              {entry.title} <span className="text-muted-foreground">({entry.entryDate})</span>
+            </Link>
+          ))}
+          {person.links.tasks.map((task) => (
+            <Link
+              key={task.id}
+              href={`/tasks/${task.id}`}
+              className="flex items-center gap-2 underline-offset-4 hover:underline"
+            >
+              <CircleCheck className="size-4 shrink-0 text-muted-foreground" />
+              {task.title}{" "}
+              <span className="text-muted-foreground">({statusLabels[task.status] ?? task.status})</span>
+            </Link>
+          ))}
+          {person.links.journalEntries.length === 0 && person.links.tasks.length === 0 && (
+            <p className="text-muted-foreground">{t("empty")}</p>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+            {t("detail.actions")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-wrap gap-2">
           <Dialog open={editOpen} onOpenChange={setEditOpen}>
             <DialogTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Pencil className="size-4" /> Sửa
+              <Button className="h-9" disabled={pending}>
+                <Pencil className="size-4" /> {t("detail.edit")}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-h-[85vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>Sửa người</DialogTitle>
+                <DialogTitle>{t("detail.editTitle")}</DialogTitle>
                 <DialogDescription>{person.fullName}</DialogDescription>
               </DialogHeader>
               <PersonForm
@@ -146,87 +265,14 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
                   contactMethods: person.contactMethods,
                 }}
                 onSubmit={onUpdate}
-                submitLabel="Cập nhật"
+                submitLabel={t("form.update")}
                 pending={pending}
               />
             </DialogContent>
           </Dialog>
-          <Button variant="outline" size="sm" onClick={onDelete} disabled={pending}>
-            <Trash2 className="size-4" /> Xoá
+          <Button variant="destructive" className="h-9" onClick={onDelete} disabled={pending}>
+            <Trash2 className="size-4" /> {t("detail.delete")}
           </Button>
-        </div>
-      </div>
-
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-base">Thông tin</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-2 text-sm">
-          <div><span className="text-muted-foreground">Ngày sinh:</span> {person.dob ?? "—"}</div>
-          <div>
-            <span className="text-muted-foreground">Liên lạc:</span>
-            {person.contactMethods.length === 0 && " —"}
-            <ul className="mt-1 list-inside">
-              {person.contactMethods.map((c, i) => (
-                <li key={i}>{c.type}: {c.value}</li>
-              ))}
-            </ul>
-          </div>
-          <div><span className="text-muted-foreground">Ghi chú:</span> {person.notes ?? "—"}</div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Liên quan</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-2 text-sm">
-          {person.links.journalEntries.map((entry) => (
-            <Link key={entry.id} href={`/journal/${entry.id}`} className="underline-offset-4 hover:underline">
-              📔 {entry.title} <span className="text-muted-foreground">({entry.entryDate})</span>
-            </Link>
-          ))}
-          {person.links.tasks.map((task) => (
-            <Link key={task.id} href={`/tasks/${task.id}`} className="underline-offset-4 hover:underline">
-              ✅ {task.title} <span className="text-muted-foreground">({STATUS_LABELS[task.status] ?? task.status})</span>
-            </Link>
-          ))}
-          {person.links.journalEntries.length === 0 && person.links.tasks.length === 0 && (
-            <p className="text-muted-foreground">Chưa có gì gắn với người này.</p>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Nhãn</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-wrap items-center gap-2">
-          {person.labels.map((label) => (
-            <Badge key={label.id} variant="outline" style={{ borderColor: label.color }}>
-              {label.name}
-              <button type="button" onClick={() => unassignLabel(label.id)} aria-label={`Gỡ nhãn ${label.name}`}>
-                <X className="size-3" />
-              </button>
-            </Badge>
-          ))}
-          {unassigned.length > 0 && (
-            <Select onValueChange={assignLabel} value="">
-              <SelectTrigger size="sm" className="w-40">
-                <SelectValue placeholder="+ Gắn nhãn" />
-              </SelectTrigger>
-              <SelectContent>
-                {unassigned.map((label) => (
-                  <SelectItem key={label.id} value={label.id}>{label.name}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-          {allLabels.length === 0 && (
-            <p className="text-sm text-muted-foreground">
-              Chưa có nhãn nào — <Link href="/people" className="underline">tạo nhãn ở trang People</Link>
-            </p>
-          )}
         </CardContent>
       </Card>
     </div>

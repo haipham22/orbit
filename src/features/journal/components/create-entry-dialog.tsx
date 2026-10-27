@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,6 +24,7 @@ const CREATE_ENTRY = `
 `;
 
 export function CreateEntryDialog() {
+  const t = useTranslations("journal");
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
@@ -34,7 +36,7 @@ export function CreateEntryDialog() {
       setOpen(false);
       router.push(`/journal/${data.createJournalEntry.id}`);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Lỗi không xác định");
+      toast.error(err instanceof Error ? err.message : t("unknownError"));
     } finally {
       setPending(false);
     }
@@ -43,16 +45,16 @@ export function CreateEntryDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">
-          <Plus className="size-4" /> Viết nhật ký
+        <Button size="sm" className="rounded-sm">
+          <Plus className="size-4" /> {t("writeEntry")}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Viết nhật ký</DialogTitle>
-          <DialogDescription>Ghi lại điều đáng nhớ.</DialogDescription>
+          <DialogTitle>{t("writeEntry")}</DialogTitle>
+          <DialogDescription>{t("writeEntryDesc")}</DialogDescription>
         </DialogHeader>
-        <JournalEntryForm onSubmit={onSubmit} submitLabel="Lưu" pending={pending} />
+        <JournalEntryForm onSubmit={onSubmit} submitLabel={t("save")} pending={pending} />
       </DialogContent>
     </Dialog>
   );

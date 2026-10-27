@@ -17,6 +17,190 @@
     "submitting": "Signing in…",
     "errorInvalid": "Wrong email or password",
     "errorEmailInvalid": "Invalid email",
-    "errorPasswordRequired": "Enter your password"
+    "errorPasswordRequired": "Enter your password",
+    "tagline": "One place for your people, journals, and tasks.",
+    "footer": "No account yet? Sign-up opens later — owner-only for now."
+  },
+  "journal": {
+    "title": "Journal",
+    "metaTitle": "Journal — orbit",
+    "entryMetaTitle": "Entry — orbit",
+    "writeEntry": "New entry",
+    "writeEntryDesc": "Note down something worth remembering.",
+    "searchPlaceholder": "Search journal…",
+    "searchLabel": "Search journal",
+    "empty": "Nothing here yet ✌️",
+    "emptySearch": "No entries match your search",
+    "backToList": "Back to journal",
+    "relatedPeople": "Related people",
+    "addPerson": "Link person",
+    "removePerson": "Remove {name}",
+    "peopleEmptyHint": "Add people on the People page first to link them here.",
+    "save": "Save",
+    "saving": "Saving…",
+    "close": "Close",
+    "edit": "Edit",
+    "update": "Update",
+    "updated": "Updated",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this entry?",
+    "unknownError": "Unknown error",
+    "titleLabel": "Title",
+    "titleRequired": "Enter a title",
+    "dateLabel": "Date",
+    "dateRequired": "Pick a date",
+    "bodyLabel": "Body"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "metaTitle": "Tasks — orbit",
+    "taskMetaTitle": "Task — orbit",
+    "addTask": "Add task",
+    "addTaskDesc": "Jot down what needs doing.",
+    "newProjectPlaceholder": "New project…",
+    "addProject": "Add",
+    "projectAdded": "Project added",
+    "deleteProject": "Delete project {name}",
+    "backToBoard": "Back to board",
+    "deleteTask": "Delete task",
+    "deleteTaskConfirm": "Delete this task?",
+    "start": "Start",
+    "finish": "Done",
+    "startedToast": "In progress",
+    "doneToast": "Completed",
+    "empty": "Nothing here yet ✌️",
+    "columns": {
+      "todo": "To do",
+      "in_progress": "In progress",
+      "done": "Done"
+    },
+    "status": {
+      "todo": "To do",
+      "in_progress": "In progress",
+      "done": "Done"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Med",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "dueChip": "Due {date}",
+    "doneChip": "Done {date}",
+    "overdueChip": "Overdue",
+    "none": "— None —",
+    "titleLabel": "Task",
+    "titleRequired": "Enter the task",
+    "statusLabel": "Status",
+    "priorityLabel": "Priority",
+    "dueLabel": "Due",
+    "projectLabel": "Project",
+    "notesLabel": "Notes",
+    "save": "Save",
+    "saving": "Saving…",
+    "update": "Update",
+    "updated": "Updated",
+    "unknownError": "Unknown error",
+    "removePerson": "Remove {name}",
+    "addPerson": "Link person",
+    "relatedPeople": "Related people",
+    "peopleEmptyHint": "Add people on the People page first to link them here.",
+    "projectNameRequired": "Enter a project name"
+  },
+  "people": {
+    "empty": "Nothing here yet ✌️",
+    "removeLabel": "Remove label {name}",
+    "meta": {
+      "listTitle": "People — orbit",
+      "detailTitle": "Person — orbit"
+    },
+    "list": {
+      "title": "People",
+      "searchPlaceholder": "Search people by name…",
+      "search": "Search people",
+      "noMatch": "No one matches",
+      "labels": "Labels",
+      "newLabelPlaceholder": "New label name…",
+      "addLabel": "Add",
+      "labelNameRequired": "Label name is required"
+    },
+    "create": {
+      "trigger": "Add person",
+      "title": "Add person",
+      "description": "Save details about someone you know.",
+      "submitted": "Person added"
+    },
+    "form": {
+      "fullName": "Full name",
+      "fullNameRequired": "Name is required",
+      "relationship": "Relationship",
+      "relationshipPlaceholder": "Friend, family, colleague…",
+      "dob": "Date of birth",
+      "notes": "Notes",
+      "contacts": "Contact methods",
+      "contactType": "Type (zalo, email…)",
+      "contactValue": "Value",
+      "contactTypeRequired": "Type is required",
+      "contactValueRequired": "Value is required",
+      "addContact": "Add contact method",
+      "removeContact": "Remove contact method",
+      "save": "Save",
+      "update": "Update",
+      "saving": "Saving…",
+      "errorUnknown": "Unknown error"
+    },
+    "detail": {
+      "back": "Back to list",
+      "info": "Details",
+      "dob": "Date of birth",
+      "contacts": "Contacts",
+      "notes": "Notes",
+      "related": "Related",
+      "labels": "Labels",
+      "assignLabel": "Assign label",
+      "createLabelsHint": "Create labels on the People page",
+      "edit": "Edit",
+      "editTitle": "Edit person",
+      "delete": "Delete person",
+      "confirmDelete": "Delete {name}?",
+      "updated": "Updated",
+      "deleted": "Deleted",
+      "statusTodo": "To do",
+      "statusInProgress": "In progress",
+      "statusDone": "Done",
+      "actions": "Actions"
+    }
+  },
+  "dashboard": {
+    "metaTitle": "Dashboard — orbit",
+    "greeting": "Good afternoon",
+    "tagline": "All your stuff lives here. One glance is enough.",
+    "empty": "Nothing here yet ✌️",
+    "day": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "inDays": "in {count} days"
+    },
+    "birthdays": {
+      "title": "Birthdays in 30 days"
+    },
+    "dueTasks": {
+      "title": "Due in 7 days"
+    },
+    "journal": {
+      "title": "Recent journal"
+    },
+    "taskSummary": {
+      "title": "Task summary",
+      "todo": "To do",
+      "inProgress": "In progress",
+      "done": "Done"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    }
   }
 }
