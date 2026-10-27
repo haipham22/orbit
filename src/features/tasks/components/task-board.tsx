@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { gql } from "@/lib/gql-client";
@@ -55,11 +59,17 @@ type TaskFields = {
   projectId: string | null;
 };
 
+const createProjectSchema = z.object({ name: z.string().min(1, "Nhập tên dự án") });
+type CreateProjectValues = z.infer<typeof createProjectSchema>;
+
 export function TaskBoard({ tasks, projects }: { tasks: TaskWithMeta[]; projects: ProjectRow[] }) {
   const router = useRouter();
   const [createOpen, setCreateOpen] = useState(false);
-  const [projectName, setProjectName] = useState("");
   const [pending, setPending] = useState(false);
+  const projectForm = useForm<CreateProjectValues>({
+    resolver: zodResolver(createProjectSchema),
+    defaultValues: { name: "" },
+  });
 
   async function mutate(query: string, variables: Record<string, unknown>, successMsg?: string) {
     try {
@@ -119,19 +129,12 @@ export function TaskBoard({ tasks, projects }: { tasks: TaskWithMeta[]; projects
 
         <form
           className="flex gap-2"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            if (!projectName.trim()) return;
-            await mutate(CREATE_PROJECT, { name: projectName.trim() }, "Đã thêm dự án");
-            setProjectName("");
-          }}
+          onSubmit={projectForm.handleSubmit(async (values) => {
+            await mutate(CREATE_PROJECT, { name: values.name.trim() }, "Đã thêm dự án");
+            projectForm.reset();
+          })}
         >
-          <input
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            placeholder="Dự án mới…"
-            className="h-9 w-36 rounded-md border bg-transparent px-3 text-sm"
-          />
+          <Input {...projectForm.register("name")} placeholder="Dự án mới…" className="h-9 w-36" />
           <Button type="submit" variant="outline" size="sm">Thêm</Button>
         </form>
 
