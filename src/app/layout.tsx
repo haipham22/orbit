@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import { authProvider } from "@/server/auth/provider";
-import { ClerkProviderWrapper } from "./clerk-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const content =
-    authProvider === "clerk" ? <ClerkProviderWrapper>{children}</ClerkProviderWrapper> : children;
+    authProvider === "clerk" ? <ClerkProvider>{children}</ClerkProvider> : children;
 
   return (
     <html

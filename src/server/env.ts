@@ -31,14 +31,7 @@ const envSchema = z
       }
     }
 
-    if (env.AUTH_PROVIDER === "clerk") {
-      if (!env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
-        missing("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "bắt buộc khi AUTH_PROVIDER=clerk");
-      }
-      if (!env.CLERK_SECRET_KEY) {
-        missing("CLERK_SECRET_KEY", "bắt buộc khi AUTH_PROVIDER=clerk");
-      }
-    }
+    // Clerk keyless dev mode chạy được không cần keys; khi thiếu keys ở production Clerk tự fail lúc boot
 
     if (env.JOBS_PROVIDER === "temporal") {
       for (const key of ["TEMPORAL_ADDRESS", "TEMPORAL_NAMESPACE", "TEMPORAL_TASK_QUEUE"] as const) {
