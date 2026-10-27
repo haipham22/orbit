@@ -22,6 +22,7 @@ last_reviewed: "2026-10-27"
 | Date | Decision | Reason | Standing assumption | Reversible? |
 |---|---|---|---|---|
 | (template) | Log decisions in this file | Small solo product, needs to ship within a week to test the response | Scope can be locked within 2 hours | Yes — switch to a heavier process if that limit is exceeded |
+| 2026-10-27 | Pothos resolvers gọi service layer trực tiếp, không wire @pothos/plugin-drizzle cho CRUD | RC risk + n+1 xử lý ở service (batch labels); plugin cài sẵn, wire lại khi cần relational queries | Có — thêm plugin không đổi schema |
 
 <!-- The seed row above deliberately carries the date "(template)" so it does NOT count as a decision —
      a decision only counts when it has an ISO date logged by this project itself. -->

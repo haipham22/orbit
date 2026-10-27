@@ -1,5 +1,8 @@
-import { GraphQLError } from "graphql";
 import { builder } from "./builder";
+import { requireContextUser } from "./require-context-user";
+import "./types/people";
+import "./people-fields";
+import "./people-mutations";
 
 builder.queryType({
   fields: (t) => ({
@@ -7,14 +10,7 @@ builder.queryType({
       resolve: () => "orbit",
     }),
     me: t.string({
-      resolve: (_root, _args, ctx) => {
-        if (!ctx.user) {
-          throw new GraphQLError("Unauthenticated", {
-            extensions: { code: "UNAUTHENTICATED" },
-          });
-        }
-        return ctx.user.email;
-      },
+      resolve: (_root, _args, ctx) => requireContextUser(ctx).email,
     }),
   }),
 });

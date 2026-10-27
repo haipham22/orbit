@@ -5,5 +5,3 @@ export const builder = new SchemaBuilder<{
   Context: Context;
   AuthUser: { id: string; email: string };
 }>({});
-
-builder.queryType({});
