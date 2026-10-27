@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- AC-2: People — CRUD + labels. Person detail hiện labels + links (journal/task gắn người). -->
+<html lang="vi" data-theme="cool-console">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>s3 — People</title>
+<link rel="stylesheet" href="../assets/theme.css">
+<script>
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.querySelectorAll('.theme-switch button').forEach(function (b) {
+    b.setAttribute('aria-pressed', String(b.dataset.t === t));
+  });
+}
+</script>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">orbit</span>
+  <nav class="nav" data-component="Nav">
+    <a href="s1.html">Đăng nhập</a>
+    <a href="s2.html">Dashboard</a>
+    <a href="s3.html" aria-current="page">People</a>
+    <a href="s4.html">Journal</a>
+    <a href="s5.html">Tasks</a>
+  </nav>
+  <div class="theme-switch" data-component="ThemeSwitch">
+    <button type="button" data-t="cool-console" aria-pressed="true" onclick="setTheme('cool-console')">Cool</button>
+    <button type="button" data-t="night-focus" aria-pressed="false" onclick="setTheme('night-focus')">Night</button>
+  </div>
+</div>
+<main class="wrap">
+<h1>People</h1>
+<p class="muted">4 người · 5 nhãn · search tên (trgm)</p>
+
+<div style="max-width: 360px; margin-bottom: var(--space-4);">
+  <label for="p-search">Tìm người</label>
+  <input class="input" id="p-search" type="search" value="mai">
+</div>
+
+<div class="rows">
+  <div class="row" data-component="PersonRow">
+    <div class="grow">
+      <div class="row-title">Mai Trần</div>
+      <div class="row-sub">bạn học · sinh nhật 12-09</div>
+    </div>
+    <span class="chip chip-accent">bạn bè</span>
+    <span class="chip">work</span>
+  </div>
+  <div class="row" data-component="PersonRow">
+    <div class="grow">
+      <div class="row-title">Lâm Vũ</div>
+      <div class="row-sub">đồng nghiệp · sinh nhật 12-20</div>
+    </div>
+    <span class="chip">work</span>
+  </div>
+  <div class="row" data-component="PersonRow">
+    <div class="grow">
+      <div class="row-title">An Phạm</div>
+      <div class="row-sub">gia đình · sinh nhật 01-02</div>
+    </div>
+    <span class="chip chip-success">gia đình</span>
+  </div>
+</div>
+
+<h2>Mai Trần — chi tiết</h2>
+<div class="card" data-component="PersonCard">
+  <p class="row-title" style="margin: 0 0 var(--space-1);">Mai Trần</p>
+  <p class="muted" style="margin: 0 0 var(--space-3);">bạn học · sinh nhật 12-09 · ghi chú: cà phê Thứ Sáu hàng tuần</p>
+  <p style="margin: 0 0 var(--space-2);"><span class="chip chip-accent">bạn bè</span> <span class="chip">work</span></p>
+  <p style="margin: 0;"><span class="chip chip-success">entry: Cà phê với Mai</span> <span class="chip">task: Gọi cho Mai</span></p>
+</div>
+</main>
+</body>
+</html>

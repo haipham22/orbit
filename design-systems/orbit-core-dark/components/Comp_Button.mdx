@@ -1,0 +1,100 @@
+---
+name: Comp_Button
+group: action
+purpose: Nút hành động — variant primary/ghost/danger, size sm/md/lg theo token control.height.
+screens: [S1, S2, S3, S4, S5, S6, S7, S8]
+personas: [P-OWN]
+shadcn_base: Button
+radix_primitive: @radix-ui/react-slot
+---
+
+# Comp_Button — Button
+
+Thuộc nhóm **action**. Nút hành động — variant primary/ghost/danger, size sm/md/lg theo token control.height.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+inline-flex container → icon slot (svg 16) → label. Chiều cao từ control.height-*, padding ngang từ space-3/4/5 theo size.
+
+## Trạng thái
+
+default: sẵn sàng bấm · sending: mờ 0.7 + spinner, khoá pointer · disabled: mờ 0.5, aria-disabled · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-primary`
+- `--color-on-primary`
+- `--color-danger`
+- `--color-on-danger`
+- `--color-border`
+- `--color-surface-raised`
+- `--color-primary-soft`
+- `--color-fg`
+- `--radius-sm`
+- `--control-height-sm`
+- `--control-height-md`
+- `--control-height-lg`
+- `--space-2`
+- `--space-3`
+- `--space-4`
+- `--space-5`
+- `--text-sm`
+- `--text-base`
+- `--text-lg`
+
+## Biến thể
+
+- variant: `primary` / `ghost` / `danger`
+- size: `sm` / `md` / `lg` (control.height-*)
+- trạng thái: mặc định / đang gửi / bị vô hiệu
+
+## Tiếp cận
+
+- Nhãn chữ luôn nhìn thấy (icon-only phải có aria-label)
+- Đang gửi giữ aria-busy
+
+## Không được làm
+
+- Không đặt cỡ cố định px — luôn dùng control.height-*
+- Không đổi màu ngoài token (variant mới = DECISIONS trước)
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/button.tsx -->
+```tsx
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-sm)] transition-[transform,opacity] disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4",
+  { variants: {
+      variant: {
+        primary: "bg-[var(--color-primary)] text-[var(--color-on-primary)] hover:brightness-110",
+        ghost: "text-[var(--color-primary)] border border-[var(--color-border)] bg-[var(--color-surface-raised)]",
+        danger: "bg-[var(--color-danger)] text-[var(--color-on-danger)]",
+      },
+      size: {
+        sm: "h-[var(--control-height-sm)] px-3 text-[length:var(--text-sm)]",
+        md: "h-[var(--control-height-md)] px-4 text-[length:var(--text-base)]",
+        lg: "h-[var(--control-height-lg)] px-5 text-[length:var(--text-lg)]",
+      },
+      state: { default: "", sending: "opacity-70 pointer-events-none", disabled: "opacity-50 pointer-events-none" },
+    },
+    defaultVariants: { variant: "primary", size: "md", state: "default" } })
+
+export interface CompButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> { asChild?: boolean }
+
+export const Comp_Button = React.forwardRef<HTMLButtonElement, CompButtonProps>(
+  ({ className, variant, size, state, asChild = false, children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return <Comp ref={ref} className={cn(buttonVariants({ variant, size, state }), className)} {...props}>{state === "sending" ? <Spinner /> : null}{children}</Comp>
+  })
+Comp_Button.displayName = "Comp_Button"
+```

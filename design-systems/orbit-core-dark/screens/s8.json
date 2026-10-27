@@ -1,0 +1,17 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_Button",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_StreakBadge",
+    "Comp_TextInput"
+  ],
+  "id": "S8",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-core-dark/screens/s8.html",
+  "title": "Tasks — chi tiết — DS-ORBIT-CORE-DARK"
+}

@@ -5,6 +5,12 @@ import { stderr } from "node:process";
 
 config({ path: "deployment/local/.env", quiet: true });
 
+// AUTH_PROVIDER=clerk + chưa có keys → bootstrap accountless dev keys trước khi spawn
+if (process.env.AUTH_PROVIDER === "clerk") {
+  const { ensureClerkDevKeys } = await import("./clerk-keyless-dev.mjs");
+  await ensureClerkDevKeys(process.env);
+}
+
 const [bin, ...args] = process.argv.slice(2);
 if (!bin) {
   stderr.write("usage: node scripts/run-with-env.mjs <cmd> [args...]\n");

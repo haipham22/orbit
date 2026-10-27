@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "people": "People",
+    "journal": "Journal",
+    "tasks": "Tasks"
+  },
+  "shell": {
+    "logout": "Sign out",
+    "themeToggle": "Light/Dark"
+  },
+  "auth": {
+    "title": "Sign in to orbit",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "errorInvalid": "Wrong email or password",
+    "errorEmailInvalid": "Invalid email",
+    "errorPasswordRequired": "Enter your password"
+  }
+}

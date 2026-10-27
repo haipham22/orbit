@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Artifact giao gói FACET + prototype spec — không lint/typecheck (tsconfig exclude tương tự)
+    "design-systems/**",
+    "prototype/**",
   ]),
   {
     files: ["src/server/**/*.ts"],

@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "people": "People",
+    "journal": "Journal",
+    "tasks": "Tasks"
+  },
+  "shell": {
+    "logout": "Đăng xuất",
+    "themeToggle": "Sáng/Tối"
+  },
+  "auth": {
+    "title": "Đăng nhập orbit",
+    "emailLabel": "Email",
+    "passwordLabel": "Mật khẩu",
+    "submit": "Đăng nhập",
+    "submitting": "Đang đăng nhập…",
+    "errorInvalid": "Email hoặc mật khẩu không đúng",
+    "errorEmailInvalid": "Email không hợp lệ",
+    "errorPasswordRequired": "Nhập mật khẩu"
+  }
+}

@@ -40,7 +40,7 @@ last_reviewed: "2026-10-27"
 ## 4. Comments
 
 - Comments explain **why**, not **what** (the code already says what).
-- Where the code deviates from the obvious → comment with a reference: `// soft delete — see DECISIONS.md 2026-08-01`.
+- Where the code deviates from the obvious → comment with a reference: `// soft delete — see DECISIONS.md D3`.
 - Don't keep dead code as comments. Delete it — git remembers for you.
 
 ## 5. Error handling
@@ -86,7 +86,7 @@ last_reviewed: "2026-10-27"
 
 - Small commits, one idea per commit.
 - Imperative, active-voice messages: `add appointment booking screen`, not `updates`.
-- Non-obvious decision → reference it in the commit: `# DECISION: DECISIONS.md 2026-08-01`.
+- Non-obvious decision → reference it in the commit: `# DECISION: DECISIONS.md D3`.
 - Code diverges from docs → fix the docs **in the same commit** (rule #4).
 
 ## 9. Dependencies

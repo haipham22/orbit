@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- AC-3: Journal — search full-text (tsvector + trgm), entry gắn person. -->
+<html lang="vi" data-theme="cool-console">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>s4 — Journal</title>
+<link rel="stylesheet" href="../assets/theme.css">
+<script>
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.querySelectorAll('.theme-switch button').forEach(function (b) {
+    b.setAttribute('aria-pressed', String(b.dataset.t === t));
+  });
+}
+</script>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">orbit</span>
+  <nav class="nav" data-component="Nav">
+    <a href="s1.html">Đăng nhập</a>
+    <a href="s2.html">Dashboard</a>
+    <a href="s3.html">People</a>
+    <a href="s4.html" aria-current="page">Journal</a>
+    <a href="s5.html">Tasks</a>
+  </nav>
+  <div class="theme-switch" data-component="ThemeSwitch">
+    <button type="button" data-t="cool-console" aria-pressed="true" onclick="setTheme('cool-console')">Cool</button>
+    <button type="button" data-t="night-focus" aria-pressed="false" onclick="setTheme('night-focus')">Night</button>
+  </div>
+</div>
+<main class="wrap">
+<h1>Journal</h1>
+<p class="muted">3 entry · tìm theo ý chính, gõ sai chính tả vẫn khớp ("ban giao" → "bàn giao"). Nhấn Enter để tìm.</p>
+
+<div style="max-width: 360px; margin-bottom: var(--space-4);">
+  <label for="p-search">Tìm trong nhật ký</label>
+  <input class="input" id="j-search" type="search" value="ban giao du an">
+</div>
+
+<div class="rows">
+  <div class="row" data-component="JournalRow">
+    <div class="grow">
+      <div class="row-title">"Cà phê với Mai — bàn giao dự án"</div>
+      <div class="row-sub">20:14 · gắn: Mai Trần</div>
+    </div>
+    <span class="chip">work</span>
+  </div>
+  <div class="row" data-component="JournalRow">
+    <div class="grow">
+      <div class="row-title">"Tuần bận — weekly review"</div>
+      <div class="row-sub">Hôm qua 21:00 · gắn: Lâm Vũ</div>
+    </div>
+    <span class="chip">doing</span>
+  </div>
+  <div class="row" data-component="JournalRow">
+    <div class="grow">
+      <div class="row-title">"Đọc xong sách deep work"</div>
+      <div class="row-sub">28-08 · không gắn ai</div>
+    </div>
+  </div>
+</div>
+
+<div class="pattern" data-component="StatePattern" data-pattern="empty" style="margin-top: var(--space-4);">
+  <span class="icon">◌</span>
+  <p class="muted" style="margin: 0;">Không có entry nào khớp — thử từ khác, hoặc <a href="#">viết entry mới</a>.</p>
+</div>
+
+<h2>Viết nhanh</h2>
+<div class="card" data-component="EntryComposer" data-state="default">
+  <label for="j-title">Hôm nay có gì?</label>
+  <input class="input" id="j-title" type="text" placeholder="Một dòng là đủ…">
+  <div style="height: var(--space-3);"></div>
+  <p style="margin: 0 0 var(--space-3);" class="muted">Gắn người: <span class="chip chip-accent">Mai Trần</span> <span class="chip">+ thêm</span></p>
+  <button class="btn" data-component="Button" data-state="default">Lưu entry</button>
+</div>
+</main>
+</body>
+</html>

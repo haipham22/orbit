@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- AC-4: Task board — projects + due date + priority; link task tới person. -->
+<html lang="vi" data-theme="cool-console">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>s5 — Tasks</title>
+<link rel="stylesheet" href="../assets/theme.css">
+<script>
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.querySelectorAll('.theme-switch button').forEach(function (b) {
+    b.setAttribute('aria-pressed', String(b.dataset.t === t));
+  });
+}
+</script>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">orbit</span>
+  <nav class="nav" data-component="Nav">
+    <a href="s1.html">Đăng nhập</a>
+    <a href="s2.html">Dashboard</a>
+    <a href="s3.html">People</a>
+    <a href="s4.html">Journal</a>
+    <a href="s5.html" aria-current="page">Tasks</a>
+  </nav>
+  <div class="theme-switch" data-component="ThemeSwitch">
+    <button type="button" data-t="cool-console" aria-pressed="true" onclick="setTheme('cool-console')">Cool</button>
+    <button type="button" data-t="night-focus" aria-pressed="false" onclick="setTheme('night-focus')">Night</button>
+  </div>
+</div>
+<main class="wrap">
+<h1>Tasks</h1>
+<p class="muted">5 task mở · 2 project · sort due date</p>
+
+<div class="board">
+  <div class="board-col" data-component="BoardColumn">
+    <h3>todo</h3>
+    <div class="rows">
+      <div class="row" data-component="TaskRow">
+        <div class="grow">
+          <div class="row-title">Gọi cho Mai trước thứ Sáu</div>
+          <div class="row-sub">12-09 · cao · work</div>
+        </div>
+      </div>
+      <div class="row" data-component="TaskRow">
+        <div class="grow">
+          <div class="row-title">Book bàn cà phê cuối tuần</div>
+          <div class="row-sub">12-14 · thấp · work</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="board-col" data-component="BoardColumn">
+    <h3>doing</h3>
+    <div class="rows">
+      <div class="row" data-component="TaskRow">
+        <div class="grow">
+          <div class="row-title">Viết weekly review</div>
+          <div class="row-sub">12-12 · trung bình · work</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="board-col" data-component="BoardColumn">
+    <h3>done</h3>
+    <div class="rows">
+      <div class="row" data-component="TaskRow">
+        <div class="grow">
+          <div class="row-title">Đọc xong sách deep work</div>
+          <div class="row-sub">10-28 · xong · —</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,96 @@
+/* SINH TỰ ĐỘNG từ tokens.json — không sửa tay, chạy make package */
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --color-accent: #3ECF8E;
+  --color-accent-fg: #0E1512;
+  --color-bg: #14171C;
+  --color-border: #6B7484;
+  --color-danger: #E5645C;
+  --color-fg: #E9ECEF;
+  --color-fg-muted: #A3ABB8;
+  --color-on-danger: #2B0A08;
+  --color-on-primary: #0E1512;
+  --color-primary: #3ECF8E;
+  --color-primary-soft: #22403A;
+  --color-success: #4CC38A;
+  --color-surface: #1C2027;
+  --color-surface-raised: #242A33;
+  --color-text: #E9ECEF;
+  --color-text-muted: #A3ABB8;
+  --color-warning: #D9A13B;
+  --control-height-lg: 44px;
+  --control-height-md: 36px;
+  --control-height-sm: 30px;
+  --font-display: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --radius: 8px;
+  --radius-full: 999px;
+  --radius-lg: 16px;
+  --radius-md: 8px;
+  --radius-sm: 4px;
+  --shadow: 0 1px 2px rgba(0,0,0,.40);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-lg: 28px;
+  --space-md: 16px;
+  --space-sm: 8px;
+  --text-base: 15px;
+  --text-lg: 20px;
+  --text-sm: 13px;
+  --text-xl: 26px;
+  --type-weight-bold: 700;
+  --type-weight-strong: 600;
+
+  /* shadcn/ui bridge mappings */
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-on-primary);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text);
+  --secondary: var(--color-secondary, var(--color-surface));
+  --secondary-foreground: var(--color-on-secondary, var(--color-text));
+  --muted: var(--color-muted, var(--color-surface));
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-accent, var(--color-surface));
+  --accent-foreground: var(--color-on-accent, var(--color-text));
+  --destructive: var(--color-danger);
+  --destructive-foreground: var(--color-on-primary);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-primary);
+}

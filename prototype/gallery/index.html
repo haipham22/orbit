@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="cool-console">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Gallery — orbit</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  .demo { margin: 0 0 var(--space-6); }
+  .demo-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+</style>
+<script>
+  function setTheme(t) {
+    document.documentElement.dataset.theme = t;
+    document.querySelectorAll('.theme-switch button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.t === t));
+    });
+  }
+</script>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">orbit</span>
+  <nav class="nav" data-component="Nav">
+    <a href="index.html" aria-current="page">Gallery</a>
+    <a href="screens/s1.html">Đăng nhập</a>
+    <a href="screens/s2.html">Dashboard</a>
+    <a href="screens/s3.html">People</a>
+    <a href="screens/s4.html">Journal</a>
+    <a href="screens/s5.html">Tasks</a>
+  </nav>
+  <div class="theme-switch" data-component="ThemeSwitch">
+    <button type="button" data-t="cool-console" aria-pressed="true" onclick="setTheme('cool-console')">Cool</button>
+    <button type="button" data-t="night-focus" aria-pressed="false" onclick="setTheme('night-focus')">Night</button>
+  </div>
+</div>
+<main class="wrap">
+  <h1>Gallery — orbit</h1>
+  <p class="muted">Spec: components × states + state patterns. Switch theme (Cool · Warm · Night) — màu chỉ từ tokens.json, 3 themes.</p>
+
+  <section class="demo" data-component="Button" data-state="default">
+    <h2>Button</h2>
+    <div class="demo-row">
+      <button class="btn">Lưu entry</button>
+      <button class="btn btn-ghost">Xem trước</button>
+    </div>
+    <div class="demo-row" style="margin-top: var(--space-3);">
+      <button class="btn" data-component="Button" data-state="sending" aria-busy="true">Đang lưu…</button>
+      <button class="btn" data-component="Button" data-state="disabled" disabled>Đã lưu</button>
+    </div>
+  </section>
+
+  <section class="demo" data-component="Input" data-state="default">
+    <h2>Input</h2>
+    <div style="max-width: 360px;">
+      <label for="g-name">Tên người quen</label>
+      <input class="input" id="g-name" type="text" value="Mai Trần">
+    </div>
+  </section>
+
+  <section class="demo" data-component="SearchInput" data-state="default">
+    <h2>SearchInput</h2>
+    <div style="max-width: 360px;">
+      <label for="g-search">Tìm trong nhật ký</label>
+      <input class="input" id="g-search" type="search" value="bàn giao dự án">
+    </div>
+  </section>
+
+  <section class="demo" data-component="Chip" data-state="default">
+    <h2>Chip / status</h2>
+    <div class="demo-row">
+      <span class="chip">todo</span>
+      <span class="chip chip-accent">doing</span>
+      <span class="chip chip-success">done</span>
+      <span class="chip chip-warning">quá hạn</span>
+      <span class="chip chip-danger">nhãn cần gọi</span>
+    </div>
+  </section>
+
+  <section class="demo" data-component="Row" data-state="default">
+    <h2>Row</h2>
+    <div class="rows" style="max-width: 560px;">
+      <div class="row" data-component="PersonRow" data-state="default">
+        <div class="grow">
+          <div class="row-title">Mai Trần</div>
+          <div class="row-sub">bạn học · sinh nhật 12-05</div>
+        </div>
+        <span class="chip chip-accent">bạn bè</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo" data-component="StatePattern" data-state="empty">
+    <h2>State patterns</h2>
+    <div class="grid-2">
+      <div class="pattern" data-component="StatePattern" data-pattern="empty">
+        <span class="icon">◌</span>
+        <p class="muted" style="margin: 0;">Chưa có gì ở đây.</p>
+      </div>
+      <div class="pattern pattern-error" data-component="StatePattern" data-pattern="error">
+        <span class="icon">!</span>
+        <p class="muted" style="margin: 0;">Không tải được dữ liệu.</p>
+      </div>
+      <div class="pattern pattern-loading" data-component="StatePattern" data-pattern="loading">
+        <span class="icon">◌</span>
+        <p class="muted" style="margin: 0;">Đang tải…</p>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

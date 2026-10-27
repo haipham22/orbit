@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- AC-1: local sign-in → dashboard. Sai email bị chặn; curl GraphQL không session = 401. -->
+<html lang="vi" data-theme="cool-console">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>s1 — Đăng nhập — orbit</title>
+<link rel="stylesheet" href="../assets/theme.css">
+<script>
+  function setTheme(t) {
+    document.documentElement.dataset.theme = t;
+    document.querySelectorAll('.theme-switch button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.t === t));
+    });
+  }
+</script>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">orbit</span>
+  <div class="theme-switch" data-component="ThemeSwitch">
+    <button type="button" data-t="cool-console" aria-pressed="true" onclick="setTheme('cool-console')">Cool</button>
+    <button type="button" data-t="night-focus" aria-pressed="false" onclick="setTheme('night-focus')">Night</button>
+  </div>
+</div>
+<main class="wrap" style="max-width: 420px;">
+  <h1>Đăng nhập orbit</h1>
+  <p class="muted">Đăng nhập bằng email duy nhất của bạn.</p>
+
+  <div class="card" data-component="SignInForm" data-state="default">
+    <form onsubmit="return false">
+      <label for="email">Email</label>
+      <input class="input" id="email" type="email" value="hai@orbit.local">
+      <div style="height: var(--space-3);"></div>
+      <label for="pw">Mật khẩu</label>
+      <input class="input" id="pw" type="password" value="********">
+      <div style="height: var(--space-4);"></div>
+      <button class="btn" data-component="Button" data-state="default" style="width: 100%;">Đăng nhập</button>
+      <p class="muted" style="margin: var(--space-3) 0 0;">Sai email sẽ bị chặn — chỉ email đã đăng ký được vào. Trạng thái "Đang đăng nhập…" xem ở Gallery → Button.</p>
+    </form>
+  </div>
+</main>
+</body>
+</html>

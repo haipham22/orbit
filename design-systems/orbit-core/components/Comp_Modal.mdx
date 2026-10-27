@@ -1,0 +1,83 @@
+---
+name: Comp_Modal
+group: phản hồi
+purpose: Hộp thoại xác nhận hành động phá hủy (xoá người/entry) — scrim là --color-bg opacity .82, không raw rgba.
+screens: [S4, S6]
+personas: [P-OWN]
+shadcn_base: Dialog
+radix_primitive: @radix-ui/react-dialog
+---
+
+# Comp_Modal — Modal
+
+Thuộc nhóm **phản hồi**. Hộp thoại xác nhận hành động phá hủy (xoá người/entry) — scrim là --color-bg opacity .82, không raw rgba.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+overlay scrim (bg token, opacity) → modal card: title → desc → modal-footer (huỷ + hành động).
+
+## Trạng thái
+
+default (mở, focus vào nút nguy hiểm) · sending: nút mờ .7 + spinner · disabled: hết phiên, chỉ đọc · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-bg`
+- `--color-surface`
+- `--color-border`
+- `--color-danger`
+- `--color-on-danger`
+- `--radius-lg`
+- `--shadow`
+- `--space-4`
+- `--space-5`
+- `--text-sm`
+
+## Biến thể
+
+- nội dung tuỳ màn; footer luôn Huỷ + hành động chính
+
+## Tiếp cận
+
+- role=dialog + aria-modal; focus nút nguy hiểm; Huỷ luôn còn đường thoát
+
+## Không được làm
+
+- Không modal trong modal
+- Không đóng khi click scrim khi đang sending
+- Scrim không dùng rgba ngoài token
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/modal.tsx -->
+```tsx
+import * as React from "react"
+import * as Dialog from "@radix-ui/react-dialog"
+import { cn } from "@/lib/utils"
+import { Comp_Button } from "./button"
+
+export function Comp_Modal({ open, title, desc, state = "default", onConfirm, onCancel }: {
+  open: boolean; title: string; desc: string; state?: "default" | "sending" | "disabled"; onConfirm?: () => void; onCancel?: () => void
+}) {
+  return (
+    <Dialog.Root open={open}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-[var(--color-bg)] opacity-82 z-20" />
+        <Dialog.Content aria-modal="true" className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(420px,92vw)] flex flex-col gap-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-lg)] p-5 shadow-[var(--shadow)] z-21">
+          <Dialog.Title className="font-[var(--font-display)] font-bold">{title}</Dialog.Title>
+          <Dialog.Description className="text-[length:var(--text-sm)] text-[var(--color-text-muted)]">{desc}</Dialog.Description>
+          <div className="flex justify-end gap-2">
+            <Comp_Button variant="ghost" onClick={onCancel} disabled={state !== "default"}>Huỷ</Comp_Button>
+            <Comp_Button variant="danger" state={state} onClick={onConfirm}>{state === "sending" ? "Đang xoá…" : "Xoá"}</Comp_Button>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  )
+}
+```

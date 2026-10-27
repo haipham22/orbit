@@ -1,0 +1,57 @@
+---
+name: Comp_Icon
+group: hiển thị
+purpose: Bộ icon lucide inline SVG stroke currentColor — CẤM icon-font/emoji làm icon.
+screens: [S1, S2, S3, S4, S5, S6, S7, S8]
+personas: [P-OWN]
+shadcn_base: lucide-react
+radix_primitive: —
+---
+
+# Comp_Icon — Icon
+
+Thuộc nhóm **hiển thị**. Bộ icon lucide inline SVG stroke currentColor — CẤM icon-font/emoji làm icon.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+svg stroke currentColor 24-viewbox co qua width/height; không fill, màu kế thừa chữ.
+
+## Trạng thái
+
+default · sending: spinner (loader) · disabled: opacity .4 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-fg`
+- `--text-sm`
+
+## Biến thể
+
+- `default` — hình thái chuẩn
+- thêm biến thể chỉ khi ≥2 màn dùng thật
+
+## Tiếp cận
+
+- aria-hidden với icon trang trí; icon hành động thì nhãn nằm ở nút
+
+## Không được làm
+
+- Không emoji làm icon
+- Không đụng fill — stroke currentColor để kế thừa token màu
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/icon.tsx -->
+```tsx
+import * as React from "react"
+// lucide-react dùng trực tiếp: <Cake className="size-4" /> — stroke kế thừa currentColor
+export function Comp_Icon({ name, size = 16, state = "default" }: { name: string; size?: number; state?: "default" | "sending" | "disabled" }) {
+  const Cmp = (Lucide as any)[name]
+  return <Cmp width={size} height={size} aria-hidden className={state === "disabled" ? "opacity-40" : ""} />
+}
+```

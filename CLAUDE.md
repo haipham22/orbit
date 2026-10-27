@@ -22,10 +22,12 @@ Dead docs are bugs, not chores.
 
 ## Decision rule
 
-Every design decision goes into `context/DECISIONS.md` as ONE line:
+Every design decision goes into `context/DECISIONS.md` as ONE row (table),
+numbered sequentially with a `D` prefix (`D6`, `D7`, … — continue from the
+last row):
 
 ```
-YYYY-MM-DD | <decision> | <why> | reversible: yes/no
+DN | YYYY-MM-DD | <decision> | <why> | <standing assumption> | reversible: yes/no
 ```
 
 Decide yourself — do not hand-ask. The AskUserQuestion hook enforces this:

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+  Direction tile for orbit — one self-contained style candidate.
+  Phase A: distinct visual direction per references/tokens-guide.md.
+  Sample content identical across candidates; only visual language differs.
+-->
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction 1 — Warm ledger — orbit</title>
+<style>
+  :root {
+    --type-family: ui-serif, Georgia, 'Times New Roman', serif;
+    --color-fg: #262220;
+    --color-fg-muted: #5C5651;
+    --color-bg: #FAF6EF;
+    --color-surface: #FFFDF9;
+    --color-border: #E2DCD2;
+    --color-accent: #8A3A1B;
+    --color-accent-fg: #FFFFFF;
+    --color-danger: #B3261E;
+    --color-warning: #8A5A00;
+    --color-success: #1B7F3B;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-7: 28px;
+    --space-8: 32px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-full: 999px;
+    --type-size-sm: 14px;
+    --type-size-base: 16px;
+    --type-size-lg: 20px;
+    --type-size-xl: 26px;
+    --type-weight: 400;
+    --type-leading: 1.5;
+  }
+  h1, h2 { font-weight: 600; letter-spacing: 0.01em; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--type-family);
+    font-size: var(--type-size-base);
+    font-weight: var(--type-weight);
+    line-height: var(--type-leading);
+    color: var(--color-fg);
+    background: var(--color-bg);
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: var(--space-8) var(--space-4); }
+  h1 { font-size: var(--type-size-xl); margin: 0 0 var(--space-2); }
+  h2 { font-size: var(--type-size-lg); margin: var(--space-8) 0 var(--space-3); }
+  p  { margin: 0 0 var(--space-3); }
+  .muted { color: var(--color-fg-muted); font-size: var(--type-size-sm); }
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+  .btn {
+    display: inline-block;
+    font: inherit;
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-accent);
+    border: 1px solid var(--color-border);
+  }
+  input {
+    font: inherit;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-fg);
+    background: var(--color-surface);
+  }
+  label { display: block; font-size: var(--type-size-sm); margin-bottom: var(--space-1); }
+  .swatches { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+  .swatch {
+    width: 88px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    font-size: var(--type-size-sm);
+  }
+  .swatch span { display: block; padding: var(--space-1) var(--space-2); background: var(--color-surface); color: var(--color-fg); }
+  .chip {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--type-size-sm);
+    border: 1px solid var(--color-border);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Direction — orbit</h1>
+  <p class="muted">Warm ledger — serif, paper, terracotta. Editorial calm for a personal archive. Same sample content as every other candidate; only the visual language differs.</p>
+
+  <h2>Type specimen</h2>
+  <div class="card">
+    <p style="font-size: var(--type-size-xl); margin: 0 0 var(--space-2);">Người quen, nhật ký, việc cần — một nơi duy nhất</p>
+    <p style="font-size: var(--type-size-lg); margin: 0 0 var(--space-2);">Tra người quen nhanh, ghi nhật ký có link, task không trôi</p>
+    <p style="margin: 0 0 var(--space-2);">Dashboard hôm nay: sinh nhật sắp tới, task đến hạn, nhật ký mới nhất. Không phải mở app nào khác.</p>
+    <p class="muted" style="margin: 0;">Mai Trần · sinh nhật thứ Sáu · 2 task đến hạn · entry mới 20:14</p>
+  </div>
+
+  <h2>Color swatches</h2>
+  <div class="swatches">
+    <div class="swatch"><div style="height:44px; background: var(--color-bg);"></div><span>--color-bg</span></div>
+    <div class="swatch"><div style="height:44px; background: var(--color-surface);"></div><span>--color-surface</span></div>
+    <div class="swatch"><div style="height:44px; background: var(--color-fg);"></div><span>--color-fg</span></div>
+    <div class="swatch"><div style="height:44px; background: var(--color-fg-muted);"></div><span>--color-fg-muted</span></div>
+    <div class="swatch"><div style="height:44px; background: var(--color-accent);"></div><span>--color-accent</span></div>
+    <div class="swatch"><div style="height:44px; background: var(--color-danger);"></div><span>--color-danger</span></div>
+  </div>
+
+  <h2>Component feel</h2>
+  <div class="card">
+    <p style="margin: 0 0 var(--space-3);"><button class="btn">Lưu entry</button>
+       <button class="btn btn-ghost" style="margin-left: var(--space-2);">Xem trước</button></p>
+    <form onsubmit="return false">
+      <label for="d-client">Tên người quen</label>
+      <input id="d-client" type="text" value="Mai Trần">
+      <label for="d-amount" style="margin-top: var(--space-3);">Ghi chú</label>
+      <input id="d-amount" type="text" value="Cà phê thứ Sáu, bàn giao dự án">
+    </form>
+  </div>
+
+  <h2>Sample content section</h2>
+  <div class="card">
+    <p style="margin: 0 0 var(--space-2);"><span class="chip">Đến hạn tuần này</span></p>
+    <p style="margin: 0 0 var(--space-2);">Task sắp đến hạn</p>
+    <p class="muted" style="margin: 0;">5 task · 2 quá hạn · nhắc lúc 08:00 sáng mai</p>
+  </div>
+
+  <p class="muted" style="margin-top: var(--space-8);">Warm ledger (D1) — candidate. Not a screen; a palette and type decision, rendered.</p>
+</div>
+</body>
+</html>

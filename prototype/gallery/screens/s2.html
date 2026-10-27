@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- AC-5: Dashboard 4 sections — sinh nhật, task đến hạn, nhật ký mới, tổng quan task. -->
+<html lang="vi" data-theme="cool-console">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>s2 — Dashboard</title>
+<link rel="stylesheet" href="../assets/theme.css">
+<script>
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  document.querySelectorAll('.theme-switch button').forEach(function (b) {
+    b.setAttribute('aria-pressed', String(b.dataset.t === t));
+  });
+}
+</script>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">orbit</span>
+  <nav class="nav" data-component="Nav">
+    <a href="s1.html">Đăng nhập</a>
+    <a href="s2.html" aria-current="page">Dashboard</a>
+    <a href="s3.html">People</a>
+    <a href="s4.html">Journal</a>
+    <a href="s5.html">Tasks</a>
+  </nav>
+  <div class="theme-switch" data-component="ThemeSwitch">
+    <button type="button" data-t="cool-console" aria-pressed="true" onclick="setTheme('cool-console')">Cool</button>
+    <button type="button" data-t="night-focus" aria-pressed="false" onclick="setTheme('night-focus')">Night</button>
+  </div>
+</div>
+<main class="wrap">
+<h1>Dashboard</h1>
+<p class="muted">Thứ Sáu 12-09 · 2 sinh nhật trong 30 ngày · 5 task mở (2 quá hạn)</p>
+
+<div class="grid-4">
+  <div class="card stat" data-component="StatTile">
+    <div class="num">2</div><div class="muted">sinh nhật 30 ngày</div>
+  </div>
+  <div class="card stat" data-component="StatTile">
+    <div class="num">2</div><div class="muted">task quá hạn</div>
+  </div>
+  <div class="card stat" data-component="StatTile">
+    <div class="num">5</div><div class="muted">task mở</div>
+  </div>
+  <div class="card stat" data-component="StatTile">
+    <div class="muted">entry mới nhất</div>
+    <div style="margin-top: var(--space-2);">"Cà phê với Mai" — 20:14</div>
+  </div>
+</div>
+
+<h2>Sinh nhật 30 ngày</h2>
+<div class="rows">
+  <div class="row" data-component="BirthdayRow">
+    <div class="grow">
+      <div class="row-title">Mai Trần</div>
+      <div class="row-sub">12-12 · sau 3 ngày</div>
+    </div>
+    <span class="chip chip-accent">3 ngày</span>
+  </div>
+  <div class="row" data-component="BirthdayRow">
+    <div class="grow">
+      <div class="row-title">Lâm Vũ</div>
+      <div class="row-sub">12-20 · sau 11 ngày</div>
+    </div>
+    <span class="chip">11 ngày</span>
+  </div>
+</div>
+
+<h2>Task đến hạn</h2>
+<div class="rows">
+  <div class="row" data-component="TaskRow">
+    <div class="grow">
+      <div class="row-title">Gọi cho Mai trước thứ Sáu</div>
+      <div class="row-sub">hết hạn 12-09 · ưu tiên cao</div>
+    </div>
+    <span class="chip chip-warning">hết hạn hôm nay</span>
+    <span class="chip">work</span>
+  </div>
+  <div class="row" data-component="TaskRow">
+    <div class="grow">
+      <div class="row-title">Nộp hồ bảo hiểm</div>
+      <div class="row-sub">hết hạn 12-05 · ưu tiên cao</div>
+    </div>
+    <span class="chip chip-danger">quá hạn 4 ngày</span>
+  </div>
+  <div class="row" data-component="TaskRow">
+    <div class="grow">
+      <div class="row-title">Trả lời email An</div>
+      <div class="row-sub">hết hạn 12-07 · ưu tiên trung bình</div>
+    </div>
+    <span class="chip chip-danger">quá hạn 2 ngày</span>
+  </div>
+  <div class="row" data-component="TaskRow">
+    <div class="grow">
+      <div class="row-title">Viết weekly review</div>
+      <div class="row-sub">hết hạn 12-12 · ưu tiên trung bình</div>
+    </div>
+    <span class="chip">doing</span>
+  </div>
+</div>
+
+<h2>Nhật ký mới</h2>
+<div class="rows">
+  <div class="row" data-component="JournalRow">
+    <div class="grow">
+      <div class="row-title">"Cà phê với Mai — bàn giao dự án"</div>
+      <div class="row-sub">20:14 · gắn: Mai Trần</div>
+    </div>
+    <span class="chip">work</span>
+  </div>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_Card",
+    "Comp_NavItem",
+    "Comp_StreakBadge",
+    "Comp_XPBar"
+  ],
+  "id": "S2",
+  "patterns": [
+    "empty"
+  ],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-core-dark/screens/s2.html",
+  "title": "Dashboard — DS-ORBIT-CORE-DARK"
+}

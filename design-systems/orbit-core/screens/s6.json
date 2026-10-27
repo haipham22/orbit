@@ -1,0 +1,17 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_Button",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_StreakBadge",
+    "Comp_TextInput"
+  ],
+  "id": "S6",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-core/screens/s6.html",
+  "title": "Journal — entry — DS-ORBIT-CORE"
+}

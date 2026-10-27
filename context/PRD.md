@@ -18,7 +18,9 @@ Thông tin cá nhân (quan hệ, nhật ký, việc cần làm) nằm rải rác
 
 ## 2. Audience
 
-1 người duy nhất — chủ project (personal management system, không multi-user). Deploy lên k8s cluster cá nhân; đồng thời công khai source (OSS) nên mọi setup phải chạy được với zero SaaS.
+Vòng 1: 1 người duy nhất — chủ project (personal management system). Deploy lên k8s cluster cá nhân; đồng thời công khai source (OSS) nên mọi setup phải chạy được với zero SaaS.
+
+Định hướng thiết kế (AMENDMENT 2026-10-27): Gen Z từ 13 tuổi trở lên, có điện thoại + dùng được máy tính — mobile tối giản, desktop nịnh mắt. Multi-user/monetize = sau vòng này, thiết kế không dựng tường.
 
 Detailed personas + per-role capabilities + permission matrix: `context/PERSONAS.md`.
 
@@ -39,7 +41,7 @@ Loop này ship hết AC-1..AC-5 (core PMS chạy được end-to-end, plan phase
 
 ## 5. Out-of-scope — definitely NOT done in this loop
 
-- Multi-user / sharing / permission phân cấp
+- Multi-user / sharing / permission phân cấp — CHƯA, trong vòng này (trước: 'không bao giờ'); mở đăng ký + kiếm tiền là mục tiêu sau, thiết kế không khóa đường
 - Mobile app / PWA
 - Realtime sync (WebSocket)
 - i18n framework
@@ -61,10 +63,17 @@ Công cụ cá nhân — loop này không đo metric kinh doanh; done = ACs §3 
 | Charging money | không — OSS + personal |
 | Core data model | people, labels, people_labels, journal_entries, projects, tasks, links, agent_runs — chi tiết `ARCHITECTURE.md §6` |
 | Edge cases to handle | unique names, links unique 3 cột, cascade delete; còn lại `ARCHITECTURE.md §6` |
-| Empty state | _TO_FILL_ |
-| Error state | _TO_FILL_ |
-| Sample data | _TO_FILL_ |
-| Name / domain / voice | orbit — tiếng Việt thân mật, không corporate |
+| Empty state | mỗi section/list 1 dòng `text-muted-foreground` kiểu "Chưa có …" (+ link CTA khi hợp lý) |
+| Error state | mutation fail → `toast.error` (sonner) với message từ GraphQL error; gql-client throw Error chuẩn |
+| Sample data | không seed — owner tự nhập dữ liệu thật; OSS user cũng vậy |
+| Name / domain / voice | orbit — tiếng Việt thân mật, không corporate; định hướng Gen Z 13+ |
+| Dark mode | vòng 1 ship luôn cặp light+dark (theme switcher) — `orbit-facet` gói `orbit-core` + `orbit-core-dark` |
+| Tùy chỉnh UI | mọi màu qua semantic token; accent + bg là slot user đổi được từ vòng 1; font là slot (Space Grotesk display · Geist body · Plus Jakarta Sans); micro-interaction đầy đủ |
+| Theme preset library | vòng sau — preset theme.json + công cụ preview/export/import share (backlog) |
+| Empty state copy | nguyên văn "Chưa có gì ở đây cả ✌️" — ✌️ là copy-voice duy nhất được phép (không phải icon) |
+| Icon | lucide inline SVG — CẤM emoji-font làm icon (gói DS v1, Comp_Icon) |
+| Copy convention | "Xóa" (không "Xoá"); đếm tiếng Việt ("5 nhật ký · 1 việc", không "5 entries"); chip trạng thái "tới hạn" thống nhất |
+| i18n | có — next-intl, locale cookie (vi mặc định + en), không đổi URL; en catalog seed scope shell+auth, feature copy dịch dần theo từng màn restyle |
 | Deploy place | k8s cluster cá nhân (image standalone; manifests thuộc infra user) |
 
 ## 8. Sources

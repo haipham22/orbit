@@ -84,3 +84,10 @@ the real filled-in copy lives at `deployment/local/.env`; root `.env.local` is a
 | `JOBS_PROVIDER` | `none` (default) \| `temporal` | app | no |
 | `TEMPORAL_ADDRESS` / `TEMPORAL_NAMESPACE` / `TEMPORAL_TASK_QUEUE` | Temporal connection | app | temporal mode |
 | `CACHE_PROVIDER` / `REDIS_URL` | cache provider chọn | app | no |
+
+
+## Design system (2026-10-28)
+
+- Nguồn sự thật token: `design-systems/orbit-core/tokens.json` (light) + `design-systems/orbit-core-dark/tokens.json` (dark) — APPROVED v1, từ facet tag `ds-orbit-core-v1` / `ds-orbit-core-dark-v1`.
+- Không hard-code màu trong component — mọi màu qua semantic token (shadcn vars map 1-1 với alias DS; xem `src/app/globals.css`).
+- Control sizes sm/md/lg = 30/36/44px (--control-h-*).

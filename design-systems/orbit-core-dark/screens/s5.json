@@ -1,0 +1,19 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_Button",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_PersonRow",
+    "Comp_StreakBadge",
+    "Comp_TextInput",
+    "Comp_Toast"
+  ],
+  "id": "S5",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-core-dark/screens/s5.html",
+  "title": "Journal — danh sách — DS-ORBIT-CORE-DARK"
+}

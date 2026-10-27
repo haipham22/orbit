@@ -1,0 +1,61 @@
+---
+name: Comp_XPBar
+group: hiển thị
+purpose: Thanh tiến độ tuần (gamification) — fill --color-primary trên nền primary-soft.
+screens: [S2]
+personas: [P-OWN]
+shadcn_base: Progress
+radix_primitive: —
+---
+
+# Comp_XPBar — XPBar
+
+Thuộc nhóm **hiển thị**. Thanh tiến độ tuần (gamification) — fill --color-primary trên nền primary-soft.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+track primary-soft + fill primary; đang gửi = fill indeterminate trượt (transform, không margin).
+
+## Trạng thái
+
+default · sending: thanh indeterminate — fill vector trượt trong bar, không spinner tròn · disabled: opacity .5 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-primary`
+- `--color-primary-soft`
+- `--color-border`
+- `--radius-full`
+- `--space-3`
+
+## Biến thể
+
+- `default` — hình thái chuẩn
+- thêm biến thể chỉ khi ≥2 màn dùng thật
+
+## Tiếp cận
+
+- Focus ring 2px theo `--color-primary` (focus-visible)
+- Vùng chạm ≥24px, mobile ≥44 theo control height
+- Accessible name qua label/aria khi không có text nhìn thấy
+
+## Không được làm
+
+- Không bao giờ animate width bằng JS tay — CSS transition đủ
+- Không đổi hue theo %
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/xpbar.tsx -->
+```tsx
+export function Comp_XPBar({ percent = 76, state = "default" }: { percent?: number; state?: "default" | "sending" | "disabled" }) {
+  return <div className="h-3 rounded-full border border-[var(--color-border)] bg-[var(--color-primary-soft)] overflow-hidden" style={badgeOpacity(state)}>
+    <span className={cn("block h-full bg-[var(--color-primary)]", state === "sending" && "w-2/5 animate-[indet_1.1s_ease-in-out_infinite]")} style={state === "default" ? { width: `${percent}%` } : undefined} />
+  </div>
+}
+```

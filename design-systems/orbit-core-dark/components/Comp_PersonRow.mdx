@@ -1,0 +1,74 @@
+---
+name: Comp_PersonRow
+group: hiển thị
+purpose: Hàng người trong danh sách: avatar + tên + nhãn + đếm + thao tác — dùng ở People, chi tiết, task.
+screens: [S3, S4, S8]
+personas: [P-OWN]
+shadcn_base: None
+radix_primitive: —
+---
+
+# Comp_PersonRow — PersonRow
+
+Thuộc nhóm **hiển thị**. Hàng người trong danh sách: avatar + tên + nhãn + đếm + thao tác — dùng ở People, chi tiết, task.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+flex row: avatar → tên (link) → chip → grow (count + action); border-top kẻ hàng.
+
+## Trạng thái
+
+default · sending: opacity .6 + nhãn 'Đang xoá…' trên action · disabled: opacity .5 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-border`
+- `--color-text-muted`
+- `--space-2`
+- `--space-3`
+- `--text-sm`
+- `--text-lg`
+
+## Biến thể
+
+- có/không chip nhãn; có/không action xoá
+
+## Tiếp cận
+
+- Tên là link có aria-label riêng; hàng đang gửi aria-busy
+
+## Không được làm
+
+- Không hàng không thao tác mà vẫn hiện nút Xóa
+- Không count biến mất ở desktop (chỉ ẩn ≤768px)
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/personrow.tsx -->
+```tsx
+import { cn } from "@/lib/utils"
+import { Comp_Avatar } from "./avatar"
+import { Comp_Chip } from "./chip"
+import { Comp_Button } from "./button"
+
+export function Comp_PersonRow({ initials, name, label, count, state = "default", onDelete }: {
+  initials: string; name: string; label?: string; count?: string; state?: "default" | "sending" | "disabled"; onDelete?: () => void
+}) {
+  return (
+    <div className={cn("flex items-center gap-3 py-3 px-2 border-t border-[var(--color-border)]", state !== "default" && "opacity-60")} aria-busy={state === "sending"}>
+      <Comp_Avatar initials={initials} state={state} />
+      <span className="font-bold text-[length:var(--text-lg)]">{name}</span>
+      {label ? <Comp_Chip>{label}</Comp_Chip> : null}
+      <span className="ml-auto flex items-center gap-2">
+        <span className="text-[var(--color-text-muted)] text-[length:var(--text-sm)]">{count}</span>
+        {onDelete ? <Comp_Button variant="ghost" size="sm" state={state} onClick={onDelete}><Trash2 className="size-3" />{state === "sending" ? "Đang xoá…" : "Xóa"}</Comp_Button> : null}
+      </span>
+    </div>
+  )
+}
+```

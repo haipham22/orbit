@@ -28,7 +28,7 @@ Single-user personal tool → 1 persona (owner).
 
 | Experience | Persona | Exposed capability | Loop | Design system |
 |---|---|---|---|---|
-| orbit-web | owner (1 user) | dashboard, people, journal, tasks | MVP build-out | — |
+| orbit-web | owner (1 user) | dashboard, people, journal, tasks | MVP build-out | orbit-core v1 + orbit-core-dark v1 (source: orbit-facet, tag ds-*-v1) |
 
 ## 3. Frontend experiences — mobile
 
@@ -76,8 +76,8 @@ Conventions: uuid PK defaultRandom, timestamptz, pgEnum. `app_user` table chỉ 
 |---|---|
 | Duplicates | labels/projects: unique name chặn; links: unique 3 cột |
 | Delete | people_labels cascade; person/task/journal delete → links cascade (xác nhận lúc Phase 5–7) |
-| Concurrent edit | _TO_FILL_ |
-| Double submit | _TO_FILL_ |
+| Concurrent edit | 1 user → last-write-wins, không optimistic locking (`updated_at` chỉ để sort/hiện thị) |
+| Double submit | submit button `disabled={pending}` + label "Đang lưu…" trong mọi form component |
 
 ## 7. Core flow
 
@@ -116,9 +116,9 @@ Ground rules that never change:
 
 ## 10. Deliberately NOT doing
 
-- Multi-user / multi-tenant — 1 owner, Clerk chỉ là identity gate (ORBIT_USER_EMAIL)
+- Multi-user / multi-tenant — CHƯA trong vòng này: 1 owner, Clerk chỉ là identity gate (ORBIT_USER_EMAIL); mở đăng ký là mục tiêu sau, schema không chặn đường
 - Mobile app
 - WebSocket / realtime
-- i18n — single user, tiếng Việt nội dung tự do
+- i18n — BỎ CHỐT CŨ 2026-10-28: có i18n (next-intl, cookie locale, vi default + en); khung làm trong vòng DS, feature copy dịch dần
 - Microservices — 1 app + (optional) 1 worker process
 - Bắt buộc Temporal/Redis/Clerk cho OSS user — mọi thứ nặng là opt-in qua provider env

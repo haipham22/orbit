@@ -1,8 +1,12 @@
 import { SignIn } from "@clerk/nextjs";
+import { getTranslations } from "next-intl/server";
 import { authProvider } from "@/server/auth/provider";
 import { LocalSignInForm } from "@/features/auth/components/local-sign-in-form";
 
-export const metadata = { title: "Đăng nhập — orbit" };
+export async function generateMetadata() {
+  const t = await getTranslations("auth");
+  return { title: t("title") };
+}
 
 export default function SignInPage() {
   return (

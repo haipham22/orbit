@@ -1,0 +1,17 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_PersonRow",
+    "Comp_StreakBadge",
+    "Comp_TextInput"
+  ],
+  "id": "S3",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-core/screens/s3.html",
+  "title": "People — danh sách — DS-ORBIT-CORE"
+}

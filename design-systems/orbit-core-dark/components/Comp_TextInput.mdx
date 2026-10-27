@@ -1,0 +1,74 @@
+---
+name: Comp_TextInput
+group: input
+purpose: Ô nhập một dòng / textarea — size sm/md/lg theo control.height, mọi form dùng chung.
+screens: [S1, S3, S4, S5, S6, S8]
+personas: [P-OWN]
+shadcn_base: Input
+radix_primitive: —
+---
+
+# Comp_TextInput — TextInput
+
+Thuộc nhóm **input**. Ô nhập một dòng / textarea — size sm/md/lg theo control.height, mọi form dùng chung.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+input một dòng (hoặc textarea mở rộng): border + nền surface-raised, placeholder màu text-muted, focus ring primary.
+
+## Trạng thái
+
+default: sẵn sàng nhập · sending: aria-busy + nhãn 'Đang kiểm tra…' · disabled: attr disabled · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-surface-raised`
+- `--color-text`
+- `--color-text-muted`
+- `--color-border`
+- `--color-primary`
+- `--radius-sm`
+- `--control-height-sm`
+- `--control-height-md`
+- `--control-height-lg`
+- `--text-sm`
+- `--text-base`
+- `--text-lg`
+- `--space-3`
+- `--space-4`
+
+## Biến thể
+
+- size: `sm` / `md` / `lg`
+- kiểu: một dòng / textarea / type=search (kèm dropdown kết quả)
+
+## Tiếp cận
+
+- Luôn có label hoặc aria-label
+- Search kèm role=combobox + listbox cho dropdown
+
+## Không được làm
+
+- Không tự viền đỏ khi lỗi — dùng khuôn error của Comp_EmptyState + Comp_Toast
+- Không placeholder màu đậm hơn text-muted
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/textinput.tsx -->
+```tsx
+import * as React from "react"
+import { cn } from "@/lib/utils"
+
+export const Comp_TextInput = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement> & { state?: "default" | "sending" | "disabled" }>(
+  ({ className, state = "default", ...props }, ref) => (
+    <input ref={ref} aria-busy={state === "sending"} disabled={state === "disabled"}
+      className={cn("w-full border border-[var(--color-border)] bg-[var(--color-surface-raised)] text-[var(--color-text)] rounded-[var(--radius-sm)] outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-text-muted)]", className)}
+      {...props} />
+  ))
+Comp_TextInput.displayName = "Comp_TextInput"
+```

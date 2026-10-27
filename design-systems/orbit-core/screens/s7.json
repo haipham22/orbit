@@ -1,0 +1,19 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_Button",
+    "Comp_Card",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_StreakBadge"
+  ],
+  "id": "S7",
+  "patterns": [
+    "empty"
+  ],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-core/screens/s7.html",
+  "title": "Tasks — board — DS-ORBIT-CORE"
+}
