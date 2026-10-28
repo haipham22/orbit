@@ -1,0 +1,70 @@
+---
+name: Comp_Toast
+group: phản hồi
+purpose: Phản hồi kết quả mutation — bar màu theo loại (success/primary/danger), giọng ngắn thân mật.
+screens: [S2, S5, S6, S8]
+personas: [P-OWN]
+shadcn_base: sonner
+radix_primitive: —
+---
+
+# Comp_Toast — Toast
+
+Thuộc nhóm **phản hồi**. Phản hồi kết quả mutation — bar màu theo loại (success/primary/danger), giọng ngắn thân mật.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+flex: bar màu trạng thái → title + description; đặt góc qua host (sonner).
+
+## Trạng thái
+
+default: kết quả đã có · sending: 'Đang lưu…' + spinner · disabled: toast lỗi chỉ đọc · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-surface-raised`
+- `--color-border-soft`
+- `--color-success`
+- `--color-primary`
+- `--color-danger`
+- `--radius-lg`
+- `--shadow`
+- `--space-2`
+- `--space-3`
+- `--space-4`
+
+## Biến thể
+
+- loại: `success` / `sending` / `error`
+
+## Tiếp cận
+
+- role=status, không giật focus
+
+## Không được làm
+
+- Không toast nói lỗi kỹ thuật (stack) — một câu người dùng hiểu
+- Không toast chồng > 3
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/toast.tsx -->
+```tsx
+// Standalone — deps: react, sonner
+import { toast } from "sonner"
+
+const Spin = () => (
+  <span aria-hidden className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+)
+
+export const Comp_Toast = {
+  success: (t: string, d?: string) => toast.success(t, { description: d }),
+  sending: (t: string, d?: string) => toast(t, { description: d, icon: <Spin /> }),
+  error: (t: string, d?: string) => toast.error(t, { description: d }),
+}
+```

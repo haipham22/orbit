@@ -72,14 +72,15 @@ const Spin = () => (
   <span aria-hidden className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
 )
 
-export function Comp_ConfirmDialog({ open, title, desc, confirmLabel, cancelLabel, sendingLabel, state = "default", onConfirm, onCancel }: {
-  open: boolean; title: string; desc: string
+export function Comp_ConfirmDialog({ open, onOpenChange, title, desc, confirmLabel, cancelLabel, sendingLabel, state = "default", onConfirm, onCancel }: {
+  open: boolean; onOpenChange?: (open: boolean) => void
+  title: string; desc: string
   confirmLabel: string; cancelLabel: string; sendingLabel?: string
   state?: "default" | "sending" | "disabled"
   onConfirm?: () => void; onCancel?: () => void
 }) {
   return (
-    <Dialog.Root open={open}>
+    <Dialog.Root open={open} onOpenChange={state === "sending" ? undefined : onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-[var(--color-bg)] opacity-[.82] z-20" />
         <Dialog.Content aria-modal="true"

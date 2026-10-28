@@ -1,0 +1,18 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_BottomNav",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_PersonRow",
+    "Comp_SearchInput",
+    "Comp_StreakBadge"
+  ],
+  "id": "S3",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-preset-bold/screens/s3.html",
+  "title": "People — danh sách — ORBIT-PRESET-BOLD"
+}

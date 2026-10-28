@@ -1,0 +1,76 @@
+---
+name: Comp_Skeleton
+group: phản hồi
+purpose: Khối loading chuẩn (line/avatar/card) — pulse bằng opacity, nền primary-soft; khuôn loading của mọi màn dùng nó.
+screens: [S2, S3, S5, S7]
+personas: [P-OWN]
+shadcn_base: None
+radix_primitive: —
+---
+
+# Comp_Skeleton — Skeleton
+
+Thuộc nhóm **phản hồi**. Khối loading chuẩn (line/avatar/card) — pulse bằng opacity, nền primary-soft; khuôn loading của mọi màn dùng nó.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+khối đơn: shape line/avatar/card, nền primary-soft, animation pulse opacity.
+
+## Trạng thái
+
+mặc định: pulse · đang gửi: pulse (cùng hình) · bị vô hiệu: mờ 0.7, không pulse
+
+## Token dùng
+
+- `--color-primary-soft`
+- `--radius-sm`
+- `--radius-md`
+- `--radius-full`
+- `--control-height-sm`
+- `--space-4`
+- `--space-8`
+
+## Biến thể
+
+- shape: `line` / `avatar` / `card` — width tuỳ ý qua prop
+
+## Tiếp cận
+
+- aria-hidden (nội dung chưa có, screen reader không đọc
+- container có aria-busy=true
+
+## Không được làm
+
+- Không spinner tròn thay skeleton cho khối nội dung — spinner chỉ cho action
+- Không skeleton nhấp nháy màu — pulse opacity là đủ
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/skeleton.tsx -->
+```tsx
+// Standalone — deps: react
+import * as React from "react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+const SHAPES: Record<string, string> = {
+  line: "h-[var(--space-4)] rounded-[var(--radius-sm)]",
+  avatar: "size-[var(--control-height-sm)] rounded-full",
+  card: "h-[var(--space-8)] rounded-[var(--radius-md)]",
+}
+
+export function Comp_Skeleton({ shape = "line", width, state = "default" }: {
+  shape?: keyof typeof SHAPES; width?: string; state?: "default" | "sending" | "disabled"
+}) {
+  const box = (w?: string): React.CSSProperties => (w ? { width: w } : {})
+  return (
+    <div aria-hidden data-shape={shape} style={box(width)}
+      className={cn("bg-[var(--color-primary-soft)] animate-pulse", SHAPES[shape], state === "disabled" && "opacity-70")} />
+  )
+}
+```

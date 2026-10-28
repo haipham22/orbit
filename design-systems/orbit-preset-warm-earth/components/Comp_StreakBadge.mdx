@@ -1,0 +1,74 @@
+---
+name: Comp_StreakBadge
+group: hiển thị
+purpose: Chip chuỗi ngày dùng liền (gamification) — flame icon + số ngày.
+screens: [S2, S3, S4, S5, S6, S7, S8]
+personas: [P-OWN]
+shadcn_base: None
+radix_primitive: —
+---
+
+# Comp_StreakBadge — StreakBadge
+
+Thuộc nhóm **hiển thị**. Chip chuỗi ngày dùng liền (gamification) — flame icon + số ngày.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+chip nhỏ: flame icon + số ngày; nền primary-soft viền border.
+
+## Trạng thái
+
+default · sending: spinner khi tính lại · disabled: mờ 0.7 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-primary-soft`
+- `--color-primary`
+- `--color-border`
+- `--radius-sm`
+- `--control-height-sm`
+- `--text-sm`
+- `--space-1`
+- `--space-3`
+
+## Biến thể
+
+- `default` — hình thái chuẩn
+- thêm biến thể chỉ khi ≥2 màn dùng thật
+
+## Tiếp cận
+
+- Focus ring 2px theo `--color-primary` (focus-visible)
+- Vùng chạm ≥24px, mobile ≥44 theo control height
+- Accessible name qua label/aria khi không có text nhìn thấy
+
+## Không được làm
+
+- Không nháy liên tục — ổn định là chuẩn console
+- Không số ảo khi chưa có dữ liệu
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/streakbadge.tsx -->
+```tsx
+// Standalone — deps: react, lucide-react
+import * as React from "react"
+import { Flame } from "lucide-react"
+
+const badgeOpacity = (state: string): React.CSSProperties => ({ opacity: state === "disabled" ? 0.7 : 1 })
+
+export function Comp_StreakBadge({ days, state = "default", label }: { days: number; state?: "default" | "sending" | "disabled"; label?: string }) {
+  return (
+    <span aria-busy={state === "sending" || undefined} style={badgeOpacity(state)}
+      className="inline-flex items-center gap-1 h-[var(--control-height-sm)] px-3 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold text-[length:var(--text-sm)]">
+      <Flame className="size-3.5" aria-hidden />
+      {state === "sending" ? "…" : `${days} ${label ?? "ngày liền"}`}
+    </span>
+  )
+}
+```

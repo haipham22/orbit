@@ -1,0 +1,91 @@
+---
+name: Comp_TextInput
+group: input
+purpose: Ô nhập một dòng / textarea — size sm/md/lg theo control.height, mọi form dùng chung; lỗi = viền danger + message.
+screens: [S1, S3, S4, S5, S6, S8]
+personas: [P-OWN]
+shadcn_base: Input
+radix_primitive: —
+---
+
+# Comp_TextInput — TextInput
+
+Thuộc nhóm **input**. Ô nhập một dòng / textarea — size sm/md/lg theo control.height, mọi form dùng chung; lỗi = viền danger + message.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+input một dòng (hoặc textarea mở rộng): border + nền surface-raised, placeholder màu text-muted, focus ring primary.
+
+## Trạng thái
+
+mặc định: sẵn sàng nhập · đang gửi: aria-busy, spinner cuối input · bị vô hiệu: attr disabled · error: aria-invalid + message `role=alert` dưới input
+
+## Token dùng
+
+- `--color-surface-raised`
+- `--color-text`
+- `--color-text-muted`
+- `--color-border`
+- `--color-primary`
+- `--color-danger`
+- `--radius-sm`
+- `--control-height-sm`
+- `--control-height-md`
+- `--control-height-lg`
+- `--text-sm`
+- `--text-base`
+- `--text-lg`
+- `--space-1`
+- `--space-3`
+- `--space-4`
+
+## Biến thể
+
+- size: `sm` / `md` / `lg`
+- kiểu: một dòng / textarea / type=search (search dùng Comp_SearchInput)
+- error: viền `--color-danger` + message dưới input (aria-invalid)
+
+## Tiếp cận
+
+- Luôn có label hoặc aria-label
+- Search kèm role=combobox + listbox cho dropdown
+
+## Không được làm
+
+- Không viền đỏ mà thiếu message lỗi — error luôn kèm chữ nói sai gì và sửa thế nào
+- Không placeholder màu đậm hơn text-muted
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/textinput.tsx -->
+```tsx
+// Standalone — deps: react
+import * as React from "react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+export const Comp_TextInput = React.forwardRef<HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement> & {
+    state?: "default" | "sending" | "disabled"
+    error?: string
+  }>(
+  ({ className, state = "default", error, id, ...props }, ref) => (
+    <div className={cn("w-full", className)}>
+      <input ref={ref} id={id}
+        aria-busy={state === "sending" || undefined}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id ?? props.name}-msg` : undefined}
+        disabled={state === "disabled"}
+        className={cn("w-full border bg-[var(--color-surface-raised)] text-[var(--color-text)] rounded-[var(--radius-sm)] outline-none focus:ring-2 focus:ring-[var(--color-primary)] placeholder:text-[var(--color-text-muted)] border-[var(--color-border)]",
+          error && "border-[var(--color-danger)]")}
+        {...props} />
+      {error ? <p id={`${id ?? props.name}-msg`} role="alert" className="mt-1 flex items-center gap-1 text-[length:var(--text-sm)] text-[var(--color-danger)]">{error}</p> : null}
+    </div>
+  ))
+Comp_TextInput.displayName = "Comp_TextInput"
+```

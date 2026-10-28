@@ -2,7 +2,7 @@
 type: design-system
 design_system_id: "DS-ORBIT-CORE-DARK"
 status: "APPROVED"
-version: 2
+version: 3
 source: "in-house"
 platforms: [web]
 owner_authority: "Hải Phạm"
@@ -28,7 +28,7 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | Aspect | Value |
 |---|---|
 | Source | in-house |
-| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 2) |
+| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 3) |
 
 ## 3. Design tokens
 
@@ -44,6 +44,8 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | `--color-border` | `#6B7484` | viền input, kẻ chia |
 | `--color-border-soft` | `#333B47` | viền trang trí (toast, khối nổi) — border là mức input cần 3:1 |
 | `--color-danger` | `#E5645C` | lỗi, xoá |
+| `--color-data-ink` | `#E9ECEF` | chữ trên nền màu data sáng (chip user-color, law DECISIONS 2026-10-28) |
+| `--color-data-paper` | `#14171C` | chữ trên nền màu data tối |
 | `--color-fg` | `#E9ECEF` | alias khớp tên orbit = text |
 | `--color-fg-muted` | `#A3ABB8` | alias khớp tên orbit = text-muted |
 | `--color-on-danger` | `#2B0A08` | chữ TRÊN nền danger |
@@ -130,6 +132,7 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | S6 | `screens/s6.html` + `.json` | Journal — entry — DS-ORBIT-CORE-DARK |
 | S7 | `screens/s7.html` + `.json` | Tasks — board — DS-ORBIT-CORE-DARK |
 | S8 | `screens/s8.html` + `.json` | Tasks — chi tiết — DS-ORBIT-CORE-DARK |
+| S9 | `screens/s9.html` + `.json` | Cài đặt — theme & ngôn ngữ — DS-ORBIT-CORE-DARK |
 
 ## 6. Changelog
 
@@ -139,3 +142,5 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | 2026-10-28 | 1 | Authority nghiệm thu vòng 1 — APPROVED, đóng gói bàn giao |
 | 2026-10-28 | 2 | Vòng 2 additive: color.success-soft + color.warning-soft (chip trạng thái done/tới hạn); đồng bộ 6 component mới + mở rộng biến thể với orbit-core; thêm color.border-soft (viền toast mềm, feedback Authority) |
 | 2026-10-28 | 2 | Authority nghiệm thu vòng 2 — APPROVED, đóng gói bàn giao v1.1 |
+| 2026-10-28 | 3 | Vòng 3: messages vi/en + patch consume v2 (onOpenChange, Chip color prop, Nav asChild, DateInput/DateRange locale labels, disabled attr, a11y) + color.data-ink/data-paper; data-ink/paper lật theo dark (ink gần trắng, paper gần đen) |
+| 2026-10-28 | 3 | Authority nghiệm thu vòng 3 — APPROVED, đóng gói bàn giao v3 |

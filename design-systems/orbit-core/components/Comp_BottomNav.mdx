@@ -1,7 +1,7 @@
 ---
 name: Comp_BottomNav
 group: điều hướng
-purpose: Tab bar mobile (≤768px) — icon + label, active = primary, min-height control-lg; desktop ẩn (sidebar/topbar đảm nhiệm).
+purpose: Tab bar mobile (≤768px) — icon + label, active = primary + aria-current; item `asChild` cho next/link; desktop ẩn.
 screens: [S2, S3, S4, S5, S6, S7, S8]
 personas: [P-OWN]
 shadcn_base: None
@@ -10,7 +10,7 @@ radix_primitive: —
 
 # Comp_BottomNav — BottomNav
 
-Thuộc nhóm **điều hướng**. Tab bar mobile (≤768px) — icon + label, active = primary, min-height control-lg; desktop ẩn (sidebar/topbar đảm nhiệm).
+Thuộc nhóm **điều hướng**. Tab bar mobile (≤768px) — icon + label, active = primary + aria-current; item `asChild` cho next/link; desktop ẩn.
 
 
 > **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
@@ -54,25 +54,30 @@ mặc định · active: aria-current=page, chữ/icon primary · đang gửi: i
 
 <!-- EXPORT: components/ui/bottomnav.tsx -->
 ```tsx
-// Standalone — deps: react
+// Standalone — deps: react, @radix-ui/react-slot (cho asChild — next/link)
 import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
 
 const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
 
-export type NavTarget = { href: string; label: string; icon: React.ReactNode; active?: boolean }
+export type NavTarget = { href: string; label: string; icon: React.ReactNode; active?: boolean; asChild?: boolean; children?: React.ReactNode }
 
 export function Comp_BottomNav({ items, ariaLabel }: { items: NavTarget[]; ariaLabel?: string }) {
   return (
     <nav aria-label={ariaLabel}
       className="fixed bottom-0 inset-x-0 z-20 flex border-t border-[var(--color-border)] bg-[var(--color-surface)] pb-[env(safe-area-inset-bottom)] md:hidden">
-      {items.map((it) => (
-        <a key={it.href} href={it.href} aria-current={it.active ? "page" : undefined}
-          className={cn("flex flex-1 flex-col items-center justify-center gap-0.5 min-h-[var(--control-height-lg)] py-1 text-[length:var(--text-sm)] font-semibold text-[var(--color-fg-muted)]",
-            it.active && "text-[var(--color-primary)]")}>
-          {it.icon}
-          {it.label}
-        </a>
-      ))}
+      {items.map((it) => {
+        const cls = cn("flex flex-1 flex-col items-center justify-center gap-0.5 min-h-[var(--control-height-lg)] py-1 text-[length:var(--text-sm)] font-semibold text-[var(--color-fg-muted)]",
+          it.active && "text-[var(--color-primary)]")
+        const content = <>{it.icon}{it.label}</>
+        return it.asChild ? (
+          <Slot key={it.href} className={cls} aria-current={it.active ? "page" : undefined}>{it.children}</Slot>
+        ) : (
+          <a key={it.href} href={it.href} aria-current={it.active ? "page" : undefined} className={cls}>
+            {content}
+          </a>
+        )
+      })}
     </nav>
   )
 }

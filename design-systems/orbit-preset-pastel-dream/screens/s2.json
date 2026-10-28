@@ -1,0 +1,17 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_BottomNav",
+    "Comp_Card",
+    "Comp_NavItem",
+    "Comp_StreakBadge",
+    "Comp_XPBar"
+  ],
+  "id": "S2",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-preset-pastel-dream/screens/s2.html",
+  "title": "Dashboard — ORBIT-PRESET-PASTEL-DREAM"
+}

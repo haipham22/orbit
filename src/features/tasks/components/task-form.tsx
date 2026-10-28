@@ -52,6 +52,7 @@ export function TaskForm({
   pending: boolean;
 }) {
   const t = useTranslations("tasks");
+  const dt = useTranslations("dateInput");
   const statusLabels = {
     todo: t("status.todo"),
     in_progress: t("status.in_progress"),
@@ -131,6 +132,12 @@ export function TaskForm({
                 value={field.value || undefined}
                 onChange={field.onChange}
                 ariaLabel={t("dueLabel")}
+                labels={{
+                  dow: dt.raw("dow") as string[],
+                  month: (year, month) => dt("month", { year, month }),
+                  prevMonth: dt("prevMonth"),
+                  nextMonth: dt("nextMonth"),
+                }}
               />
             )}
           />

@@ -7,9 +7,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
-import { Comp_Button } from "@/components/ui/ds/button";
 import { Comp_Chip } from "@/components/ui/ds/chip";
+import { Comp_Button } from "@/components/ui/ds/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
@@ -155,17 +154,12 @@ export function TaskBoard({ tasks, projects }: { tasks: TaskWithMeta[]; projects
 
         <div className="ml-auto flex flex-wrap items-center gap-2">
           {projects.map((p) => (
-            <Badge
-              key={p.id}
-              variant="outline"
-              className="h-7 rounded-full px-3 text-[length:var(--type-size-sm)]"
-              style={{ borderColor: p.color }}
-            >
+            <Comp_Chip key={p.id} color={p.color}>
               {p.name}
               <button type="button" aria-label={t("deleteProject", { name: p.name })} onClick={() => mutate(DELETE_PROJECT, { id: p.id })}>
                 <X className="size-3" />
               </button>
-            </Badge>
+            </Comp_Chip>
           ))}
         </div>
       </div>

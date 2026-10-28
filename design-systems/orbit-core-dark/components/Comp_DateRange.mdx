@@ -1,7 +1,7 @@
 ---
 name: Comp_DateRange
 group: input
-purpose: Chọn khoảng ngày (filter nhật ký/task từ–đến) — 2 tháng cạnh nhau, 2 click chọn khoảng; cùng luật lịch custom với Comp_DateInput.
+purpose: Chọn khoảng ngày (filter nhật ký/task từ–đến) — 2 tháng cạnh nhau, 2 click chọn khoảng; labels prop cho i18n (message key: DateRange.*).
 screens: [S3, S5, S7]
 personas: [P-OWN]
 shadcn_base: None
@@ -10,7 +10,7 @@ radix_primitive: —
 
 # Comp_DateRange — DateRange
 
-Thuộc nhóm **input**. Chọn khoảng ngày (filter nhật ký/task từ–đến) — 2 tháng cạnh nhau, 2 click chọn khoảng; cùng luật lịch custom với Comp_DateInput.
+Thuộc nhóm **input**. Chọn khoảng ngày (filter nhật ký/task từ–đến) — 2 tháng cạnh nhau, 2 click chọn khoảng; labels prop cho i18n (message key: DateRange.*).
 
 
 > **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
@@ -82,11 +82,18 @@ const iso = (d: Date): string =>
 
 export type DateSpan = { from?: string; to?: string }
 
-export function Comp_DateRange({ value, onChange, state = "default", error, ariaLabel, startPlaceholder, endPlaceholder }: {
+const VI_RANGE = {
+  prevMonth: "Tháng trước", nextMonth: "Tháng sau", prevYear: "Lùi 1 năm", nextYear: "Tiến 1 năm",
+}
+
+export function Comp_DateRange({ value, onChange, state = "default", error, ariaLabel, startPlaceholder, endPlaceholder, labels }: {
   value?: DateSpan; onChange?: (v: DateSpan) => void
   state?: "default" | "sending" | "disabled"; error?: string; ariaLabel?: string
   startPlaceholder?: string; endPlaceholder?: string
+  labels?: DateLabels & { prevYear?: string; nextYear?: string }
 }) {
+  const L = { ...VI_RANGE, ...labels }
+  const panelId = React.useId()
   const [open, setOpen] = React.useState(false)
   const [view, setView] = React.useState(() => {
     const base = value?.from ? new Date(`${value.from}T00:00:00`) : new Date()
@@ -108,8 +115,8 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
         <div className="text-center font-[var(--font-display)] font-semibold text-[length:var(--text-sm)] mb-2">
           Tháng {m.getMonth() + 1} · {m.getFullYear()}
         </div>
-        <div className="grid grid-cols-7 gap-[var(--space-1)] text-center text-[length:var(--text-sm)]">
-          {DOW.map((d) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold py-1">{d}</span>)}
+        <div className="grid grid-cols-[repeat(7,minmax(0,1fr))] gap-[var(--space-1)] text-center text-[length:var(--text-sm)]">
+          {(labels?.dow ?? DOW).map((d) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold py-1">{d}</span>)}
           {Array.from({ length: lead }, (_, i) => <span key={`p${i}`} />)}
           {Array.from({ length: days }, (_, i) => {
             const key = iso(new Date(m.getFullYear(), m.getMonth(), i + 1))
@@ -131,7 +138,7 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
   const navBtn = "p-1 rounded-[var(--radius-sm)] text-[var(--color-fg-muted)] hover:bg-[var(--color-primary-soft)]"
   return (
     <div className={cn("relative w-full", state === "disabled" && "opacity-70")}>
-      <button type="button" role="combobox" aria-expanded={open} aria-haspopup="dialog" aria-busy={state === "sending" || undefined}
+      <button type="button" role="combobox" aria-expanded={open} aria-haspopup="dialog" aria-controls={panelId} aria-busy={state === "sending" || undefined}
         aria-invalid={error ? true : undefined} disabled={state === "disabled"} onClick={() => setOpen(!open)} aria-label={ariaLabel}
         className={cn("flex w-full items-center gap-2 h-[var(--control-height-md)] px-4 border bg-[var(--color-surface-raised)] text-[var(--color-text)] rounded-[var(--radius-sm)] outline-none focus:ring-2 focus:ring-[var(--color-primary)] border-[var(--color-border)]",
           error && "border-[var(--color-danger)]")}>
@@ -144,21 +151,21 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
         <div role="dialog" aria-label={ariaLabel}
           className="absolute z-10 mt-1 border border-[var(--color-border)] rounded-[var(--radius-md)] p-3 bg-[var(--color-surface)] shadow-[var(--shadow)]">
           <div className="flex items-center gap-2 mb-2">
-            <button type="button" aria-label="Lùi 1 năm" onClick={() => shift(-12)} className={navBtn}><ChevronsLeft className="size-4" aria-hidden /></button>
-            <button type="button" aria-label="Tháng trước" onClick={() => shift(-1)} className={navBtn}><ChevronLeft className="size-4" aria-hidden /></button>
+            <button type="button" aria-label={L.prevYear} onClick={() => shift(-12)} className={navBtn}><ChevronsLeft className="size-4" aria-hidden /></button>
+            <button type="button" aria-label={L.prevMonth} onClick={() => shift(-1)} className={navBtn}><ChevronLeft className="size-4" aria-hidden /></button>
             <div className="flex flex-1 items-center justify-around font-[var(--font-display)] font-semibold text-[length:var(--text-sm)]">
-              <span>Tháng {view.getMonth() + 1} · {view.getFullYear()}</span>
-              <span>Tháng {next.getMonth() + 1} · {next.getFullYear()}</span>
+              <span>{L.month(view.getFullYear(), view.getMonth() + 1)}</span>
+              <span>{L.month(next.getFullYear(), next.getMonth() + 1)}</span>
             </div>
-            <button type="button" aria-label="Tháng sau" onClick={() => shift(1)} className={navBtn}><ChevronRight className="size-4" aria-hidden /></button>
-            <button type="button" aria-label="Tiến 1 năm" onClick={() => shift(12)} className={navBtn}><ChevronsRight className="size-4" aria-hidden /></button>
+            <button type="button" aria-label={L.nextMonth} onClick={() => shift(1)} className={navBtn}><ChevronRight className="size-4" aria-hidden /></button>
+            <button type="button" aria-label={L.nextYear} onClick={() => shift(12)} className={navBtn}><ChevronsRight className="size-4" aria-hidden /></button>
           </div>
           <div className="flex gap-4">
             {state === "sending"
               ? [0, 1].map((p) => (
                   <div key={p} className="w-[248px]" aria-busy="true">
                     <div className="h-[var(--space-4)] rounded-[var(--radius-sm)] bg-[var(--color-primary-soft)] animate-pulse mb-2" />
-                    <div className="grid grid-cols-7 gap-[var(--space-1)]">
+                    <div className="grid grid-cols-[repeat(7,minmax(0,1fr))] gap-[var(--space-1)]">
                       {Array.from({ length: 28 }, (_, i) => <div key={i} className="h-[var(--space-5)] rounded-[var(--radius-sm)] bg-[var(--color-primary-soft)] animate-pulse" />)}
                     </div>
                   </div>))

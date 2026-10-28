@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { href: "/people", key: "people" },
   { href: "/journal", key: "journal" },
   { href: "/tasks", key: "tasks" },
+  { href: "/settings", key: "settings" },
 ] as const;
 
 export async function AppShell({ email, children }: { email: string; children: ReactNode }) {

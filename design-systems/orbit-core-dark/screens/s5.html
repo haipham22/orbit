@@ -5,6 +5,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" href="data:," />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;600;800&family=Geist:wght@400;600&display=swap" rel="stylesheet" />
 <title>Journal — danh sách — DS-ORBIT-CORE-DARK</title>
 <style>
 :root {
@@ -14,6 +16,8 @@
       --color-border: #6B7484;
       --color-border-soft: #333B47;
       --color-danger: #E5645C;
+      --color-data-ink: #E9ECEF;
+      --color-data-paper: #14171C;
       --color-fg: #E9ECEF;
       --color-fg-muted: #A3ABB8;
       --color-on-danger: #2B0A08;
@@ -91,7 +95,7 @@
   .btn-md { height: var(--control-height-md); padding: 0 var(--space-4); font-size: var(--text-base); }
   .btn-lg { height: var(--control-height-lg); padding: 0 var(--space-5); font-size: var(--text-lg); }
   .btn.sending { opacity: .8; pointer-events: none; }
-  .btn.disabled, .btn:disabled { opacity: .65; pointer-events: none; }
+  .btn.disabled, .btn:disabled { opacity: .7; pointer-events: none; }
   :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 1px; }
   .disabled { opacity: .7; }
   .backlink { display: inline-flex; align-items: center; gap: var(--space-1); padding: var(--space-1) var(--space-2); }
@@ -103,11 +107,13 @@
   .input-lg { height: var(--control-height-lg); font-size: var(--text-lg); }
   .input:focus { outline: 2px solid var(--color-primary); outline-offset: 1px; }
   .input::placeholder { color: var(--color-text-muted); }
+  .input:disabled { opacity: .7; }
   .input-error, .input-error:focus { border-color: var(--color-danger); }
   .input-msg { display: flex; align-items: center; gap: var(--space-1); color: var(--color-danger); font-size: var(--text-sm); margin-top: var(--space-1); }
   textarea.input { height: auto; padding: var(--space-3) var(--space-4); resize: vertical; }
 
-  .chip { display: inline-flex; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; align-items: center; gap: var(--space-1); height: var(--control-height-sm); padding: 0 var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); background: var(--color-primary-soft); color: var(--color-primary); border: 1px solid var(--color-border); }
+  .chip { display: inline-flex; max-width: min(220px, 100%); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; align-items: center; gap: var(--space-1); height: var(--control-height-sm); padding: 0 var(--space-3); border-radius: var(--radius-full); font-size: var(--text-sm); background: var(--color-primary-soft); color: var(--color-primary); border: 1px solid var(--color-border); }
+  .chip-data { border-color: transparent; }
   .chip-todo { background: var(--color-surface); color: var(--color-text-muted); }
   .chip-success { background: var(--color-success-soft); color: var(--color-success); border-color: var(--color-success-soft); }
   .chip-warning { background: var(--color-warning-soft); color: var(--color-warning); border-color: var(--color-warning-soft); }
@@ -173,7 +179,8 @@
 
   .cal { border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); background: var(--color-surface); max-width: 280px; }
   .cal-head { display: flex; align-items: center; justify-content: space-between; font-family: var(--font-display); font-weight: var(--type-weight-strong); margin-bottom: var(--space-2); font-size: var(--text-sm); }
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-1); text-align: center; font-size: var(--text-sm); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-1); text-align: center; font-size: var(--text-sm); }
+  .cal-grid .dow { overflow: hidden; }
   .cal-grid .dow { color: var(--color-fg-muted); font-weight: var(--type-weight-strong); }
   .cal-grid .day { padding: var(--space-1) 0; border-radius: var(--radius-sm); }
   .cal-grid .day.out { color: var(--color-text-muted); opacity: .65; }
@@ -198,6 +205,15 @@
   .rangehead { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--color-fg-muted); }
   .rangehead .months { flex: 1; display: flex; justify-content: space-around; font-family: var(--font-display); font-weight: var(--type-weight-strong); font-size: var(--text-sm); color: var(--color-fg); }
   .daterange { display: flex; gap: var(--space-4); }
+  .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-top: var(--space-7); }
+  @media (max-width: 768px) {
+    .daterange { flex-wrap: wrap; }
+    .daterange > .cal { flex: 1 1 100%; }
+    .rangehead { flex-wrap: wrap; }
+    .rangehead .months { flex-direction: column; align-items: center; gap: var(--space-1); }
+    .rangehead button { min-width: var(--control-height-lg); }
+    .grid2 { grid-template-columns: 1fr; }
+  }
   .daterange > .cal { flex: 1 1 0; }
   .cal-grid .day.inrange { background: var(--color-primary-soft); border-radius: 0; }
   .datewrap > .daterange-panel { position: absolute; top: 100%; left: 0; z-index: 2; margin-top: var(--space-1); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); padding: var(--space-3); box-shadow: var(--shadow); }
@@ -205,6 +221,15 @@
   .rangehead { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--color-fg-muted); }
   .rangehead .months { flex: 1; display: flex; justify-content: space-around; font-family: var(--font-display); font-weight: var(--type-weight-strong); font-size: var(--text-sm); color: var(--color-fg); }
   .daterange { display: flex; gap: var(--space-4); }
+  .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); margin-top: var(--space-7); }
+  @media (max-width: 768px) {
+    .daterange { flex-wrap: wrap; }
+    .daterange > .cal { flex: 1 1 100%; }
+    .rangehead { flex-wrap: wrap; }
+    .rangehead .months { flex-direction: column; align-items: center; gap: var(--space-1); }
+    .rangehead button { min-width: var(--control-height-lg); }
+    .grid2 { grid-template-columns: 1fr; }
+  }
   .daterange > .cal { flex: 1 1 0; }
   .cal-grid .day.inrange { background: var(--color-primary-soft); border-radius: 0; }
   .datewrap > .cal { position: absolute; top: 100%; left: 0; z-index: 2; margin-top: var(--space-1); }

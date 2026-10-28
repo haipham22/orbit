@@ -1,0 +1,14 @@
+{
+  "components": [
+    "Comp_BottomNav",
+    "Comp_Button",
+    "Comp_TextInput"
+  ],
+  "id": "S1",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-preset-kid/screens/s1.html",
+  "title": "Sign-in — ORBIT-PRESET-KID"
+}

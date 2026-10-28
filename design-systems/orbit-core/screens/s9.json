@@ -1,0 +1,16 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_BottomNav",
+    "Comp_Card",
+    "Comp_NavItem",
+    "Comp_StreakBadge"
+  ],
+  "id": "S9",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-core/screens/s9.html",
+  "title": "Cài đặt — theme & ngôn ngữ — DS-ORBIT-CORE"
+}

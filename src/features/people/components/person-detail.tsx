@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Comp_Button } from "@/components/ui/ds/button";
 import { Comp_ConfirmDialog } from "@/components/ui/ds/confirmdialog";
-import { Badge } from "@/components/ui/badge";
+import { Comp_Chip } from "@/components/ui/ds/chip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
@@ -150,11 +150,7 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
         </CardHeader>
         <CardContent className="flex flex-wrap items-center gap-2">
           {person.labels.map((label) => (
-            <Badge
-              key={label.id}
-              variant="outline"
-              style={{ borderColor: label.color, color: label.color }}
-            >
+            <Comp_Chip key={label.id} color={label.color}>
               {label.name}
               <button
                 type="button"
@@ -163,7 +159,7 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
               >
                 <X className="size-3" />
               </button>
-            </Badge>
+            </Comp_Chip>
           ))}
           {unassigned.length > 0 && (
             <Select onValueChange={assignLabel} value="">

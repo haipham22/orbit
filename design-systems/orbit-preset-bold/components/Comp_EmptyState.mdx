@@ -1,0 +1,76 @@
+---
+name: Comp_EmptyState
+group: phản hồi
+purpose: Khuôn dùng chung empty/error/loading — title/desc/action là prop, giọng Gen Z thân mật.
+screens: [S2, S3, S5, S7]
+personas: [P-OWN]
+shadcn_base: None
+radix_primitive: —
+---
+
+# Comp_EmptyState — EmptyState
+
+Thuộc nhóm **phản hồi**. Khuôn dùng chung empty/error/loading — title/desc/action là prop, giọng Gen Z thân mật.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+khối dashed center: title → desc → action; loading thay nội dung bằng skeleton.
+
+## Trạng thái
+
+default · sending/loading: skeleton (.skel) · error: khối inline kèm nút Tải lại · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-border`
+- `--color-primary`
+- `--color-primary-soft`
+- `--radius-md`
+- `--space-2`
+- `--space-6`
+- `--text-sm`
+
+## Biến thể
+
+- `default` — hình thái chuẩn
+- thêm biến thể chỉ khi ≥2 màn dùng thật
+
+## Tiếp cận
+
+- Error nói việc làm tiếp (nút Tải lại), không chỉ báo lỗi
+
+## Không được làm
+
+- Không viết câu corporate ('Không có dữ liệu')
+- Không mỗi màn một khuôn riêng
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/emptystate.tsx -->
+```tsx
+// Standalone — deps: react
+import * as React from "react"
+
+type Khuon = "empty" | "error" | "loading"
+
+const skelBox = (w: string): React.CSSProperties => ({ width: w })
+
+function Skel({ w }: { w: string }) {
+  return <div aria-hidden className="h-[var(--space-4)] rounded-[var(--radius-sm)] bg-[var(--color-primary-soft)] animate-pulse" style={skelBox(w)} />
+}
+
+export function Comp_EmptyState({ khuon, title, desc, action }: { khuon: Khuon; title: string; desc?: string; action?: React.ReactNode }) {
+  return (
+    <div data-pattern={khuon} className="border border-dashed border-[var(--color-border)] rounded-[var(--radius-md)] p-6 flex flex-col items-center text-center gap-2">
+      {khuon === "loading"
+        ? <><Skel w="80%" /><Skel w="55%" /></>
+        : <><h3>{title}</h3>{desc ? <p className="text-[var(--color-text-muted)] text-[length:var(--text-sm)]">{desc}</p> : null}{action}</>}
+    </div>
+  )
+}
+```

@@ -3,7 +3,8 @@
     "dashboard": "Dashboard",
     "people": "People",
     "journal": "Journal",
-    "tasks": "Tasks"
+    "tasks": "Tasks",
+    "settings": "Cài đặt"
   },
   "shell": {
     "logout": "Đăng xuất",
@@ -208,6 +209,111 @@
       "medium": "Trung bình",
       "high": "Cao",
       "urgent": "Gấp"
+    }
+  },
+  "common": {
+    "save": "Lưu",
+    "saving": "Đang lưu…",
+    "delete": "Xóa",
+    "deleting": "Đang xoá…",
+    "cancel": "Huỷ",
+    "open": "Mở",
+    "retry": "Tải lại",
+    "viewDetail": "Xem chi tiết",
+    "start": "Bắt đầu",
+    "finish": "Hoàn thành",
+    "advance": "Đẩy trạng thái",
+    "details": "Chi tiết"
+  },
+  "bottomNav": {
+    "ariaLabel": "Điều hướng chính"
+  },
+  "empty": {
+    "title": "Chưa có gì ở đây cả ✌️",
+    "peopleDesc": "Thêm người đầu tiên để orbit bắt đầu nhớ hộ bạn.",
+    "errorTitle": "Lấy dữ liệu chưa xong",
+    "errorDesc": "Mất kết nối — thử tải lại nhé.",
+    "sessionDesc": "Hết phiên — đăng nhập lại nhé."
+  },
+  "toast": {
+    "saved": "Đã lưu!",
+    "journalSaved": "Nhật ký đã vào sổ.",
+    "willNotify": "chốt xong báo ngay",
+    "failed": "Lưu chưa xong",
+    "network": "Mất mạng rồi — thử lại nhé."
+  },
+  "personRow": {
+    "entries": "{count} nhật ký",
+    "tasks": "{count} việc",
+    "removeAria": "Bỏ gắn {name}"
+  },
+  "personPicker": {
+    "placeholder": "Gắn người vào entry…",
+    "empty": "Không thấy ai khớp tên này."
+  },
+  "searchInput": {
+    "placeholder": "Tìm người theo tên…",
+    "resultsMeta": "{count} kết quả · gõ sai chính tả vẫn khớp",
+    "noResults": "Không thấy gì khớp \"{query}\" cả."
+  },
+  "streak": {
+    "days": "{days} ngày liền"
+  },
+  "xp": {
+    "weekly": "{done}/{total} việc xong — giữ nhịp tuần này"
+  },
+  "dateInput": {
+    "dow": [
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7",
+      "CN"
+    ],
+    "month": "Tháng {month} · {year}",
+    "prevMonth": "Tháng trước",
+    "nextMonth": "Tháng sau",
+    "placeholder": "yyyy-mm-dd"
+  },
+  "dateRange": {
+    "startPlaceholder": "Từ ngày",
+    "endPlaceholder": "Đến ngày",
+    "prevYear": "Lùi 1 năm",
+    "nextYear": "Tiến 1 năm"
+  },
+  "confirm": {
+    "deleteTitle": "Xóa {target}?",
+    "deleteDesc": "\"{name}\" sẽ mất — không hoàn tác được.",
+    "personDesc": "Người này sẽ khỏi orbit — journal vẫn giữ, link thì mất."
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "subtitle": "Giao diện và ngôn ngữ — của bạn, bạn chọn.",
+    "theme": "Theme",
+    "themeHint": "7 preset + light/dark — bấm là đổi cả app.",
+    "font": "Font",
+    "fontHint": "Bộ ba mặt chữ — chọn cái hợp mắt.",
+    "language": "Ngôn ngữ",
+    "languageHint": "Tiếng Việt mặc định — English sẵn sàng.",
+    "preview": "Xem trước",
+    "mode": {
+      "label": "Chế độ màu",
+      "light": "Sáng",
+      "dark": "Tối",
+      "system": "Hệ thống"
+    },
+    "preset": {
+      "label": "Preset",
+      "default": "Mặc định",
+      "kid": "Kid",
+      "teenCool": "Teen Cool",
+      "soft": "Soft",
+      "bold": "Bold",
+      "warmEarth": "Warm Earth",
+      "pastelDream": "Pastel Dream",
+      "sticker": "Sticker"
     }
   }
 }

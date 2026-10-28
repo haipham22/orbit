@@ -2,7 +2,7 @@
 type: design-system
 design_system_id: "DS-ORBIT-CORE"
 status: "APPROVED"
-version: 2
+version: 3
 source: "in-house"
 platforms: [web]
 owner_authority: "Hải Phạm"
@@ -28,7 +28,7 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | Aspect | Value |
 |---|---|
 | Source | in-house |
-| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 2) |
+| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 3) |
 
 ## 3. Design tokens
 
@@ -44,6 +44,8 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | `--color-border` | `#87909C` | viền input, kẻ chia — là chỉ báo duy nhất của input thì ≥3:1 |
 | `--color-border-soft` | `#D5DBE3` | viền trang trí (toast, khối nổi) — border là mức input cần 3:1 |
 | `--color-danger` | `#C0261B` | lỗi, xoá |
+| `--color-data-ink` | `#1F2933` | chữ trên nền màu data sáng (chip user-color, law DECISIONS 2026-10-28) |
+| `--color-data-paper` | `#FFFFFF` | chữ trên nền màu data tối |
 | `--color-fg` | `#1F2933` | alias khớp tên orbit = text |
 | `--color-fg-muted` | `#5A6472` | alias khớp tên orbit = text-muted |
 | `--color-on-danger` | `#FFFFFF` | chữ TRÊN nền danger |
@@ -130,6 +132,7 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | S6 | `screens/s6.html` + `.json` | Journal — entry — DS-ORBIT-CORE |
 | S7 | `screens/s7.html` + `.json` | Tasks — board — DS-ORBIT-CORE |
 | S8 | `screens/s8.html` + `.json` | Tasks — chi tiết — DS-ORBIT-CORE |
+| S9 | `screens/s9.html` + `.json` | Cài đặt — theme & ngôn ngữ — DS-ORBIT-CORE |
 
 ## 6. Changelog
 
@@ -139,3 +142,5 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | 2026-10-28 | 1 | Authority nghiệm thu vòng 1 — APPROVED, đóng gói bàn giao |
 | 2026-10-28 | 2 | Vòng 2 additive: color.success-soft + color.warning-soft (chip trạng thái done/tới hạn); 6 component mới, mở rộng biến thể Chip/TextInput/NavItem/Modal, packaging ui/*.tsx standalone; success light đậm #1B7F3B → #177034 (đệm tương phản chip done 4.51 → 5.50); thêm color.border-soft (viền toast mềm, feedback Authority) |
 | 2026-10-28 | 2 | Authority nghiệm thu vòng 2 — APPROVED, đóng gói bàn giao v1.1 |
+| 2026-10-28 | 3 | Vòng 3: messages vi/en + patch consume v2 (onOpenChange, Chip color prop, Nav asChild, DateInput/DateRange locale labels, disabled attr, a11y) + color.data-ink/data-paper |
+| 2026-10-28 | 3 | Authority nghiệm thu vòng 3 — APPROVED, đóng gói bàn giao v3 |

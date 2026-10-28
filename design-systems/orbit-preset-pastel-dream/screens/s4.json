@@ -1,0 +1,17 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_BottomNav",
+    "Comp_Button",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_StreakBadge"
+  ],
+  "id": "S4",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-preset-pastel-dream/screens/s4.html",
+  "title": "People — chi tiết — ORBIT-PRESET-PASTEL-DREAM"
+}

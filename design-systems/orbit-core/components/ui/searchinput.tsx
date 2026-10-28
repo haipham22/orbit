@@ -4,8 +4,6 @@
 import * as React from "react"
 import { Search } from "lucide-react"
 
-const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
-
 const skelBox = (i: number): React.CSSProperties => ({ width: `${44 - i * 8}%` })
 
 export type SearchResult = { id: string; title: string; meta?: string }

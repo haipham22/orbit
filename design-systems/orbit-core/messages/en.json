@@ -1,0 +1,97 @@
+{
+  "common": {
+    "save": "Save",
+    "saving": "Saving…",
+    "delete": "Delete",
+    "deleting": "Deleting…",
+    "cancel": "Cancel",
+    "open": "Open",
+    "retry": "Retry",
+    "viewDetail": "View details",
+    "start": "Start",
+    "finish": "Done",
+    "advance": "Move to next",
+    "details": "Details"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "people": "People",
+    "journal": "Journal",
+    "tasks": "Tasks",
+    "settings": "Settings"
+  },
+  "bottomNav": {
+    "ariaLabel": "Main navigation"
+  },
+  "empty": {
+    "title": "Nothing here yet ✌️",
+    "peopleDesc": "Add the first person and orbit starts remembering for you.",
+    "errorTitle": "Couldn't load data",
+    "errorDesc": "Connection dropped — try again.",
+    "sessionDesc": "Session ended — sign in again."
+  },
+  "toast": {
+    "saved": "Saved!",
+    "journalSaved": "Journal entry stored.",
+    "willNotify": "we'll ping when done",
+    "failed": "Didn't save",
+    "network": "Network's gone — try again."
+  },
+  "personRow": {
+    "entries": "{count} entries",
+    "tasks": "{count} tasks",
+    "removeAria": "Unlink {name}"
+  },
+  "personPicker": {
+    "placeholder": "Link people to this entry…",
+    "empty": "No one matches that name."
+  },
+  "searchInput": {
+    "placeholder": "Search people by name…",
+    "resultsMeta": "{count} results · misspelled names still match",
+    "noResults": "Nothing matches \"{query}\"."
+  },
+  "streak": {
+    "days": "{days}-day streak"
+  },
+  "xp": {
+    "weekly": "{done}/{total} tasks done — keep the streak"
+  },
+  "dateInput": {
+    "dow": [
+      "Mo",
+      "Tu",
+      "We",
+      "Th",
+      "Fr",
+      "Sa",
+      "Su"
+    ],
+    "month": "{month} · {year}",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "placeholder": "yyyy-mm-dd"
+  },
+  "dateRange": {
+    "startPlaceholder": "Start date",
+    "endPlaceholder": "End date",
+    "prevYear": "Back 1 year",
+    "nextYear": "Forward 1 year"
+  },
+  "confirm": {
+    "deleteTitle": "Delete {target}?",
+    "deleteDesc": "\"{name}\" will be gone — no undo.",
+    "personDesc": "They leave orbit — journal stays, links break."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Look and language — yours to pick.",
+    "theme": "Theme",
+    "themeHint": "6 presets + light/dark — tap to switch the whole app.",
+    "font": "Font",
+    "fontHint": "Three faces — pick what fits your eyes.",
+    "language": "Language",
+    "languageHint": "Vietnamese by default — English ready.",
+    "preview": "Preview"
+  }
+}

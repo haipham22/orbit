@@ -3,7 +3,7 @@ import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server
 import { authProvider } from "./server/auth/provider";
 import { SESSION_COOKIE_NAME } from "./server/auth/local/session";
 
-const PROTECTED = /^\/(dashboard|people|journal|tasks)(\/|$)/;
+const PROTECTED = /^\/(dashboard|people|journal|tasks|settings)(\/|$)/;
 
 function localProxy(req: NextRequest) {
   if (PROTECTED.test(req.nextUrl.pathname) && !req.cookies.get(SESSION_COOKIE_NAME)) {

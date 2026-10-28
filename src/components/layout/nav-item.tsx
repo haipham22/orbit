@@ -1,26 +1,16 @@
 "use client";
 
-// Adapter Comp_NavItem cho sidebar desktop: Comp_NavItem sinh <a> (full-page reload)
-// và không nhận children/onClick nên không bọc được bằng next/link. File DS là
-// sinh tự động (không sửa tay), nên adapter này giữ spec Comp_NavItem
-// (active = aria-current="page" + màu primary) nhưng render Link để giữ SPA nav.
+// Wrapper client cho sidebar desktop: active phải theo usePathname nên cần
+// client; DS spec giữ qua Comp_NavItem asChild + next/link (SPA nav, không reload).
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Comp_NavItem } from "@/components/ui/ds/navitem";
 
 export function NavItem({ href, label }: { href: string; label: string }) {
   const active = usePathname().startsWith(href);
   return (
-    <Link
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className={
-        "block rounded-md px-2 py-1.5 text-sm font-semibold transition-colors " +
-        (active
-          ? "text-primary"
-          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground")
-      }
-    >
-      {label}
-    </Link>
+    <Comp_NavItem asChild href={href} active={active} label={label}>
+      <Link href={href}>{label}</Link>
+    </Comp_NavItem>
   );
 }

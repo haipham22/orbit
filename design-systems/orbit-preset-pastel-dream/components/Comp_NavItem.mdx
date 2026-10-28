@@ -1,0 +1,85 @@
+---
+name: Comp_NavItem
+group: điều hướng
+purpose: Mục điều hướng — active: gạch chân primary + aria-current; `asChild` cho next/link (Slot); sending: spinner khi chuyển trang.
+screens: [S2, S3, S4, S5, S6, S7, S8]
+personas: [P-OWN]
+shadcn_base: None
+radix_primitive: @radix-ui/react-slot
+---
+
+# Comp_NavItem — NavItem
+
+Thuộc nhóm **điều hướng**. Mục điều hướng — active: gạch chân primary + aria-current; `asChild` cho next/link (Slot); sending: spinner khi chuyển trang.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+inline link: label + border-bottom làm chỉ báo active; đang gửi thêm spinner.
+
+## Trạng thái
+
+mặc định · active: aria-current=page (trạng thái riêng) · đang gửi: spinner · bị vô hiệu: mờ 0.7
+
+## Token dùng
+
+- `--color-fg-muted`
+- `--color-primary`
+- `--color-border`
+- `--space-1`
+- `--space-2`
+
+## Biến thể
+
+- trạng thái: mặc định / active / đang gửi / bị vô hiệu
+
+## Tiếp cận
+
+- Focus ring 2px theo `--color-primary` (focus-visible)
+- Vùng chạm ≥24px, mobile ≥44 theo control height
+- Accessible name qua label/aria khi không có text nhìn thấy
+
+## Không được làm
+
+- Không icon không chữ trên desktop
+- Không tự set active theo cảm tính — theo route
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/navitem.tsx -->
+```tsx
+// Standalone — deps: react, @radix-ui/react-slot (cho asChild — next/link của Next.js)
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+const Spin = () => (
+  <span aria-hidden className="inline-block size-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
+)
+
+export function Comp_NavItem({ label, active, state = "default", href, asChild, children }: {
+  label: string; active?: boolean; state?: "default" | "sending" | "disabled"; href: string
+  asChild?: boolean; children?: React.ReactNode
+}) {
+  const cls = cn("font-semibold py-2 px-1 border-b-2",
+    active ? "text-[var(--color-primary)] border-[var(--color-primary)]" : "text-[var(--color-fg-muted)] border-transparent",
+    state === "disabled" && "opacity-70 pointer-events-none")
+  if (asChild) {
+    return (
+      <Slot className={cls} aria-current={active ? "page" : undefined} aria-busy={state === "sending" || undefined}>
+        {children}
+      </Slot>
+    )
+  }
+  return (
+    <a href={href} aria-current={active ? "page" : undefined} aria-busy={state === "sending" || undefined} className={cls}>
+      {state === "sending" ? <Spin /> : null} {label}
+    </a>
+  )
+}
+```

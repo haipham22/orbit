@@ -1,0 +1,90 @@
+---
+name: Comp_Calendar
+group: input
+purpose: Ô chọn ngày (hạn chót task, xem sinh nhật) — grid tháng console, ngày chọn nền primary.
+screens: [S2, S7, S8]
+personas: [P-OWN]
+shadcn_base: None
+radix_primitive: —
+---
+
+# Comp_Calendar — Calendar
+
+Thuộc nhóm **input**. Ô chọn ngày (hạn chót task, xem sinh nhật) — grid tháng console, ngày chọn nền primary.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+cal → cal-head (tháng + nav) → cal-grid 7 cột: dow → day (out/today/sel).
+
+## Trạng thái
+
+default (ngày chọn + hôm nay có khung) · sending: skeleton grid · disabled: mờ 0.7 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-surface`
+- `--color-border`
+- `--color-primary`
+- `--color-on-primary`
+- `--color-text-muted`
+- `--color-fg-muted`
+- `--radius-md`
+- `--radius-sm`
+- `--text-sm`
+- `--font-display`
+- `--type-weight-strong`
+- `--space-1`
+- `--space-2`
+- `--space-3`
+
+## Biến thể
+
+- ngày: thường / hôm nay (khung) / đã chọn (nền primary)
+
+## Tiếp cận
+
+- Ngày bấm được có aria-pressed; hôm nay aria-current
+
+## Không được làm
+
+- Không tự chọn hộ ngày — mặc định trống hoặc hôm nay
+- Không lẫn thứ tự T2..CN
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/calendar.tsx -->
+```tsx
+// Standalone — deps: react
+import * as React from "react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+export function Comp_Calendar({ month, year, selected, state = "default", ariaLabel }: {
+  month: number; year: number; selected?: number; state?: "default" | "sending" | "disabled"; ariaLabel?: string
+}) {
+  const days = new Date(year, month, 0).getDate()
+  const dow = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+  return (
+    <div role="group" aria-label={ariaLabel}
+      className={cn("border border-[var(--color-border)] rounded-[var(--radius-md)] p-3 bg-[var(--color-surface)] max-w-[280px]", state === "disabled" && "opacity-70")}
+      aria-busy={state === "sending" || undefined}>
+      <div className="flex items-center justify-between font-[var(--font-display)] font-semibold text-[length:var(--text-sm)] mb-2">{ariaLabel ?? `Tháng ${month} · ${year}`}</div>
+      <div className="grid grid-cols-7 gap-1 text-center text-[length:var(--text-sm)]">
+        {state === "sending"
+          ? Array.from({ length: 14 }, (_, i) => <div key={i} className="h-5 rounded-[var(--radius-sm)] bg-[var(--color-primary-soft)] animate-pulse" />)
+          : dow.map((d) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold">{d}</span>)
+              .concat(Array.from({ length: days }, (_, i) => {
+                const d = i + 1
+                return <span key={d} aria-current={d === selected ? "date" : undefined}
+                  className={cn("py-1 rounded-[var(--radius-sm)]", d === selected && "bg-[var(--color-primary)] text-[var(--color-on-primary)] font-semibold")}>{d}</span>
+              }))}
+      </div>
+    </div>
+  )
+}
+```

@@ -1,0 +1,110 @@
+/* SINH TỰ ĐỘNG từ components/Comp_DateRange.mdx — không sửa tay, chạy make package */
+
+// Standalone — deps: react, lucide-react
+import * as React from "react"
+import { Calendar, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight, MoveRight } from "lucide-react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+const DOW = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+
+const iso = (d: Date): string =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+
+export type DateSpan = { from?: string; to?: string }
+
+const VI_RANGE = {
+  prevMonth: "Tháng trước", nextMonth: "Tháng sau", prevYear: "Lùi 1 năm", nextYear: "Tiến 1 năm",
+}
+
+export function Comp_DateRange({ value, onChange, state = "default", error, ariaLabel, startPlaceholder, endPlaceholder, labels }: {
+  value?: DateSpan; onChange?: (v: DateSpan) => void
+  state?: "default" | "sending" | "disabled"; error?: string; ariaLabel?: string
+  startPlaceholder?: string; endPlaceholder?: string
+  labels?: DateLabels & { prevYear?: string; nextYear?: string }
+}) {
+  const L = { ...VI_RANGE, ...labels }
+  const panelId = React.useId()
+  const [open, setOpen] = React.useState(false)
+  const [view, setView] = React.useState(() => {
+    const base = value?.from ? new Date(`${value.from}T00:00:00`) : new Date()
+    return new Date(base.getFullYear(), base.getMonth(), 1)
+  })
+  const next = new Date(view.getFullYear(), view.getMonth() + 1, 1)
+  const shift = (months: number) => setView(new Date(view.getFullYear(), view.getMonth() + months, 1))
+  const pick = (key: string) => {
+    if (!value?.from || (value.from && value.to)) onChange?.({ from: key })
+    else if (value.from <= key) onChange?.({ from: value.from, to: key })
+    else onChange?.({ from: key, to: value.from })
+  }
+  const month = (m: Date) => {
+    const first = new Date(m.getFullYear(), m.getMonth(), 1)
+    const lead = (first.getDay() + 6) % 7 // Monday-first
+    const days = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate()
+    return (
+      <div className="w-[248px]">
+        <div className="text-center font-[var(--font-display)] font-semibold text-[length:var(--text-sm)] mb-2">
+          Tháng {m.getMonth() + 1} · {m.getFullYear()}
+        </div>
+        <div className="grid grid-cols-[repeat(7,minmax(0,1fr))] gap-[var(--space-1)] text-center text-[length:var(--text-sm)]">
+          {(labels?.dow ?? DOW).map((d) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold py-1">{d}</span>)}
+          {Array.from({ length: lead }, (_, i) => <span key={`p${i}`} />)}
+          {Array.from({ length: days }, (_, i) => {
+            const key = iso(new Date(m.getFullYear(), m.getMonth(), i + 1))
+            const isEnd = key === value?.from || key === value?.to
+            const isMid = !!value?.from && !!value?.to && key > value.from && key < value.to
+            return (
+              <button key={key} type="button" aria-pressed={isEnd} onClick={() => pick(key)}
+                className={cn("py-1 rounded-[var(--radius-sm)] hover:bg-[var(--color-primary-soft)]",
+                  isEnd && "bg-[var(--color-primary)] text-[var(--color-on-primary)] font-semibold",
+                  isMid && "bg-[var(--color-primary-soft)] rounded-none")}>
+                {i + 1}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+  const navBtn = "p-1 rounded-[var(--radius-sm)] text-[var(--color-fg-muted)] hover:bg-[var(--color-primary-soft)]"
+  return (
+    <div className={cn("relative w-full", state === "disabled" && "opacity-70")}>
+      <button type="button" role="combobox" aria-expanded={open} aria-haspopup="dialog" aria-controls={panelId} aria-busy={state === "sending" || undefined}
+        aria-invalid={error ? true : undefined} disabled={state === "disabled"} onClick={() => setOpen(!open)} aria-label={ariaLabel}
+        className={cn("flex w-full items-center gap-2 h-[var(--control-height-md)] px-4 border bg-[var(--color-surface-raised)] text-[var(--color-text)] rounded-[var(--radius-sm)] outline-none focus:ring-2 focus:ring-[var(--color-primary)] border-[var(--color-border)]",
+          error && "border-[var(--color-danger)]")}>
+        <span className={cn("flex-1 text-left", !value?.from && "text-[var(--color-text-muted)]")}>{value?.from ?? startPlaceholder}</span>
+        <MoveRight className="size-3.5 text-[var(--color-text-muted)]" aria-hidden />
+        <span className={cn("flex-1 text-left", !value?.to && "text-[var(--color-text-muted)]")}>{value?.to ?? endPlaceholder}</span>
+        <Calendar className="size-4 text-[var(--color-text-muted)]" aria-hidden />
+      </button>
+      {open && state !== "disabled" ? (
+        <div role="dialog" aria-label={ariaLabel}
+          className="absolute z-10 mt-1 border border-[var(--color-border)] rounded-[var(--radius-md)] p-3 bg-[var(--color-surface)] shadow-[var(--shadow)]">
+          <div className="flex items-center gap-2 mb-2">
+            <button type="button" aria-label={L.prevYear} onClick={() => shift(-12)} className={navBtn}><ChevronsLeft className="size-4" aria-hidden /></button>
+            <button type="button" aria-label={L.prevMonth} onClick={() => shift(-1)} className={navBtn}><ChevronLeft className="size-4" aria-hidden /></button>
+            <div className="flex flex-1 items-center justify-around font-[var(--font-display)] font-semibold text-[length:var(--text-sm)]">
+              <span>{L.month(view.getFullYear(), view.getMonth() + 1)}</span>
+              <span>{L.month(next.getFullYear(), next.getMonth() + 1)}</span>
+            </div>
+            <button type="button" aria-label={L.nextMonth} onClick={() => shift(1)} className={navBtn}><ChevronRight className="size-4" aria-hidden /></button>
+            <button type="button" aria-label={L.nextYear} onClick={() => shift(12)} className={navBtn}><ChevronsRight className="size-4" aria-hidden /></button>
+          </div>
+          <div className="flex gap-4">
+            {state === "sending"
+              ? [0, 1].map((p) => (
+                  <div key={p} className="w-[248px]" aria-busy="true">
+                    <div className="h-[var(--space-4)] rounded-[var(--radius-sm)] bg-[var(--color-primary-soft)] animate-pulse mb-2" />
+                    <div className="grid grid-cols-[repeat(7,minmax(0,1fr))] gap-[var(--space-1)]">
+                      {Array.from({ length: 28 }, (_, i) => <div key={i} className="h-[var(--space-5)] rounded-[var(--radius-sm)] bg-[var(--color-primary-soft)] animate-pulse" />)}
+                    </div>
+                  </div>))
+              : <>{month(view)}{month(next)}</>}
+          </div>
+        </div>
+      ) : null}
+      {error ? <p role="alert" className="mt-1 flex items-center gap-1 text-[length:var(--text-sm)] text-[var(--color-danger)]">{error}</p> : null}
+    </div>
+  )
+}

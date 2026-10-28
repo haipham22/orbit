@@ -1,0 +1,19 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_BottomNav",
+    "Comp_Button",
+    "Comp_Chip",
+    "Comp_NavItem",
+    "Comp_PersonRow",
+    "Comp_SearchInput",
+    "Comp_StreakBadge"
+  ],
+  "id": "S5",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-preset-bold/screens/s5.html",
+  "title": "Journal — danh sách — ORBIT-PRESET-BOLD"
+}

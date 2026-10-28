@@ -1,43 +1,45 @@
 "use client";
 
-// Bottom tab bar mobile (<md) — DS PERSONAS: mobile tối giản, vùng chạm ≥44px.
+// Bottom tab bar mobile (<md) — Comp_BottomNav asChild + next/link giữ SPA nav;
+// active theo usePathname, vùng chạm theo DS (--control-height-lg).
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, LayoutDashboard, ListChecks, Users } from "lucide-react";
+import { BookOpen, LayoutDashboard, ListChecks, Settings, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Comp_BottomNav } from "@/components/ui/ds/bottomnav";
 
 const ITEMS = [
   { href: "/dashboard", key: "dashboard", icon: LayoutDashboard },
   { href: "/people", key: "people", icon: Users },
   { href: "/journal", key: "journal", icon: BookOpen },
   { href: "/tasks", key: "tasks", icon: ListChecks },
+  { href: "/settings", key: "settings", icon: Settings },
 ] as const;
 
 export function BottomNav() {
   const pathname = usePathname();
   const t = useTranslations("nav");
   return (
-    <nav
-      aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 flex border-t bg-background/95 backdrop-blur md:hidden"
-    >
-      {ITEMS.map(({ href, key, icon: Icon }) => {
+    <Comp_BottomNav
+      ariaLabel="Primary"
+      items={ITEMS.map(({ href, key, icon: Icon }) => {
         const active = pathname.startsWith(href);
-        return (
-          <Link
-            key={href}
-            href={href}
-            aria-current={active ? "page" : undefined}
-            className={
-              "flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-[length:var(--type-size-sm)] " +
-              (active ? "font-semibold text-primary" : "text-muted-foreground")
-            }
-          >
-            <Icon className="size-5" aria-hidden />
-            {t(key)}
-          </Link>
-        );
+        // asChild: Slot bọc Link — icon + label phải là children của Link
+        // (trường icon/label của NavTarget chỉ dùng cho nhánh <a> thường).
+        return {
+          href,
+          label: t(key),
+          icon: <Icon className="size-5" aria-hidden />,
+          active,
+          asChild: true as const,
+          children: (
+            <Link href={href}>
+              <Icon className="size-5" aria-hidden />
+              {t(key)}
+            </Link>
+          ),
+        };
       })}
-    </nav>
+    />
   );
 }

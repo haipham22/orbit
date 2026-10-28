@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
 import { Comp_Button } from "@/components/ui/ds/button";
+import { Comp_Chip } from "@/components/ui/ds/chip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
@@ -67,11 +67,9 @@ export function LabelsCard({ labels }: { labels: LabelRow[] }) {
       <CardContent className="flex flex-col gap-3">
         <div className="flex flex-wrap gap-2">
           {labels.map((label) => (
-            <Badge
-              key={label.id}
-              variant="outline"
-              style={{ borderColor: label.color, color: label.color }}
-            >
+            // Data law (DECISIONS 2026-10-28): hex từ DB vào Comp_Chip color,
+            // chữ tự chọn data-ink/data-paper theo luminance — không Badge + inline style.
+            <Comp_Chip key={label.id} color={label.color} className="pr-2">
               {label.name}
               <button
                 type="button"
@@ -80,7 +78,7 @@ export function LabelsCard({ labels }: { labels: LabelRow[] }) {
               >
                 <X className="size-3" />
               </button>
-            </Badge>
+            </Comp_Chip>
           ))}
           {labels.length === 0 && (
             <p className="text-sm text-muted-foreground">{t("empty")}</p>

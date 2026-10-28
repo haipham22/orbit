@@ -1,5 +1,6 @@
 {
   "components": [
+    "Comp_BottomNav",
     "Comp_Button",
     "Comp_TextInput"
   ],

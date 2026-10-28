@@ -1,0 +1,19 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_BottomNav",
+    "Comp_Button",
+    "Comp_DateInput",
+    "Comp_NavItem",
+    "Comp_PersonPicker",
+    "Comp_StreakBadge",
+    "Comp_TextInput"
+  ],
+  "id": "S6",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-preset-warm-earth/screens/s6.html",
+  "title": "Journal — entry — ORBIT-PRESET-WARM-EARTH"
+}

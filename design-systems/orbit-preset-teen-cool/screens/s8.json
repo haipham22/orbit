@@ -1,0 +1,19 @@
+{
+  "components": [
+    "Comp_Avatar",
+    "Comp_BottomNav",
+    "Comp_Button",
+    "Comp_Chip",
+    "Comp_DateInput",
+    "Comp_NavItem",
+    "Comp_StreakBadge",
+    "Comp_TextInput"
+  ],
+  "id": "S8",
+  "patterns": [],
+  "personas": [
+    "P-OWN"
+  ],
+  "source": "gallery/orbit-preset-teen-cool/screens/s8.html",
+  "title": "Tasks — chi tiết — ORBIT-PRESET-TEEN-COOL"
+}

@@ -1,0 +1,82 @@
+/* SINH TỰ ĐỘNG từ components/Comp_DateInput.mdx — không sửa tay, chạy make package */
+
+// Standalone — deps: react, lucide-react
+import * as React from "react"
+import { Calendar, ChevronLeft, ChevronRight } from "lucide-react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+const DOW_VI = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"]
+
+const iso = (d: Date): string =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+
+export type DateLabels = {
+  dow?: string[]
+  month?: (year: number, month: number) => string
+  prevMonth?: string
+  nextMonth?: string
+}
+
+const VI_LABELS: Required<DateLabels> = {
+  dow: DOW_VI,
+  month: (y, m) => `Tháng ${m} · ${y}`,
+  prevMonth: "Tháng trước",
+  nextMonth: "Tháng sau",
+}
+
+export function Comp_DateInput({ value, onChange, state = "default", error, ariaLabel, labels }: {
+  value?: string; onChange?: (iso: string) => void
+  state?: "default" | "sending" | "disabled"; error?: string; ariaLabel?: string
+  labels?: DateLabels
+}) {
+  const L = { ...VI_LABELS, ...labels }
+  const panelId = React.useId()
+  const [open, setOpen] = React.useState(false)
+  const selected = value ? new Date(`${value}T00:00:00`) : null
+  const [view, setView] = React.useState(() => selected ?? new Date())
+  const first = new Date(view.getFullYear(), view.getMonth(), 1)
+  const lead = (first.getDay() + 6) % 7 // Monday-first
+  const days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate()
+  return (
+    <div className={cn("relative w-full", state === "disabled" && "opacity-70")}>
+      <button type="button" role="combobox" aria-expanded={open} aria-haspopup="dialog" aria-controls={panelId} aria-busy={state === "sending" || undefined}
+        aria-invalid={error ? true : undefined} disabled={state === "disabled"}
+        onClick={() => setOpen(!open)} aria-label={ariaLabel}
+        className={cn("flex w-full items-center justify-between h-[var(--control-height-md)] px-4 border bg-[var(--color-surface-raised)] text-[var(--color-text)] rounded-[var(--radius-sm)] outline-none focus:ring-2 focus:ring-[var(--color-primary)] border-[var(--color-border)]",
+          error && "border-[var(--color-danger)]")}>
+        <span className={value ? "" : "text-[var(--color-text-muted)]"}>{value ?? "yyyy-mm-dd"}</span>
+        <Calendar className="size-4 text-[var(--color-text-muted)]" aria-hidden />
+      </button>
+      {open && state !== "disabled" ? (
+        <div role="dialog" id={panelId} aria-label={ariaLabel} className="absolute z-10 mt-1 w-[280px] border border-[var(--color-border)] rounded-[var(--radius-md)] p-3 bg-[var(--color-surface)] shadow-[var(--shadow)]">
+          <div className="flex items-center justify-between font-[var(--font-display)] font-semibold text-[length:var(--text-sm)] mb-2">
+            <button type="button" aria-label={L.prevMonth} onClick={() => setView(new Date(view.getFullYear(), view.getMonth() - 1, 1))}
+              className="p-1 rounded-[var(--radius-sm)] text-[var(--color-fg-muted)] hover:bg-[var(--color-primary-soft)]"><ChevronLeft className="size-4" aria-hidden /></button>
+            <span>{L.month(view.getFullYear(), view.getMonth() + 1)}</span>
+            <button type="button" aria-label={L.nextMonth} onClick={() => setView(new Date(view.getFullYear(), view.getMonth() + 1, 1))}
+              className="p-1 rounded-[var(--radius-sm)] text-[var(--color-fg-muted)] hover:bg-[var(--color-primary-soft)]"><ChevronRight className="size-4" aria-hidden /></button>
+          </div>
+          <div className="grid grid-cols-[repeat(7,minmax(0,1fr))] gap-[var(--space-1)] text-center text-[length:var(--text-sm)]">
+            {L.dow!.map((d) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold py-1">{d}</span>)}
+            {Array.from({ length: lead }, (_, i) => <span key={`p${i}`} />)}
+            {Array.from({ length: days }, (_, i) => {
+              const d = i + 1
+              const key = iso(new Date(view.getFullYear(), view.getMonth(), d))
+              const isSel = value === key
+              return (
+                <button key={key} type="button" aria-pressed={isSel}
+                  onClick={() => { onChange?.(key); setOpen(false) }}
+                  className={cn("py-1 rounded-[var(--radius-sm)] hover:bg-[var(--color-primary-soft)]",
+                    isSel && "bg-[var(--color-primary)] text-[var(--color-on-primary)] font-semibold")}>
+                  {d}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ) : null}
+      {error ? <p role="alert" className="mt-1 flex items-center gap-1 text-[length:var(--text-sm)] text-[var(--color-danger)]">{error}</p> : null}
+    </div>
+  )
+}

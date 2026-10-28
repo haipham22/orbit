@@ -36,6 +36,7 @@ export function JournalEntryForm({
   pending: boolean;
 }) {
   const t = useTranslations("journal");
+  const dt = useTranslations("dateInput");
   const form = useForm<JournalEntryFormValues>({
     resolver: zodResolver(buildSchema(t)),
     defaultValues: {
@@ -66,6 +67,12 @@ export function JournalEntryForm({
               onChange={field.onChange}
               error={form.formState.errors.entryDate?.message}
               ariaLabel={t("dateLabel")}
+              labels={{
+                dow: dt.raw("dow") as string[],
+                month: (year, month) => dt("month", { year, month }),
+                prevMonth: dt("prevMonth"),
+                nextMonth: dt("nextMonth"),
+              }}
             />
           )}
         />

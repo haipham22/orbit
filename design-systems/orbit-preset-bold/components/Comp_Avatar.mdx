@@ -1,0 +1,82 @@
+---
+name: Comp_Avatar
+group: hiển thị
+purpose: Chữ cái đầu tên trên nền primary-soft; có ảnh thì thay chữ, giữ nền.
+screens: [S2, S3, S4, S5]
+personas: [P-OWN]
+shadcn_base: Avatar
+radix_primitive: —
+---
+
+# Comp_Avatar — Avatar
+
+Thuộc nhóm **hiển thị**. Chữ cái đầu tên trên nền primary-soft; có ảnh thì thay chữ, giữ nền.
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+circle grid center: initials trên primary-soft; có ảnh thì img đè initials.
+
+## Trạng thái
+
+default (chữ cái) · sending: spinner trong vòng · disabled: mờ 0.7 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+
+## Token dùng
+
+- `--color-primary-soft`
+- `--color-primary`
+- `--radius-full`
+- `--text-sm`
+- `--text-xl`
+- `--space-7`
+- `--space-8`
+
+## Biến thể
+
+- size: `md` (control-sm) / `lg` (control-lg)
+
+## Tiếp cận
+
+- Focus ring 2px theo `--color-primary` (focus-visible)
+- Vùng chạm ≥24px, mobile ≥44 theo control height
+- Accessible name qua label/aria khi không có text nhìn thấy
+
+## Không được làm
+
+- Không ảnh vỡ để trôi — fallback về chữ cái
+- Không đổi màu nền ngoài token
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/avatar.tsx -->
+```tsx
+// Standalone — deps: react
+import * as React from "react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+const Spin = () => (
+  <span aria-hidden className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+)
+
+const avBox = (size: string): React.CSSProperties => (
+  size === "lg"
+    ? { width: "var(--control-height-lg)", height: "var(--control-height-lg)" }
+    : { width: "var(--control-height-sm)", height: "var(--control-height-sm)" }
+)
+
+export function Comp_Avatar({ initials, state = "default", size = "md" }: { initials: string; state?: "default" | "sending" | "disabled"; size?: "md" | "lg" }) {
+  return (
+    <span aria-hidden
+      className={cn("grid place-items-center rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold text-[length:var(--text-sm)]",
+        size === "lg" && "text-[length:var(--text-lg)]", state === "disabled" && "opacity-70")}
+      style={avBox(size)}>
+      {state === "sending" ? <Spin /> : initials}
+    </span>
+  )
+}
+```
