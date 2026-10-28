@@ -6,8 +6,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -77,16 +76,14 @@ export function LocalSignInForm() {
       {formError && (
         <p className="text-[length:var(--type-size-sm)] text-destructive">{formError}</p>
       )}
-      <Button type="submit" className="h-11 w-full" disabled={form.formState.isSubmitting}>
-        {form.formState.isSubmitting ? (
-          <>
-            <Loader2 className="animate-spin" aria-hidden />
-            {t("submitting")}
-          </>
-        ) : (
-          t("submit")
-        )}
-      </Button>
+      <Comp_Button
+        type="submit"
+        size="lg"
+        className="w-full"
+        state={form.formState.isSubmitting ? "sending" : "default"}
+      >
+        {form.formState.isSubmitting ? t("submitting") : t("submit")}
+      </Comp_Button>
     </form>
   );
 }

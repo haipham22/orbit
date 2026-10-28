@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { Toaster } from "@/components/ui/sonner";
 import { authProvider } from "@/server/auth/provider";
 import { isLocale } from "@/i18n/config";
+import { bootThemeScript } from "@/lib/theme-runtime";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -50,6 +51,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${plusJakarta.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Theme runtime (THEME-FORMAT §4): nạp theme đã lưu TRƯỚC paint đầu để
+            tránh nháy — script tự re-validate (chỉ setProperty, không innerHTML). */}
+        <script dangerouslySetInnerHTML={{ __html: bootThemeScript() }} />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NextIntlClientProvider messages={messages}>
             {content}

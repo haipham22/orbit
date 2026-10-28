@@ -314,6 +314,17 @@
       "warmEarth": "Warm Earth",
       "pastelDream": "Pastel Dream",
       "sticker": "Sticker"
-    }
+    },
+    "importTheme": "Import theme",
+    "importHint": "A theme.json shared by someone else — preview before applying.",
+    "importAction": "Choose theme file…",
+    "importInvalid": "Invalid theme: {reason}",
+    "importConfirm": "Apply theme “{name}”?",
+    "importApplied": "Applied theme “{name}”."
+  },
+  "errors": {
+    "title": "Couldn't load data",
+    "desc": "Connection dropped — try reloading.",
+    "retry": "Retry"
   }
 }

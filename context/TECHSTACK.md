@@ -88,6 +88,6 @@ the real filled-in copy lives at `deployment/local/.env`; root `.env.local` is a
 
 ## Design system (2026-10-28)
 
-- Nguồn sự thật token: `design-systems/orbit-core/tokens.json` (light) + `design-systems/orbit-core-dark/tokens.json` (dark) — APPROVED v1, từ facet tag `ds-orbit-core-v1` / `ds-orbit-core-dark-v1`.
+- Nguồn sự thật token: `design-systems/orbit-core/tokens.json` (light) + `design-systems/orbit-core-dark/tokens.json` (dark) — APPROVED v4, facet tag `ds-*-v4` (core v3: 6 gap fixes; v4: NavItem px-3 + min-h 44, daterange self-contained, personpicker sạch). 7 preset personality + theme.json runtime (schema orbit-theme-1, validate qua scripts/theme_tool.py).
 - Không hard-code màu trong component — mọi màu qua semantic token (shadcn vars map 1-1 với alias DS; xem `src/app/globals.css`).
 - Control sizes sm/md/lg = 30/36/44px (--control-h-*).

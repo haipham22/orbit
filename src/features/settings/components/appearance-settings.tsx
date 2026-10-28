@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { Comp_Button } from "@/components/ui/ds/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeImport } from "./theme-import";
 
 // Swatch accent/soft/radius lấy từ preset blocks trong globals.css.
 // Thẻ value="" = orbit-core gốc (không data-preset): dùng token live để luôn
@@ -124,6 +125,7 @@ export function AppearanceSettings({ currentPreset }: { currentPreset: string })
           <span className="text-sm font-semibold">{t("preset.label")}</span>
           <PresetGrid current={currentPreset} />
         </div>
+        <ThemeImport />
       </CardContent>
     </Card>
   );

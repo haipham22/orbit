@@ -314,6 +314,17 @@
       "warmEarth": "Warm Earth",
       "pastelDream": "Pastel Dream",
       "sticker": "Sticker"
-    }
+    },
+    "importTheme": "Nhập theme",
+    "importHint": "File theme.json chia sẻ từ người khác — xem trước rồi mới áp.",
+    "importAction": "Chọn file theme…",
+    "importInvalid": "Theme không hợp lệ: {reason}",
+    "importConfirm": "Áp theme “{name}”?",
+    "importApplied": "Đã áp theme “{name}”."
+  },
+  "errors": {
+    "title": "Lấy dữ liệu chưa xong",
+    "desc": "Mất kết nối — thử tải lại nhé.",
+    "retry": "Tải lại"
   }
 }

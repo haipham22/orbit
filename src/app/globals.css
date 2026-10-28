@@ -75,6 +75,7 @@
   --color-accent-fg: #ffffff;
   --color-border: #87909c;
   --color-danger: #c0261b;
+  --color-on-danger: #ffffff;
   --color-warning: #8a5a00;
   --color-success: #177034;
   --color-success-soft: #e8f5ed;
@@ -173,6 +174,7 @@
   --color-accent-fg: #0e1512;
   --color-border: #6b7484;
   --color-danger: #e5645c;
+  --color-on-danger: #2b0a08;
   --color-warning: #d9a13b;
   --color-success: #4cc38a;
   --color-success-soft: #1c3328;
