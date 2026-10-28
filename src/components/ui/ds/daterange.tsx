@@ -2,7 +2,6 @@
 
 // Standalone — deps: react, lucide-react
 import * as React from "react"
-import type { DateLabels } from "./dateinput"
 import { Calendar, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight, MoveRight } from "lucide-react"
 
 const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
@@ -14,7 +13,18 @@ const iso = (d: Date): string =>
 
 export type DateSpan = { from?: string; to?: string }
 
-const VI_RANGE = {
+export type DateRangeLabels = {
+  dow?: string[]
+  month?: (year: number, month: number) => string
+  prevMonth?: string
+  nextMonth?: string
+  prevYear?: string
+  nextYear?: string
+}
+
+const VI_RANGE: Required<DateRangeLabels> = {
+  dow: DOW,
+  month: (y, m) => `Tháng ${m} · ${y}`,
   prevMonth: "Tháng trước", nextMonth: "Tháng sau", prevYear: "Lùi 1 năm", nextYear: "Tiến 1 năm",
 }
 
@@ -22,7 +32,7 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
   value?: DateSpan; onChange?: (v: DateSpan) => void
   state?: "default" | "sending" | "disabled"; error?: string; ariaLabel?: string
   startPlaceholder?: string; endPlaceholder?: string
-  labels?: DateLabels & { prevYear?: string; nextYear?: string }
+  labels?: DateRangeLabels
 }) {
   const L = { ...VI_RANGE, ...labels }
   const panelId = React.useId()
@@ -45,10 +55,10 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
     return (
       <div className="w-[248px]">
         <div className="text-center font-[var(--font-display)] font-semibold text-[length:var(--text-sm)] mb-2">
-          Tháng {m.getMonth() + 1} · {m.getFullYear()}
+          {L.month(m.getFullYear(), m.getMonth() + 1)}
         </div>
         <div className="grid grid-cols-[repeat(7,minmax(0,1fr))] gap-[var(--space-1)] text-center text-[length:var(--text-sm)]">
-          {(labels?.dow ?? DOW).map((d: string) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold py-1">{d}</span>)}
+          {(labels?.dow ?? DOW).map((d) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold py-1">{d}</span>)}
           {Array.from({ length: lead }, (_, i) => <span key={`p${i}`} />)}
           {Array.from({ length: days }, (_, i) => {
             const key = iso(new Date(m.getFullYear(), m.getMonth(), i + 1))
@@ -86,8 +96,8 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
             <button type="button" aria-label={L.prevYear} onClick={() => shift(-12)} className={navBtn}><ChevronsLeft className="size-4" aria-hidden /></button>
             <button type="button" aria-label={L.prevMonth} onClick={() => shift(-1)} className={navBtn}><ChevronLeft className="size-4" aria-hidden /></button>
             <div className="flex flex-1 items-center justify-around font-[var(--font-display)] font-semibold text-[length:var(--text-sm)]">
-              <span>{L.month?.(view.getFullYear(), view.getMonth() + 1)}</span>
-              <span>{L.month?.(next.getFullYear(), next.getMonth() + 1)}</span>
+              <span>{L.month(view.getFullYear(), view.getMonth() + 1)}</span>
+              <span>{L.month(next.getFullYear(), next.getMonth() + 1)}</span>
             </div>
             <button type="button" aria-label={L.nextMonth} onClick={() => shift(1)} className={navBtn}><ChevronRight className="size-4" aria-hidden /></button>
             <button type="button" aria-label={L.nextYear} onClick={() => shift(12)} className={navBtn}><ChevronsRight className="size-4" aria-hidden /></button>
