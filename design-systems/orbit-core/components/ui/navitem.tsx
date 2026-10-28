@@ -14,7 +14,7 @@ export function Comp_NavItem({ label, active, state = "default", href, asChild, 
   label: string; active?: boolean; state?: "default" | "sending" | "disabled"; href: string
   asChild?: boolean; children?: React.ReactNode
 }) {
-  const cls = cn("font-semibold py-2 px-1 border-b-2",
+  const cls = cn("inline-flex items-center min-h-[var(--control-height-lg)] font-semibold py-2 px-3 border-b-2",
     active ? "text-[var(--color-primary)] border-[var(--color-primary)]" : "text-[var(--color-fg-muted)] border-transparent",
     state === "disabled" && "opacity-70 pointer-events-none")
   if (asChild) {

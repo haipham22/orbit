@@ -81,7 +81,7 @@ export function Comp_Calendar({ month, year, selected, state = "default", ariaLa
               .concat(Array.from({ length: days }, (_, i) => {
                 const d = i + 1
                 return <span key={d} aria-current={d === selected ? "date" : undefined}
-                  className={cn("py-1 rounded-[var(--radius-sm)]", d === selected && "bg-[var(--color-primary)] text-[var(--color-on-primary)] font-semibold")}>{d}</span>
+                  className={cn("py-1 min-w-0 overflow-hidden rounded-[var(--radius-sm)]", d === selected && "bg-[var(--color-primary)] text-[var(--color-on-primary)] font-semibold")}>{d}</span>
               }))}
       </div>
     </div>

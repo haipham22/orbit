@@ -92,6 +92,12 @@
     "fontHint": "Three faces — pick what fits your eyes.",
     "language": "Language",
     "languageHint": "Vietnamese by default — English ready.",
-    "preview": "Preview"
+    "preview": "Preview",
+    "importTheme": "Import theme",
+    "importHint": "A theme.json shared by someone else — preview before applying.",
+    "importAction": "Choose theme file…",
+    "importInvalid": "Invalid theme: {reason}",
+    "importConfirm": "Apply theme “{name}”?",
+    "importApplied": "Applied theme “{name}”."
   }
 }

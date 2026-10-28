@@ -1,0 +1,27 @@
+/* Preset personality — sticker (sổ dán, từ huong-2) — chỉ var() token, không màu thô.
+   Shadow sticker cứng nằm trong token --shadow của gói này. */
+.card, .input, .btn, .chip, .toast, .modal, .cal, .dropdown, .xpbar, .streak, .avatar {
+  border-width: 2px;
+  border-color: var(--color-text);
+}
+.chip { border-style: dashed; }
+.btn-primary, .btn-danger { box-shadow: var(--shadow); }
+.card { position: relative; }
+.card::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 18px;
+  width: 74px;
+  height: 20px;
+  background: var(--color-tape-a);
+  opacity: .85;
+  transform: rotate(-4deg);
+  border: 1px solid var(--color-border);
+}
+.card:nth-child(even)::before {
+  left: auto;
+  right: 22px;
+  background: var(--color-tape-b);
+  transform: rotate(3deg);
+}

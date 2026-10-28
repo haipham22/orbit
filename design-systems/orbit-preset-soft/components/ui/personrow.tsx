@@ -14,7 +14,7 @@ export function Comp_PersonRow({ initials, name, label, count, state = "default"
   return (
     <div className={cn("flex items-center gap-3 py-3 px-2 border-t border-[var(--color-border)] min-w-0", state === "sending" && "opacity-80", state === "disabled" && "opacity-70")} aria-busy={state === "sending" || undefined}>
       <span aria-hidden className="grid place-items-center size-[var(--control-height-sm)] rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold text-[length:var(--text-sm)] flex-none">{initials}</span>
-      <span className="font-bold text-[length:var(--text-lg)] [overflow-wrap:anywhere]">{name}</span>
+      <span className="block min-w-0 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-[length:var(--text-lg)]">{name}</span>
       {label ? <span className="inline-flex items-center h-[var(--control-height-sm)] px-3 rounded-full border border-[var(--color-border)] bg-[var(--color-primary-soft)] text-[var(--color-primary)] text-[length:var(--text-sm)]">{label}</span> : null}
       <span className="ml-auto flex items-center gap-2">
         {count ? <span className="text-[var(--color-text-muted)] text-[length:var(--text-sm)]">{count}</span> : null}

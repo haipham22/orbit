@@ -13,7 +13,18 @@ const iso = (d: Date): string =>
 
 export type DateSpan = { from?: string; to?: string }
 
-const VI_RANGE = {
+export type DateRangeLabels = {
+  dow?: string[]
+  month?: (year: number, month: number) => string
+  prevMonth?: string
+  nextMonth?: string
+  prevYear?: string
+  nextYear?: string
+}
+
+const VI_RANGE: Required<DateRangeLabels> = {
+  dow: DOW,
+  month: (y, m) => `Tháng ${m} · ${y}`,
   prevMonth: "Tháng trước", nextMonth: "Tháng sau", prevYear: "Lùi 1 năm", nextYear: "Tiến 1 năm",
 }
 
@@ -21,7 +32,7 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
   value?: DateSpan; onChange?: (v: DateSpan) => void
   state?: "default" | "sending" | "disabled"; error?: string; ariaLabel?: string
   startPlaceholder?: string; endPlaceholder?: string
-  labels?: DateLabels & { prevYear?: string; nextYear?: string }
+  labels?: DateRangeLabels
 }) {
   const L = { ...VI_RANGE, ...labels }
   const panelId = React.useId()
@@ -44,7 +55,7 @@ export function Comp_DateRange({ value, onChange, state = "default", error, aria
     return (
       <div className="w-[248px]">
         <div className="text-center font-[var(--font-display)] font-semibold text-[length:var(--text-sm)] mb-2">
-          Tháng {m.getMonth() + 1} · {m.getFullYear()}
+          {L.month(m.getFullYear(), m.getMonth() + 1)}
         </div>
         <div className="grid grid-cols-[repeat(7,minmax(0,1fr))] gap-[var(--space-1)] text-center text-[length:var(--text-sm)]">
           {(labels?.dow ?? DOW).map((d) => <span key={d} className="text-[var(--color-fg-muted)] font-semibold py-1">{d}</span>)}

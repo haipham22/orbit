@@ -92,6 +92,12 @@
     "fontHint": "Bộ ba mặt chữ — chọn cái hợp mắt.",
     "language": "Ngôn ngữ",
     "languageHint": "Tiếng Việt mặc định — English sẵn sàng.",
-    "preview": "Xem trước"
+    "preview": "Xem trước",
+    "importTheme": "Nhập theme",
+    "importHint": "File theme.json chia sẻ từ người khác — xem trước rồi mới áp.",
+    "importAction": "Chọn file theme…",
+    "importInvalid": "Theme không hợp lệ: {reason}",
+    "importConfirm": "Áp theme “{name}”?",
+    "importApplied": "Đã áp theme “{name}”."
   }
 }

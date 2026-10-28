@@ -2,11 +2,11 @@
 type: design-system
 design_system_id: "ORBIT-PRESET-PASTEL-DREAM"
 status: "APPROVED"
-version: 1
+version: 2
 source: "in-house"
 platforms: [web]
 owner_authority: "Hải Phạm"
-last_reviewed: "2026-10-28"
+last_reviewed: "2026-10-29"
 ---
 
 <!-- SINH TỰ ĐỘNG từ tokens.json — không sửa tay, chạy make package -->
@@ -28,7 +28,7 @@ Preset pastel-dream (mơ màng) — lavender pastel, Plus Jakarta Sans, tròn; h
 | Aspect | Value |
 |---|---|
 | Source | in-house |
-| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 1) |
+| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 2) |
 
 ## 3. Design tokens
 
@@ -140,3 +140,4 @@ Preset pastel-dream (mơ màng) — lavender pastel, Plus Jakarta Sans, tròn; h
 |---|---|---|
 | 2026-10-28 | 1 | Khởi tạo từ huong-7 full personality (vòng 3) — tròn 16px, lavender pastel; thêm color.data-ink/data-paper (law màu data) |
 | 2026-10-28 | 1 | Authority nghiệm thu vòng 3 — APPROVED, đóng gói bàn giao v1 |
+| 2026-10-29 | 2 | v2: polish sau vòng 3 (trước đó giao sớm qua main): XPBar sending sọc barber-pole + fill bo cap · NavItem padding ngang 12px · washi tape · dim law .8/.7 · crit vòng 4: NavItem min-height 44, XPBar role=progressbar, overflow clip (Avatar/Calendar/PersonRow), chip đang chọn viền primary + đậm, ngày demo tính lúc render, daterange/picker TSX sạch 3 bug TS |

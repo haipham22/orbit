@@ -4,8 +4,6 @@
 import * as React from "react"
 import { Search, X } from "lucide-react"
 
-const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
-
 export type PickablePerson = { id: string; name: string; initials: string }
 
 const skelBox = (i: number): React.CSSProperties => ({ width: `${44 - i * 8}%` })

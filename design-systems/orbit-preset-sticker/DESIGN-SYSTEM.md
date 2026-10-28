@@ -2,11 +2,11 @@
 type: design-system
 design_system_id: "DS-ORBIT-PRESET-STICKER"
 status: "APPROVED"
-version: 1
+version: 3
 source: "in-house"
 platforms: [web]
 owner_authority: "Hải Phạm"
-last_reviewed: "2026-10-28"
+last_reviewed: "2026-10-29"
 ---
 
 <!-- SINH TỰ ĐỘNG từ tokens.json — không sửa tay, chạy make package -->
@@ -28,7 +28,7 @@ Preset sticker (sổ dán — huong-2 vòng 1, Authority mời vào vòng 3) —
 | Aspect | Value |
 |---|---|
 | Source | in-house |
-| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 1) |
+| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 3) |
 
 ## 3. Design tokens
 
@@ -38,26 +38,28 @@ Preset sticker (sổ dán — huong-2 vòng 1, Authority mời vào vòng 3) —
 
 | Token | Giá trị | Dùng cho |
 |---|---|---|
-| `--color-accent` | `#B022C1` | alias khớp tên orbit = primary |
-| `--color-accent-fg` | `#FFFFFF` | alias khớp tên orbit = on-primary |
-| `--color-bg` | `#FFF9EF` | nền trang |
+| `--color-accent` | `#C2410C` | alias khớp tên orbit = primary |
+| `--color-accent-fg` | `#FFF7ED` | alias khớp tên orbit = on-primary |
+| `--color-bg` | `#F6EFE3` | nền trang |
 | `--color-border` | `#87909C` | viền input, kẻ chia — là chỉ báo duy nhất của input thì ≥3:1 |
-| `--color-border-soft` | `#F0DCF5` | viền trang trí (toast, khối nổi) — border là mức input cần 3:1 |
-| `--color-danger` | `#C0261B` | lỗi, xoá |
+| `--color-border-soft` | `#E7DCC6` | viền trang trí (toast, khối nổi) — border là mức input cần 3:1 |
+| `--color-danger` | `#B91C1C` | lỗi, xoá |
 | `--color-data-ink` | `#1F2933` | chữ trên nền màu data sáng (chip user-color, law DECISIONS 2026-10-28) |
 | `--color-data-paper` | `#FFFFFF` | chữ trên nền màu data tối |
-| `--color-fg` | `#1F2933` | alias khớp tên orbit = text |
-| `--color-fg-muted` | `#5A6472` | alias khớp tên orbit = text-muted |
+| `--color-fg` | `#2C2114` | alias khớp tên orbit = text |
+| `--color-fg-muted` | `#6D5E49` | alias khớp tên orbit = text-muted |
 | `--color-on-danger` | `#FFFFFF` | chữ TRÊN nền danger |
-| `--color-on-primary` | `#FFFFFF` | chữ TRÊN nền primary |
-| `--color-primary` | `#B022C1` | hành động chính, link, trạng thái active |
-| `--color-primary-soft` | `#FAE8FF` | nền chip/hover nhạt từ primary |
-| `--color-success` | `#177034` | thành công, đã lưu |
+| `--color-on-primary` | `#FFF7ED` | chữ TRÊN nền primary |
+| `--color-primary` | `#C2410C` | hành động chính, link, trạng thái active |
+| `--color-primary-soft` | `#FFEDD5` | nền chip/hover nhạt từ primary |
+| `--color-success` | `#267c37` | thành công, đã lưu |
 | `--color-success-soft` | `#E9F4EC` | nền chip/nhãn nhạt từ success (text success lên trên) |
 | `--color-surface` | `#FFFFFF` | nền thẻ nổi trên nền trang |
 | `--color-surface-raised` | `#FFFFFF` | nền input/search nổi trên surface |
-| `--color-text` | `#1F2933` | chữ chính |
-| `--color-text-muted` | `#5A6472` | chữ phụ, nhãn, meta |
+| `--color-tape-a` | `#FDE68A` | nhãn dán washi vàng (trang trí góc card, chỉ trang trí, không mang nội dung) |
+| `--color-tape-b` | `#D8B4FE` | nhãn dán washi tím nhạt (trang trí, xen kẽ tape-a) |
+| `--color-text` | `#2C2114` | chữ chính |
+| `--color-text-muted` | `#6D5E49` | chữ phụ, nhãn, meta |
 | `--color-warning` | `#8A5A00` | cảnh báo, tới hạn |
 | `--color-warning-soft` | `#F7EEDA` | nền chip/nhãn nhạt từ warning (text warning lên trên) |
 
@@ -75,7 +77,7 @@ Preset sticker (sổ dán — huong-2 vòng 1, Authority mời vào vòng 3) —
 | `--radius-lg` | `28px` | — |
 | `--radius-md` | `20px` | — |
 | `--radius-sm` | `12px` | — |
-| `--shadow` | `0 3px 8px rgba(176,34,193,.14)` | — |
+| `--shadow` | `3px 4px 0 rgba(44,33,20,.85)` | — |
 | `--space-1` | `4px` | — |
 | `--space-2` | `8px` | — |
 | `--space-3` | `12px` | — |
@@ -140,3 +142,6 @@ Preset sticker (sổ dán — huong-2 vòng 1, Authority mời vào vòng 3) —
 |---|---|---|
 | 2026-10-28 | 1 | Khởi tạo từ huong-2 sổ dán (Authority mời thêm lúc nghiệm thu vòng 3) — token-only: màu + bo tròn + shadow kẹo; washi-tape/2px viền là refinement backlog |
 | 2026-10-28 | 1 | Authority nghiệm thu vòng 3 — APPROVED, đóng gói bàn giao v1 |
+| 2026-10-28 | 2 | v1.1 trung thành huong-2 gốc: accent cam đất #C2410C (bỏ fuchsia), chữ nâu #2C2114, shadow sticker cứng 3px 4px 0 — Authority so với candidates/huong-2 gốc |
+| 2026-10-28 | 2 | v1.1: thêm color.tape-a/tape-b (washi tape góc card — Authority điểm danh ở huong-2) |
+| 2026-10-29 | 3 | v3: polish sau vòng 3 (trước đó giao sớm qua main): XPBar sending sọc barber-pole + fill bo cap · NavItem padding ngang 12px · washi tape · dim law .8/.7 · crit vòng 4: NavItem min-height 44, XPBar role=progressbar, overflow clip (Avatar/Calendar/PersonRow), chip đang chọn viền primary + đậm, ngày demo tính lúc render, daterange/picker TSX sạch 3 bug TS |

@@ -49,6 +49,7 @@ default (chữ cái) · sending: spinner trong vòng · disabled: mờ 0.7 · m�
 
 - Không ảnh vỡ để trôi — fallback về chữ cái
 - Không đổi màu nền ngoài token
+- Không để chữ lọt khỏi vòng tròn — chỉ 1–2 ký tự initials; tên dài → rút gọn initials trước khi đưa vào
 
 ## Mã nguồn
 
@@ -72,7 +73,7 @@ const avBox = (size: string): React.CSSProperties => (
 export function Comp_Avatar({ initials, state = "default", size = "md" }: { initials: string; state?: "default" | "sending" | "disabled"; size?: "md" | "lg" }) {
   return (
     <span aria-hidden
-      className={cn("grid place-items-center rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold text-[length:var(--text-sm)]",
+      className={cn("grid place-items-center overflow-hidden rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold text-[length:var(--text-sm)]",
         size === "lg" && "text-[length:var(--text-lg)]", state === "disabled" && "opacity-70")}
       style={avBox(size)}>
       {state === "sending" ? <Spin /> : initials}

@@ -2,11 +2,11 @@
 type: design-system
 design_system_id: "DS-ORBIT-CORE-DARK"
 status: "APPROVED"
-version: 3
+version: 4
 source: "in-house"
 platforms: [web]
 owner_authority: "Hải Phạm"
-last_reviewed: "2026-10-28"
+last_reviewed: "2026-10-29"
 ---
 
 <!-- SINH TỰ ĐỘNG từ tokens.json — không sửa tay, chạy make package -->
@@ -28,7 +28,7 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | Aspect | Value |
 |---|---|
 | Source | in-house |
-| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 3) |
+| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 4) |
 
 ## 3. Design tokens
 
@@ -144,3 +144,4 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | 2026-10-28 | 2 | Authority nghiệm thu vòng 2 — APPROVED, đóng gói bàn giao v1.1 |
 | 2026-10-28 | 3 | Vòng 3: messages vi/en + patch consume v2 (onOpenChange, Chip color prop, Nav asChild, DateInput/DateRange locale labels, disabled attr, a11y) + color.data-ink/data-paper; data-ink/paper lật theo dark (ink gần trắng, paper gần đen) |
 | 2026-10-28 | 3 | Authority nghiệm thu vòng 3 — APPROVED, đóng gói bàn giao v3 |
+| 2026-10-29 | 4 | v4: polish sau vòng 3 (trước đó giao sớm qua main): XPBar sending sọc barber-pole + fill bo cap · NavItem padding ngang 12px · washi tape · dim law .8/.7 · crit vòng 4: NavItem min-height 44, XPBar role=progressbar, overflow clip (Avatar/Calendar/PersonRow), chip đang chọn viền primary + đậm, ngày demo tính lúc render, daterange/picker TSX sạch 3 bug TS · messages: settings.importTheme* (nhập theme.json trong Cài đặt) |
