@@ -1,12 +1,12 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { listLabels, listPeople } from "@/features/people/queries";
 import { CreatePersonDialog } from "@/features/people/components/create-person-dialog";
 import { LabelsCard } from "@/features/people/components/labels-card";
 import { PersonAvatar } from "@/features/people/components/person-avatar";
+import { PeopleSearch } from "@/features/people/components/people-search";
 
 export async function generateMetadata() {
   const t = await getTranslations("people.meta");
@@ -29,16 +29,8 @@ export default async function PeoplePage({
         <CreatePersonDialog />
       </div>
 
-      {/* Comp_TextInput — tìm kiếm (GET form, enter để tìm) */}
-      <form className="max-w-md">
-        <Input
-          name="q"
-          defaultValue={q ?? ""}
-          placeholder={t("list.searchPlaceholder")}
-          aria-label={t("list.search")}
-          className="h-9"
-        />
-      </form>
+      {/* Comp_SearchInput — tìm kiếm (GET form, enter để tìm) */}
+      <PeopleSearch initialQ={q ?? ""} />
 
       {/* Comp_PersonRow: avatar → tên → chips → meta */}
       <Card>

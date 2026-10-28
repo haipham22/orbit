@@ -1,9 +1,11 @@
 {
   "components": [
     "Comp_Avatar",
+    "Comp_BottomNav",
     "Comp_Button",
-    "Comp_Chip",
+    "Comp_DateInput",
     "Comp_NavItem",
+    "Comp_PersonPicker",
     "Comp_StreakBadge",
     "Comp_TextInput"
   ],

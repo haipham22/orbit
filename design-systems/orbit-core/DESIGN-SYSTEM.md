@@ -2,7 +2,7 @@
 type: design-system
 design_system_id: "DS-ORBIT-CORE"
 status: "APPROVED"
-version: 1
+version: 2
 source: "in-house"
 platforms: [web]
 owner_authority: "Hải Phạm"
@@ -28,7 +28,7 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | Aspect | Value |
 |---|---|
 | Source | in-house |
-| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 1) |
+| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 2) |
 
 ## 3. Design tokens
 
@@ -42,6 +42,7 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | `--color-accent-fg` | `#FFFFFF` | alias khớp tên orbit = on-primary |
 | `--color-bg` | `#F5F7FA` | nền trang |
 | `--color-border` | `#87909C` | viền input, kẻ chia — là chỉ báo duy nhất của input thì ≥3:1 |
+| `--color-border-soft` | `#D5DBE3` | viền trang trí (toast, khối nổi) — border là mức input cần 3:1 |
 | `--color-danger` | `#C0261B` | lỗi, xoá |
 | `--color-fg` | `#1F2933` | alias khớp tên orbit = text |
 | `--color-fg-muted` | `#5A6472` | alias khớp tên orbit = text-muted |
@@ -49,12 +50,14 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | `--color-on-primary` | `#FFFFFF` | chữ TRÊN nền primary |
 | `--color-primary` | `#3B4FC0` | hành động chính, link, trạng thái active |
 | `--color-primary-soft` | `#E3E8F7` | nền chip/hover nhạt từ primary |
-| `--color-success` | `#1B7F3B` | thành công, đã lưu |
+| `--color-success` | `#177034` | thành công, đã lưu |
+| `--color-success-soft` | `#E8F5ED` | nền chip/nhãn nhạt từ success (text success lên trên) |
 | `--color-surface` | `#FFFFFF` | nền thẻ nổi trên nền trang |
 | `--color-surface-raised` | `#FFFFFF` | nền input/search nổi trên surface |
 | `--color-text` | `#1F2933` | chữ chính |
 | `--color-text-muted` | `#5A6472` | chữ phụ, nhãn, meta |
 | `--color-warning` | `#8A5A00` | cảnh báo, tới hạn |
+| `--color-warning-soft` | `#F7ECD4` | nền chip/nhãn nhạt từ warning (text warning lên trên) |
 
 ### 3.2 Nhóm khác
 
@@ -94,15 +97,22 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 | Component | File | Status |
 |---|---|---|
 | Comp_Avatar — Avatar | `components/Comp_Avatar.mdx` | APPROVED |
+| Comp_BottomNav — BottomNav | `components/Comp_BottomNav.mdx` | APPROVED |
 | Comp_Button — Button | `components/Comp_Button.mdx` | APPROVED |
 | Comp_Calendar — Calendar | `components/Comp_Calendar.mdx` | APPROVED |
 | Comp_Card — Card | `components/Comp_Card.mdx` | APPROVED |
 | Comp_Chip — Chip | `components/Comp_Chip.mdx` | APPROVED |
+| Comp_ConfirmDialog — ConfirmDialog | `components/Comp_ConfirmDialog.mdx` | APPROVED |
+| Comp_DateInput — DateInput | `components/Comp_DateInput.mdx` | APPROVED |
+| Comp_DateRange — DateRange | `components/Comp_DateRange.mdx` | APPROVED |
 | Comp_EmptyState — EmptyState | `components/Comp_EmptyState.mdx` | APPROVED |
 | Comp_Icon — Icon | `components/Comp_Icon.mdx` | APPROVED |
 | Comp_Modal — Modal | `components/Comp_Modal.mdx` | APPROVED |
 | Comp_NavItem — NavItem | `components/Comp_NavItem.mdx` | APPROVED |
+| Comp_PersonPicker — PersonPicker | `components/Comp_PersonPicker.mdx` | APPROVED |
 | Comp_PersonRow — PersonRow | `components/Comp_PersonRow.mdx` | APPROVED |
+| Comp_SearchInput — SearchInput | `components/Comp_SearchInput.mdx` | APPROVED |
+| Comp_Skeleton — Skeleton | `components/Comp_Skeleton.mdx` | APPROVED |
 | Comp_StreakBadge — StreakBadge | `components/Comp_StreakBadge.mdx` | APPROVED |
 | Comp_TextInput — TextInput | `components/Comp_TextInput.mdx` | APPROVED |
 | Comp_Toast — Toast | `components/Comp_Toast.mdx` | APPROVED |
@@ -127,3 +137,5 @@ Gói nền light cho orbit (PMS cá nhân, Gen Z 13+): tokens + components + scr
 |---|---|---|
 | 2026-10-27 | 1 | Khởi tạo từ huong-4 cool-console + orbit prototype tokens 0.2.1 |
 | 2026-10-28 | 1 | Authority nghiệm thu vòng 1 — APPROVED, đóng gói bàn giao |
+| 2026-10-28 | 2 | Vòng 2 additive: color.success-soft + color.warning-soft (chip trạng thái done/tới hạn); 6 component mới, mở rộng biến thể Chip/TextInput/NavItem/Modal, packaging ui/*.tsx standalone; success light đậm #1B7F3B → #177034 (đệm tương phản chip done 4.51 → 5.50); thêm color.border-soft (viền toast mềm, feedback Authority) |
+| 2026-10-28 | 2 | Authority nghiệm thu vòng 2 — APPROVED, đóng gói bàn giao v1.1 |

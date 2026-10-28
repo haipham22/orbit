@@ -23,7 +23,7 @@ flex row: avatar → tên (link) → chip → grow (count + action); border-top 
 
 ## Trạng thái
 
-default · sending: opacity .6 + nhãn 'Đang xoá…' trên action · disabled: opacity .5 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+default · sending: mờ 0.8 + nhãn 'Đang xoá…' trên action · disabled: mờ 0.7 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
 
 ## Token dùng
 
@@ -51,22 +51,30 @@ default · sending: opacity .6 + nhãn 'Đang xoá…' trên action · disabled:
 
 <!-- EXPORT: components/ui/personrow.tsx -->
 ```tsx
-import { cn } from "@/lib/utils"
-import { Comp_Avatar } from "./avatar"
-import { Comp_Chip } from "./chip"
-import { Comp_Button } from "./button"
+// Standalone — deps: react, lucide-react
+import * as React from "react"
+import { Trash2 } from "lucide-react"
 
-export function Comp_PersonRow({ initials, name, label, count, state = "default", onDelete }: {
-  initials: string; name: string; label?: string; count?: string; state?: "default" | "sending" | "disabled"; onDelete?: () => void
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+export function Comp_PersonRow({ initials, name, label, count, state = "default", onDelete, deleteLabel = "Xóa", sendingLabel = "Đang xoá…" }: {
+  initials: string; name: string; label?: string; count?: string
+  state?: "default" | "sending" | "disabled"
+  onDelete?: () => void; deleteLabel?: string; sendingLabel?: string
 }) {
   return (
-    <div className={cn("flex items-center gap-3 py-3 px-2 border-t border-[var(--color-border)]", state !== "default" && "opacity-60")} aria-busy={state === "sending"}>
-      <Comp_Avatar initials={initials} state={state} />
-      <span className="font-bold text-[length:var(--text-lg)]">{name}</span>
-      {label ? <Comp_Chip>{label}</Comp_Chip> : null}
+    <div className={cn("flex items-center gap-3 py-3 px-2 border-t border-[var(--color-border)] min-w-0", state === "sending" && "opacity-80", state === "disabled" && "opacity-70")} aria-busy={state === "sending" || undefined}>
+      <span aria-hidden className="grid place-items-center size-[var(--control-height-sm)] rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold text-[length:var(--text-sm)] flex-none">{initials}</span>
+      <span className="font-bold text-[length:var(--text-lg)] [overflow-wrap:anywhere]">{name}</span>
+      {label ? <span className="inline-flex items-center h-[var(--control-height-sm)] px-3 rounded-full border border-[var(--color-border)] bg-[var(--color-primary-soft)] text-[var(--color-primary)] text-[length:var(--text-sm)]">{label}</span> : null}
       <span className="ml-auto flex items-center gap-2">
-        <span className="text-[var(--color-text-muted)] text-[length:var(--text-sm)]">{count}</span>
-        {onDelete ? <Comp_Button variant="ghost" size="sm" state={state} onClick={onDelete}><Trash2 className="size-3" />{state === "sending" ? "Đang xoá…" : "Xóa"}</Comp_Button> : null}
+        {count ? <span className="text-[var(--color-text-muted)] text-[length:var(--text-sm)]">{count}</span> : null}
+        {onDelete ? (
+          <button type="button" onClick={onDelete} disabled={state !== "default"}
+            className="inline-flex items-center gap-1 h-[var(--control-height-sm)] px-3 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-raised)] text-[var(--color-primary)] font-semibold text-[length:var(--text-sm)]">
+            <Trash2 className="size-3" aria-hidden />{state === "sending" ? sendingLabel : deleteLabel}
+          </button>
+        ) : null}
       </span>
     </div>
   )

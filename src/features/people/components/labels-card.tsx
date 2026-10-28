@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
@@ -35,6 +35,7 @@ export function LabelsCard({ labels }: { labels: LabelRow[] }) {
   });
 
   async function onCreate(values: CreateLabelValues) {
+    if (pending) return; // Comp_Button disabled là aria-only, chặn submit lặp qua Enter
     setPending(true);
     try {
       await gql(CREATE_LABEL, { input: { name: values.name.trim() } });
@@ -92,9 +93,9 @@ export function LabelsCard({ labels }: { labels: LabelRow[] }) {
             aria-label={t("list.newLabelPlaceholder")}
             className="h-9 max-w-48"
           />
-          <Button type="submit" className="h-9" disabled={pending}>
+          <Comp_Button type="submit" size="sm" state={pending ? "sending" : "default"}>
             {t("list.addLabel")}
-          </Button>
+          </Comp_Button>
         </form>
       </CardContent>
     </Card>

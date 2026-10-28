@@ -4,7 +4,8 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
+import { Comp_DateInput } from "@/components/ui/ds/dateinput";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -122,7 +123,17 @@ export function TaskForm({
         </Field>
         <Field>
           <FieldLabel htmlFor="task-due">{t("dueLabel")}</FieldLabel>
-          <Input id="task-due" type="date" {...form.register("dueDate")} />
+          <Controller
+            control={form.control}
+            name="dueDate"
+            render={({ field }) => (
+              <Comp_DateInput
+                value={field.value || undefined}
+                onChange={field.onChange}
+                ariaLabel={t("dueLabel")}
+              />
+            )}
+          />
         </Field>
         <Field>
           <FieldLabel>{t("projectLabel")}</FieldLabel>
@@ -150,9 +161,13 @@ export function TaskForm({
         <FieldLabel htmlFor="task-notes">{t("notesLabel")}</FieldLabel>
         <Textarea id="task-notes" rows={3} {...form.register("notes")} />
       </Field>
-      <Button type="submit" disabled={pending} className="self-end rounded-sm">
+      <Comp_Button
+        type="submit"
+        state={pending ? "sending" : "default"}
+        className="self-end"
+      >
         {pending ? t("saving") : submitLabel}
-      </Button>
+      </Comp_Button>
     </form>
   );
 }

@@ -8,7 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
+import { Comp_Chip } from "@/components/ui/ds/chip";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
@@ -25,17 +26,12 @@ import { gql } from "@/lib/gql-client";
 import { TaskForm } from "./task-form";
 import type { ProjectRow, TaskWithMeta } from "@/features/tasks/queries";
 
-// Comp_Chip (FACET) — màu chip theo rule: todo=muted, doing=primary/soft, done=success,
-// quá hạn=danger, tới hạn=warning.
-const chipBase =
-  "h-[var(--control-h-sm)] rounded-full px-3 text-[length:var(--type-size-sm)] font-medium";
-const statusChipClass: Record<string, string> = {
-  todo: "border-border bg-transparent text-muted-foreground",
-  in_progress: "border-border bg-muted text-primary",
-  done: "border-[var(--color-success)] bg-transparent text-[var(--color-success)]",
+// Comp_Chip status: todo/doing/done/overdue + tone "soon" cho priority urgent.
+const STATUS_TO_CHIP: Record<string, "todo" | "doing" | "done"> = {
+  todo: "todo",
+  in_progress: "doing",
+  done: "done",
 };
-const CHIP_DANGER = "border-destructive bg-transparent text-destructive";
-const CHIP_WARNING = "border-[var(--color-warning)] bg-transparent text-[var(--color-warning)]";
 
 const COLUMNS = [{ value: "todo" }, { value: "in_progress" }, { value: "done" }] as const;
 
@@ -133,9 +129,9 @@ export function TaskBoard({ tasks, projects }: { tasks: TaskWithMeta[]; projects
       <div className="flex flex-wrap items-center gap-3">
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
-            <Button size="sm" className="rounded-sm">
+            <Comp_Button size="sm">
               <Plus className="size-4" /> {t("addTask")}
-            </Button>
+            </Comp_Button>
           </DialogTrigger>
           <DialogContent className="max-h-[85vh] overflow-y-auto">
             <DialogHeader>
@@ -154,7 +150,7 @@ export function TaskBoard({ tasks, projects }: { tasks: TaskWithMeta[]; projects
           })}
         >
           <Input {...projectForm.register("name")} placeholder={t("newProjectPlaceholder")} className="h-9 w-36 rounded-sm" />
-          <Button type="submit" variant="outline" size="sm" className="rounded-sm">{t("addProject")}</Button>
+          <Comp_Button type="submit" variant="ghost" size="sm">{t("addProject")}</Comp_Button>
         </form>
 
         <div className="ml-auto flex flex-wrap items-center gap-2">
@@ -196,17 +192,13 @@ export function TaskBoard({ tasks, projects }: { tasks: TaskWithMeta[]; projects
                       </Link>
                       <div className="flex flex-wrap items-center gap-1.5">
                         {overdue ? (
-                          <Badge variant="outline" className={`${chipBase} ${CHIP_DANGER}`}>
-                            {t("overdueChip")}
-                          </Badge>
+                          <Comp_Chip status="overdue">{t("overdueChip")}</Comp_Chip>
                         ) : task.priority === "urgent" ? (
-                          <Badge variant="outline" className={`${chipBase} ${CHIP_WARNING}`}>
-                            {t("priority.urgent")}
-                          </Badge>
+                          <Comp_Chip tone="soon">{t("priority.urgent")}</Comp_Chip>
                         ) : (
-                          <Badge variant="outline" className={`${chipBase} ${statusChipClass[task.status]}`}>
+                          <Comp_Chip status={STATUS_TO_CHIP[task.status]}>
                             {t(`status.${task.status}`)}
-                          </Badge>
+                          </Comp_Chip>
                         )}
                         <div className="flex flex-wrap items-center gap-2 text-[length:var(--type-size-sm)] text-muted-foreground">
                           {task.dueDate && <span>{t("dueChip", { date: task.dueDate })}</span>}
@@ -224,23 +216,17 @@ export function TaskBoard({ tasks, projects }: { tasks: TaskWithMeta[]; projects
                       </div>
                       <div className="flex gap-2">
                         {col.value !== "done" && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-7 rounded-sm text-[length:var(--type-size-sm)]"
-                            onClick={() => onAdvance(task)}
-                          >
+                          <Comp_Button variant="ghost" size="sm" onClick={() => onAdvance(task)}>
                             {col.value === "todo" ? t("start") : t("finish")}
-                          </Button>
+                          </Comp_Button>
                         )}
-                        <Button
+                        <Comp_Button
                           variant="ghost"
                           size="sm"
-                          className="h-7 rounded-sm text-[length:var(--type-size-sm)]"
                           onClick={() => mutate(DELETE_TASK, { id: task.id })}
                         >
                           <Trash2 className="size-3" /> {t("deleteTask")}
-                        </Button>
+                        </Comp_Button>
                       </div>
                     </CardContent>
                   </Card>

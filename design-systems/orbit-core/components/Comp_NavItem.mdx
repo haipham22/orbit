@@ -1,7 +1,7 @@
 ---
 name: Comp_NavItem
 group: điều hướng
-purpose: Mục điều hướng — active: gạch chân primary; sending: spinner khi chuyển trang.
+purpose: Mục điều hướng — active: gạch chân primary, áp cả topbar lẫn desktop sidebar; sending: spinner khi chuyển trang.
 screens: [S2, S3, S4, S5, S6, S7, S8]
 personas: [P-OWN]
 shadcn_base: None
@@ -10,7 +10,7 @@ radix_primitive: —
 
 # Comp_NavItem — NavItem
 
-Thuộc nhóm **điều hướng**. Mục điều hướng — active: gạch chân primary; sending: spinner khi chuyển trang.
+Thuộc nhóm **điều hướng**. Mục điều hướng — active: gạch chân primary, áp cả topbar lẫn desktop sidebar; sending: spinner khi chuyển trang.
 
 
 > **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
@@ -23,12 +23,13 @@ inline link: label + border-bottom làm chỉ báo active; đang gửi thêm spi
 
 ## Trạng thái
 
-default · active (trạng thái riêng) · sending: spinner · disabled: opacity .5 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+mặc định · active: aria-current=page (trạng thái riêng) · đang gửi: spinner · bị vô hiệu: mờ 0.7
 
 ## Token dùng
 
 - `--color-fg-muted`
 - `--color-primary`
+- `--color-border`
 - `--space-1`
 - `--space-2`
 
@@ -51,12 +52,23 @@ default · active (trạng thái riêng) · sending: spinner · disabled: opacit
 
 <!-- EXPORT: components/ui/navitem.tsx -->
 ```tsx
-import { cn } from "@/lib/utils"
+// Standalone — deps: react
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
 
-export function Comp_NavItem({ label, active, state = "default", href }: { label: string; active?: boolean; state?: "default" | "sending" | "disabled"; href: string }) {
-  return <a href={href} aria-current={active ? "page" : undefined} aria-busy={state === "sending"}
-    className={cn("font-semibold py-2 px-1 border-b-2", active ? "text-[var(--color-primary)] border-[var(--color-primary)]" : "text-[var(--color-fg-muted)] border-transparent", state === "disabled" && "opacity-50 pointer-events-none")}>
-    {state === "sending" ? <Spinner /> : null} {label}
-  </a>
+const Spin = () => (
+  <span aria-hidden className="inline-block size-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
+)
+
+export function Comp_NavItem({ label, active, state = "default", href }: {
+  label: string; active?: boolean; state?: "default" | "sending" | "disabled"; href: string
+}) {
+  return (
+    <a href={href} aria-current={active ? "page" : undefined} aria-busy={state === "sending" || undefined}
+      className={cn("font-semibold py-2 px-1 border-b-2",
+        active ? "text-[var(--color-primary)] border-[var(--color-primary)]" : "text-[var(--color-fg-muted)] border-transparent",
+        state === "disabled" && "opacity-70 pointer-events-none")}>
+      {state === "sending" ? <Spin /> : null} {label}
+    </a>
+  )
 }
 ```

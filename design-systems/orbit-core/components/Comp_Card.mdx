@@ -23,7 +23,7 @@ container surface + border + radius + shadow; ruột: h3 nhãn → nội dung �
 
 ## Trạng thái
 
-default · sending: skeleton (.skel pulse) · disabled: opacity .55 + skeleton · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+default · sending: skeleton (.skel pulse) · disabled: mờ 0.7 + skeleton · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
 
 ## Token dùng
 
@@ -57,8 +57,10 @@ default · sending: skeleton (.skel pulse) · disabled: opacity .55 + skeleton �
 
 <!-- EXPORT: components/ui/card.tsx -->
 ```tsx
+// Standalone — deps: react
 import * as React from "react"
-import { cn } from "@/lib/utils"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
 
 export function Comp_Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cn("bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius)] p-4 shadow-[var(--shadow)]", className)} {...props} />

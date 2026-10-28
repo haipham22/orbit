@@ -1,6 +1,7 @@
 {
   "components": [
     "Comp_Avatar",
+    "Comp_BottomNav",
     "Comp_Button",
     "Comp_Chip",
     "Comp_NavItem",

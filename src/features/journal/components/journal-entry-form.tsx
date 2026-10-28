@@ -1,10 +1,11 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
+import { Comp_DateInput } from "@/components/ui/ds/dateinput";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -56,18 +57,30 @@ export function JournalEntryForm({
       </Field>
       <Field>
         <FieldLabel htmlFor="entryDate">{t("dateLabel")}</FieldLabel>
-        <Input id="entryDate" type="date" {...form.register("entryDate")} />
-        {form.formState.errors.entryDate && (
-          <p className="text-sm text-destructive">{form.formState.errors.entryDate.message}</p>
-        )}
+        <Controller
+          control={form.control}
+          name="entryDate"
+          render={({ field }) => (
+            <Comp_DateInput
+              value={field.value}
+              onChange={field.onChange}
+              error={form.formState.errors.entryDate?.message}
+              ariaLabel={t("dateLabel")}
+            />
+          )}
+        />
       </Field>
       <Field>
         <FieldLabel htmlFor="body">{t("bodyLabel")}</FieldLabel>
         <Textarea id="body" rows={8} {...form.register("body")} />
       </Field>
-      <Button type="submit" disabled={pending} className="self-end rounded-sm">
+      <Comp_Button
+        type="submit"
+        state={pending ? "sending" : "default"}
+        className="self-end"
+      >
         {pending ? t("saving") : submitLabel}
-      </Button>
+      </Comp_Button>
     </form>
   );
 }

@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
+import { Comp_ConfirmDialog } from "@/components/ui/ds/confirmdialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -41,6 +42,7 @@ export function EntryDetail({
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   async function onUpdate(values: { title: string; body: string; entryDate: string }) {
     setPending(true);
@@ -57,7 +59,6 @@ export function EntryDetail({
   }
 
   async function onDelete() {
-    if (!confirm(t("deleteConfirm"))) return;
     setPending(true);
     try {
       await gql(DELETE_ENTRY, { id: entry.id });
@@ -66,6 +67,7 @@ export function EntryDetail({
       toast.error(err instanceof Error ? err.message : t("unknownError"));
     } finally {
       setPending(false);
+      setConfirmOpen(false);
     }
   }
 
@@ -86,14 +88,25 @@ export function EntryDetail({
           <p className="text-[length:var(--type-size-sm)] text-muted-foreground">{entry.entryDate}</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="rounded-sm" onClick={() => setEditing((v) => !v)}>
+          <Comp_Button variant="ghost" size="sm" onClick={() => setEditing((v) => !v)}>
             <Pencil className="size-4" /> {editing ? t("close") : t("edit")}
-          </Button>
-          <Button variant="destructive" size="sm" className="rounded-sm" onClick={onDelete} disabled={pending}>
+          </Comp_Button>
+          <Comp_Button variant="danger" size="sm" onClick={() => setConfirmOpen(true)}>
             <Trash2 className="size-4" /> {t("delete")}
-          </Button>
+          </Comp_Button>
         </div>
       </div>
+
+      <Comp_ConfirmDialog
+        open={confirmOpen}
+        title={t("delete")}
+        desc={t("deleteConfirm")}
+        confirmLabel={t("delete")}
+        cancelLabel={t("cancel")}
+        state={pending ? "sending" : "default"}
+        onConfirm={onDelete}
+        onCancel={() => setConfirmOpen(false)}
+      />
 
       {editing && (
         <JournalEntryForm defaultValues={entry} onSubmit={onUpdate} submitLabel={t("update")} pending={pending} />

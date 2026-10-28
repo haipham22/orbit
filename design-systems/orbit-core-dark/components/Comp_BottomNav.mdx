@@ -1,0 +1,79 @@
+---
+name: Comp_BottomNav
+group: điều hướng
+purpose: Tab bar mobile (≤768px) — icon + label, active = primary, min-height control-lg; desktop ẩn (sidebar/topbar đảm nhiệm).
+screens: [S2, S3, S4, S5, S6, S7, S8]
+personas: [P-OWN]
+shadcn_base: None
+radix_primitive: —
+---
+
+# Comp_BottomNav — BottomNav
+
+Thuộc nhóm **điều hướng**. Tab bar mobile (≤768px) — icon + label, active = primary, min-height control-lg; desktop ẩn (sidebar/topbar đảm nhiệm).
+
+
+> **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
+> `tokens.json` (hoặc thêm 1 dòng `DECISIONS.md` nếu là quyết định mới), không hard-code.
+
+
+## Giải phẫu
+
+nav fixed bottom: mỗi mục = icon (svg 20) + label, flex-1, active màu primary.
+
+## Trạng thái
+
+mặc định · active: aria-current=page, chữ/icon primary · đang gửi: item mờ + spinner · bị vô hiệu: mờ 0.7
+
+## Token dùng
+
+- `--color-surface`
+- `--color-border`
+- `--color-fg-muted`
+- `--color-primary`
+- `--control-height-lg`
+- `--space-1`
+- `--text-sm`
+- `--type-weight-strong`
+
+## Biến thể
+
+- mục: 2–5; active theo route
+
+## Tiếp cận
+
+- nav có aria-label; mục active aria-current=page
+- vùng chạm ≥ control-height-lg (44px+)
+
+## Không được làm
+
+- Không hiện trên desktop — trùng điều hướng
+- Không quá 5 mục — mobile chật
+
+## Mã nguồn
+
+<!-- EXPORT: components/ui/bottomnav.tsx -->
+```tsx
+// Standalone — deps: react
+import * as React from "react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
+export type NavTarget = { href: string; label: string; icon: React.ReactNode; active?: boolean }
+
+export function Comp_BottomNav({ items, ariaLabel }: { items: NavTarget[]; ariaLabel?: string }) {
+  return (
+    <nav aria-label={ariaLabel}
+      className="fixed bottom-0 inset-x-0 z-20 flex border-t border-[var(--color-border)] bg-[var(--color-surface)] pb-[env(safe-area-inset-bottom)] md:hidden">
+      {items.map((it) => (
+        <a key={it.href} href={it.href} aria-current={it.active ? "page" : undefined}
+          className={cn("flex flex-1 flex-col items-center justify-center gap-0.5 min-h-[var(--control-height-lg)] py-1 text-[length:var(--text-sm)] font-semibold text-[var(--color-fg-muted)]",
+            it.active && "text-[var(--color-primary)]")}>
+          {it.icon}
+          {it.label}
+        </a>
+      ))}
+    </nav>
+  )
+}
+```

@@ -1,6 +1,7 @@
 {
   "components": [
     "Comp_Avatar",
+    "Comp_BottomNav",
     "Comp_Button",
     "Comp_Card",
     "Comp_Chip",
@@ -8,9 +9,7 @@
     "Comp_StreakBadge"
   ],
   "id": "S7",
-  "patterns": [
-    "empty"
-  ],
+  "patterns": [],
   "personas": [
     "P-OWN"
   ],

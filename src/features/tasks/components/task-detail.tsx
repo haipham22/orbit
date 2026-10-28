@@ -1,18 +1,27 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
+import { Comp_ConfirmDialog } from "@/components/ui/ds/confirmdialog";
+import { Comp_PersonPicker, type PickablePerson } from "@/components/ui/ds/personpicker";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { X } from "lucide-react";
 import { toast } from "sonner";
 import { gql } from "@/lib/gql-client";
 import type { PersonWithLabels } from "@/features/people/queries";
 
-// Comp_Chip (FACET): primary-soft + primary, radius-full, control-h-sm.
-const personChip =
-  "h-[var(--control-h-sm)] rounded-full border-border bg-muted px-3 text-[length:var(--type-size-sm)] font-medium text-primary";
+// PersonWithLabels -> { id, name, initials } theo Comp_PersonPicker.
+function toPickable(p: PersonWithLabels): PickablePerson {
+  const initials = p.fullName
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+  return { id: p.id, name: p.fullName, initials };
+}
 
 const LINK_PERSON = `
   mutation LinkPerson($sourceType: LinkSourceType!, $sourceId: String!, $personId: String!) {
@@ -36,7 +45,12 @@ export function TaskPeopleManager({
 }) {
   const t = useTranslations("tasks");
   const router = useRouter();
+  const [query, setQuery] = useState("");
   const unlinked = allPeople.filter((p) => !linkedPeople.some((l) => l.id === p.id));
+  const q = query.trim().toLowerCase();
+  const suggestions = unlinked
+    .filter((p) => p.fullName.toLowerCase().includes(q))
+    .map(toPickable);
 
   async function run(mutation: string, personId: string) {
     try {
@@ -48,29 +62,22 @@ export function TaskPeopleManager({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      {linkedPeople.map((person) => (
-        <Badge key={person.id} variant="outline" className={personChip}>
-          {person.fullName}
-          <button type="button" aria-label={t("removePerson", { name: person.fullName })} onClick={() => run(UNLINK_PERSON, person.id)}>
-            <X className="size-3" />
-          </button>
-        </Badge>
-      ))}
-      {unlinked.length > 0 && (
-        <select
-          className="h-[var(--control-h-md)] rounded-sm border border-border bg-background px-3 text-[length:var(--type-size-sm)]"
-          value=""
-          onChange={(e) => e.target.value && run(LINK_PERSON, e.target.value)}
-        >
-          <option value="">{t("addPerson")}</option>
-          {unlinked.map((person) => (
-            <option key={person.id} value={person.id}>{person.fullName}</option>
-          ))}
-        </select>
-      )}
+    <div className="flex flex-col gap-2">
+      <Comp_PersonPicker
+        suggestions={suggestions}
+        selected={linkedPeople.map(toPickable)}
+        onPick={(p) => {
+          setQuery("");
+          void run(LINK_PERSON, p.id);
+        }}
+        onRemove={(p) => void run(UNLINK_PERSON, p.id)}
+        query={query}
+        onQueryChange={setQuery}
+        placeholder={t("addPerson")}
+        emptyText={t("searchEmpty")}
+      />
       {allPeople.length === 0 && (
-        <p className="text-sm text-muted-foreground">Thêm người ở trang People trước để gắn vào việc.</p>
+        <p className="text-sm text-muted-foreground">{t("peopleEmptyHint")}</p>
       )}
     </div>
   );
@@ -103,20 +110,37 @@ export function TaskPeopleCard({
 export function TaskDeleteButton({ taskId }: { taskId: string }) {
   const t = useTranslations("tasks");
   const router = useRouter();
+  const [pending, setPending] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   async function onDelete() {
-    if (!confirm(t("deleteTaskConfirm"))) return;
+    setPending(true);
     try {
       await gql("mutation DeleteTask($id: String!) { deleteTask(id: $id) }", { id: taskId });
       router.push("/tasks");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : t("unknownError"));
+    } finally {
+      setPending(false);
+      setConfirmOpen(false);
     }
   }
 
   return (
-    <Button variant="destructive" size="sm" className="rounded-sm" onClick={onDelete}>
-      {t("deleteTask")}
-    </Button>
+    <>
+      <Comp_Button variant="danger" size="sm" onClick={() => setConfirmOpen(true)}>
+        {t("deleteTask")}
+      </Comp_Button>
+      <Comp_ConfirmDialog
+        open={confirmOpen}
+        title={t("deleteTask")}
+        desc={t("deleteTaskConfirm")}
+        confirmLabel={t("deleteTask")}
+        cancelLabel={t("cancel")}
+        state={pending ? "sending" : "default"}
+        onConfirm={onDelete}
+        onCancel={() => setConfirmOpen(false)}
+      />
+    </>
   );
 }

@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
+import { Comp_ConfirmDialog } from "@/components/ui/ds/confirmdialog";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -67,6 +68,7 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const unassigned = allLabels.filter((l) => !person.labels.some((p) => p.id === l.id));
 
   const statusLabels: Record<string, string> = {
@@ -90,7 +92,6 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
   }
 
   async function onDelete() {
-    if (!confirm(t("detail.confirmDelete", { name: person.fullName }))) return;
     setPending(true);
     try {
       await gql(DELETE_PERSON, { id: person.id });
@@ -100,6 +101,7 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
       toast.error(err instanceof Error ? err.message : t("form.errorUnknown"));
     } finally {
       setPending(false);
+      setConfirmOpen(false);
     }
   }
 
@@ -247,9 +249,9 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
         <CardContent className="flex flex-wrap gap-2">
           <Dialog open={editOpen} onOpenChange={setEditOpen}>
             <DialogTrigger asChild>
-              <Button className="h-9" disabled={pending}>
+              <Comp_Button size="sm" state={pending ? "disabled" : "default"}>
                 <Pencil className="size-4" /> {t("detail.edit")}
-              </Button>
+              </Comp_Button>
             </DialogTrigger>
             <DialogContent className="max-h-[85vh] overflow-y-auto">
               <DialogHeader>
@@ -270,11 +272,23 @@ export function PersonDetail({ person, allLabels }: { person: PersonDetailData; 
               />
             </DialogContent>
           </Dialog>
-          <Button variant="destructive" className="h-9" onClick={onDelete} disabled={pending}>
+          <Comp_Button variant="danger" size="sm" onClick={() => setConfirmOpen(true)}>
             <Trash2 className="size-4" /> {t("detail.delete")}
-          </Button>
+          </Comp_Button>
         </CardContent>
       </Card>
+
+      <Comp_ConfirmDialog
+        open={confirmOpen}
+        title={t("detail.confirmDelete", { name: person.fullName })}
+        desc={t("detail.deleteDesc")}
+        confirmLabel={t("detail.delete")}
+        cancelLabel={t("detail.cancel")}
+        sendingLabel={t("detail.deleting")}
+        state={pending ? "sending" : "default"}
+        onConfirm={onDelete}
+        onCancel={() => setConfirmOpen(false)}
+      />
     </div>
   );
 }

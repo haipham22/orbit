@@ -4,7 +4,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
@@ -48,9 +48,15 @@ export function PersonForm({
     defaultValues: { contactMethods: [], ...defaultValues },
   });
   const contactArray = useFieldArray({ control: form.control, name: "contactMethods" });
+  // Comp_Button disabled là aria-only (pointer-events-none vẫn bị Enter submit qua),
+  // nên chặn submit lặp khi đang pending.
+  const submit = form.handleSubmit(async (values) => {
+    if (pending) return;
+    await onSubmit(values);
+  });
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form onSubmit={submit} className="flex flex-col gap-4">
       <Field>
         <FieldLabel htmlFor="fullName">{t("fullName")}</FieldLabel>
         <Input id="fullName" className="h-9" {...form.register("fullName")} />
@@ -92,30 +98,31 @@ export function PersonForm({
               aria-label={t("contactValue")}
               {...form.register(`contactMethods.${index}.value`)}
             />
-            <Button
+            <Comp_Button
               type="button"
               variant="ghost"
-              size="icon"
+              size="sm"
+              className="px-2"
               aria-label={t("removeContact")}
               onClick={() => contactArray.remove(index)}
             >
               <Trash2 className="size-4" />
-            </Button>
+            </Comp_Button>
           </div>
         ))}
-        <Button
+        <Comp_Button
           type="button"
-          variant="outline"
-          className="h-9 w-fit"
+          variant="ghost"
+          className="w-fit"
           onClick={() => contactArray.append({ type: "", value: "" })}
         >
           <Plus className="size-4" /> {t("addContact")}
-        </Button>
+        </Comp_Button>
       </div>
 
-      <Button type="submit" disabled={pending} className="h-11 self-end">
-        {pending ? t("saving") : submitLabel}
-      </Button>
+      <Comp_Button type="submit" size="lg" className="self-end" state={pending ? "sending" : "default"}>
+        {submitLabel}
+      </Comp_Button>
     </form>
   );
 }

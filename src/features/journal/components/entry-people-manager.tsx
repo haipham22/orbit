@@ -1,23 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { X } from "lucide-react";
+import { Comp_PersonPicker, type PickablePerson } from "@/components/ui/ds/personpicker";
 import { toast } from "sonner";
 import { gql } from "@/lib/gql-client";
 import type { PersonRow } from "@/features/people/queries";
 
-// Comp_Chip (FACET): primary-soft + primary, radius-full, control-h-sm.
-const personChip =
-  "h-[var(--control-h-sm)] rounded-full border-border bg-muted px-3 text-[length:var(--type-size-sm)] font-medium text-primary";
+// PersonRow -> { id, name, initials } theo Comp_PersonPicker.
+function toPickable(p: PersonRow): PickablePerson {
+  const initials = p.fullName
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+  return { id: p.id, name: p.fullName, initials };
+}
 
 const LINK_PERSON = `
   mutation LinkPerson($sourceType: LinkSourceType!, $sourceId: String!, $personId: String!) {
@@ -37,7 +38,12 @@ export function EntryPeopleManager({ sourceId, linkedPeople, allPeople }: {
 }) {
   const t = useTranslations("journal");
   const router = useRouter();
+  const [query, setQuery] = useState("");
   const unlinked = allPeople.filter((p) => !linkedPeople.some((l) => l.id === p.id));
+  const q = query.trim().toLowerCase();
+  const suggestions = unlinked
+    .filter((p) => p.fullName.toLowerCase().includes(q))
+    .map(toPickable);
 
   async function run(mutation: string, personId: string) {
     try {
@@ -49,31 +55,20 @@ export function EntryPeopleManager({ sourceId, linkedPeople, allPeople }: {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      {linkedPeople.map((person) => (
-        <Badge key={person.id} variant="outline" className={personChip}>
-          {person.fullName}
-          <button
-            type="button"
-            aria-label={t("removePerson", { name: person.fullName })}
-            onClick={() => run(UNLINK_PERSON, person.id)}
-          >
-            <X className="size-3" />
-          </button>
-        </Badge>
-      ))}
-      {unlinked.length > 0 && (
-        <Select onValueChange={(id) => run(LINK_PERSON, id)} value="">
-          <SelectTrigger size="sm" className="w-44">
-            <SelectValue placeholder={t("addPerson")} />
-          </SelectTrigger>
-          <SelectContent>
-            {unlinked.map((person) => (
-              <SelectItem key={person.id} value={person.id}>{person.fullName}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      )}
+    <div className="flex flex-col gap-2">
+      <Comp_PersonPicker
+        query={query}
+        onQueryChange={setQuery}
+        suggestions={suggestions}
+        selected={linkedPeople.map(toPickable)}
+        onPick={(p) => {
+          setQuery("");
+          void run(LINK_PERSON, p.id);
+        }}
+        onRemove={(p) => void run(UNLINK_PERSON, p.id)}
+        placeholder={t("addPerson")}
+        emptyText={t("emptySearch")}
+      />
       {allPeople.length === 0 && (
         <p className="text-[length:var(--type-size-sm)] text-muted-foreground">{t("peopleEmptyHint")}</p>
       )}

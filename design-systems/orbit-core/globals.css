@@ -31,6 +31,7 @@
   --color-accent-fg: #FFFFFF;
   --color-bg: #F5F7FA;
   --color-border: #87909C;
+  --color-border-soft: #D5DBE3;
   --color-danger: #C0261B;
   --color-fg: #1F2933;
   --color-fg-muted: #5A6472;
@@ -38,12 +39,14 @@
   --color-on-primary: #FFFFFF;
   --color-primary: #3B4FC0;
   --color-primary-soft: #E3E8F7;
-  --color-success: #1B7F3B;
+  --color-success: #177034;
+  --color-success-soft: #E8F5ED;
   --color-surface: #FFFFFF;
   --color-surface-raised: #FFFFFF;
   --color-text: #1F2933;
   --color-text-muted: #5A6472;
   --color-warning: #8A5A00;
+  --color-warning-soft: #F7ECD4;
   --control-height-lg: 44px;
   --control-height-md: 36px;
   --control-height-sm: 30px;

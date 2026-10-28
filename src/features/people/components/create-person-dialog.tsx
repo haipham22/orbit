@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { Comp_Button } from "@/components/ui/ds/button";
 import {
   Dialog,
   DialogContent,
@@ -46,9 +46,9 @@ export function CreatePersonDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="h-11">
+        <Comp_Button size="lg">
           <Plus className="size-4" /> {t("create.trigger")}
-        </Button>
+        </Comp_Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>

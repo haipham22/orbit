@@ -49,7 +49,8 @@
     "titleRequired": "Nhập tiêu đề",
     "dateLabel": "Ngày",
     "dateRequired": "Chọn ngày",
-    "bodyLabel": "Nội dung"
+    "bodyLabel": "Nội dung",
+    "cancel": "Huỷ"
   },
   "tasks": {
     "title": "Tasks",
@@ -105,7 +106,9 @@
     "addPerson": "Gắn người",
     "relatedPeople": "Người liên quan",
     "peopleEmptyHint": "Thêm người ở trang People trước để gắn vào việc.",
-    "projectNameRequired": "Nhập tên dự án"
+    "projectNameRequired": "Nhập tên dự án",
+    "cancel": "Huỷ",
+    "searchEmpty": "Không có người khớp"
   },
   "people": {
     "empty": "Chưa có gì ở đây cả ✌️",
@@ -122,7 +125,8 @@
       "labels": "Nhãn",
       "newLabelPlaceholder": "Tên nhãn mới…",
       "addLabel": "Thêm",
-      "labelNameRequired": "Nhập tên nhãn"
+      "labelNameRequired": "Nhập tên nhãn",
+      "searchHint": "Nhấn Enter để tìm"
     },
     "create": {
       "trigger": "Thêm người",
@@ -168,7 +172,10 @@
       "statusTodo": "Chưa làm",
       "statusInProgress": "Đang làm",
       "statusDone": "Xong",
-      "actions": "Hành động"
+      "actions": "Hành động",
+      "cancel": "Huỷ",
+      "deleteDesc": "Hành động này không thể hoàn tác.",
+      "deleting": "Đang xoá…"
     }
   },
   "dashboard": {

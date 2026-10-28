@@ -2,7 +2,7 @@
 type: design-system
 design_system_id: "DS-ORBIT-CORE-DARK"
 status: "APPROVED"
-version: 1
+version: 2
 source: "in-house"
 platforms: [web]
 owner_authority: "Hải Phạm"
@@ -28,7 +28,7 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | Aspect | Value |
 |---|---|
 | Source | in-house |
-| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 1) |
+| Versioning | số nguyên trong `tokens.json → $meta.version` (hiện: 2) |
 
 ## 3. Design tokens
 
@@ -42,6 +42,7 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | `--color-accent-fg` | `#0E1512` | alias khớp tên orbit = on-primary |
 | `--color-bg` | `#14171C` | nền trang dark |
 | `--color-border` | `#6B7484` | viền input, kẻ chia |
+| `--color-border-soft` | `#333B47` | viền trang trí (toast, khối nổi) — border là mức input cần 3:1 |
 | `--color-danger` | `#E5645C` | lỗi, xoá |
 | `--color-fg` | `#E9ECEF` | alias khớp tên orbit = text |
 | `--color-fg-muted` | `#A3ABB8` | alias khớp tên orbit = text-muted |
@@ -50,11 +51,13 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | `--color-primary` | `#3ECF8E` | hành động chính — xanh night-focus |
 | `--color-primary-soft` | `#22403A` | nền chip/hover nhạt từ primary |
 | `--color-success` | `#4CC38A` | thành công, đã lưu |
+| `--color-success-soft` | `#1C3328` | nền chip/nhãn nhạt từ success (text success lên trên) |
 | `--color-surface` | `#1C2027` | nền thẻ nổi trên nền trang |
 | `--color-surface-raised` | `#242A33` | nền input/search nổi trên surface |
 | `--color-text` | `#E9ECEF` | chữ chính |
 | `--color-text-muted` | `#A3ABB8` | chữ phụ, nhãn, meta |
 | `--color-warning` | `#D9A13B` | cảnh báo, tới hạn |
+| `--color-warning-soft` | `#38301C` | nền chip/nhãn nhạt từ warning (text warning lên trên) |
 
 ### 3.2 Nhóm khác
 
@@ -94,15 +97,22 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 | Component | File | Status |
 |---|---|---|
 | Comp_Avatar — Avatar | `components/Comp_Avatar.mdx` | APPROVED |
+| Comp_BottomNav — BottomNav | `components/Comp_BottomNav.mdx` | APPROVED |
 | Comp_Button — Button | `components/Comp_Button.mdx` | APPROVED |
 | Comp_Calendar — Calendar | `components/Comp_Calendar.mdx` | APPROVED |
 | Comp_Card — Card | `components/Comp_Card.mdx` | APPROVED |
 | Comp_Chip — Chip | `components/Comp_Chip.mdx` | APPROVED |
+| Comp_ConfirmDialog — ConfirmDialog | `components/Comp_ConfirmDialog.mdx` | APPROVED |
+| Comp_DateInput — DateInput | `components/Comp_DateInput.mdx` | APPROVED |
+| Comp_DateRange — DateRange | `components/Comp_DateRange.mdx` | APPROVED |
 | Comp_EmptyState — EmptyState | `components/Comp_EmptyState.mdx` | APPROVED |
 | Comp_Icon — Icon | `components/Comp_Icon.mdx` | APPROVED |
 | Comp_Modal — Modal | `components/Comp_Modal.mdx` | APPROVED |
 | Comp_NavItem — NavItem | `components/Comp_NavItem.mdx` | APPROVED |
+| Comp_PersonPicker — PersonPicker | `components/Comp_PersonPicker.mdx` | APPROVED |
 | Comp_PersonRow — PersonRow | `components/Comp_PersonRow.mdx` | APPROVED |
+| Comp_SearchInput — SearchInput | `components/Comp_SearchInput.mdx` | APPROVED |
+| Comp_Skeleton — Skeleton | `components/Comp_Skeleton.mdx` | APPROVED |
 | Comp_StreakBadge — StreakBadge | `components/Comp_StreakBadge.mdx` | APPROVED |
 | Comp_TextInput — TextInput | `components/Comp_TextInput.mdx` | APPROVED |
 | Comp_Toast — Toast | `components/Comp_Toast.mdx` | APPROVED |
@@ -127,3 +137,5 @@ Biến thể dark của orbit-core — CÙNG danh sách tên token, KHÁC giá t
 |---|---|---|
 | 2026-10-27 | 1 | Khởi tạo từ night-focus (orbit prototype 0.2.1) |
 | 2026-10-28 | 1 | Authority nghiệm thu vòng 1 — APPROVED, đóng gói bàn giao |
+| 2026-10-28 | 2 | Vòng 2 additive: color.success-soft + color.warning-soft (chip trạng thái done/tới hạn); đồng bộ 6 component mới + mở rộng biến thể với orbit-core; thêm color.border-soft (viền toast mềm, feedback Authority) |
+| 2026-10-28 | 2 | Authority nghiệm thu vòng 2 — APPROVED, đóng gói bàn giao v1.1 |

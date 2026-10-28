@@ -1,11 +1,12 @@
 {
   "components": [
     "Comp_Avatar",
+    "Comp_BottomNav",
     "Comp_Chip",
     "Comp_NavItem",
     "Comp_PersonRow",
-    "Comp_StreakBadge",
-    "Comp_TextInput"
+    "Comp_SearchInput",
+    "Comp_StreakBadge"
   ],
   "id": "S3",
   "patterns": [],

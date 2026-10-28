@@ -1,7 +1,7 @@
 ---
 name: Comp_Chip
 group: hiển thị
-purpose: Nhãn người/đ STATUS/trạng thái — 4 sắc: neutral/success/warning/danger, height = control-height-sm.
+purpose: Nhãn người + trạng thái dữ liệu — mapping chuẩn 5 trạng thái: todo/doing/done/overdue/due-soon (tới hạn).
 screens: [S2, S3, S4, S5, S7, S8]
 personas: [P-OWN]
 shadcn_base: Badge
@@ -10,7 +10,7 @@ radix_primitive: —
 
 # Comp_Chip — Chip
 
-Thuộc nhóm **hiển thị**. Nhãn người/đ STATUS/trạng thái — 4 sắc: neutral/success/warning/danger, height = control-height-sm.
+Thuộc nhóm **hiển thị**. Nhãn người + trạng thái dữ liệu — mapping chuẩn 5 trạng thái: todo/doing/done/overdue/due-soon (tới hạn).
 
 
 > **Luật token-only**: mọi giá trị hình thức trỏ token của gói; sửa hình thức → sửa
@@ -23,7 +23,7 @@ pill inline-flex: nhãn + (tuỳ) icon; nền primary-soft hoặc viền trạng
 
 ## Trạng thái
 
-default · sending: spinner + 'đang gán…' · disabled: opacity .5 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+mặc định · đang gửi: spinner + 'đang gán…' · bị vô hiệu: mờ 0.7
 
 ## Token dùng
 
@@ -31,9 +31,13 @@ default · sending: spinner + 'đang gán…' · disabled: opacity .5 · mặc �
 - `--color-primary`
 - `--color-border`
 - `--color-success`
+- `--color-success-soft`
 - `--color-warning`
+- `--color-warning-soft`
 - `--color-danger`
+- `--color-on-danger`
 - `--color-surface`
+- `--color-text-muted`
 - `--radius-full`
 - `--control-height-sm`
 - `--text-sm`
@@ -42,7 +46,8 @@ default · sending: spinner + 'đang gán…' · disabled: opacity .5 · mặc �
 
 ## Biến thể
 
-- tone: `neutral` / `success` / `warning` / `danger`
+- tone: `neutral` / `doing` / `done` / `overdue` / `soon`
+- status (mapping chuẩn dữ liệu): `todo`→neutral · `doing`→doing · `done`→done · `overdue`→overdue (nền solid danger) · `due-soon`→soon (tới hạn)
 
 ## Tiếp cận
 
@@ -53,25 +58,33 @@ default · sending: spinner + 'đang gán…' · disabled: opacity .5 · mặc �
 ## Không được làm
 
 - Không dùng chip làm nút bấm được
-- Không nền đậm + chữ đậm cùng lúc
+- Không tự sáng tạo màu trạng thái ngoài mapping — thêm trạng thái mới = sửa spec này
+- Chip có nút remove: text bọc span `min-width:0 + ellipsis`, nút remove `flex:none` — ellipsis chết trên flex container
 
 ## Mã nguồn
 
 <!-- EXPORT: components/ui/chip.tsx -->
 ```tsx
+// Standalone — deps: react
 import * as React from "react"
-import { cn } from "@/lib/utils"
 
-const fillStyle = (percent: number): React.CSSProperties => ({ width: `${Math.min(percent, 100)}%` })
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
 
-const tones = {
-  neutral: "bg-[var(--color-primary-soft)] text-[var(--color-primary)]",
-  success: "bg-[var(--color-surface)] text-[var(--color-success)] border-[var(--color-success)]",
-  warning: "bg-[var(--color-surface)] text-[var(--color-warning)] border-[var(--color-warning)]",
-  danger: "bg-[var(--color-surface)] text-[var(--color-danger)] border-[var(--color-danger)]",
+const TONES: Record<string, string> = {
+  neutral: "bg-[var(--color-surface)] text-[var(--color-text-muted)]",
+  doing: "bg-[var(--color-primary-soft)] text-[var(--color-primary)]",
+  done: "bg-[var(--color-success-soft)] text-[var(--color-success)]",
+  overdue: "bg-[var(--color-danger)] text-[var(--color-on-danger)]",
+  soon: "bg-[var(--color-warning-soft)] text-[var(--color-warning)]",
 }
 
-export function Comp_Chip({ tone = "neutral", className, ...props }: React.HTMLAttributes<HTMLSpanElement> & { tone?: keyof typeof tones }) {
-  return <span className={cn("inline-flex items-center gap-1 h-[var(--control-height-sm)] px-3 rounded-full border border-[var(--color-border)] text-[length:var(--text-sm)]", tones[tone], className)} {...props} />
+const STATUS_TONE: Record<string, string> = {
+  todo: "neutral", doing: "doing", done: "done", overdue: "overdue", "due-soon": "soon",
+}
+
+export function Comp_Chip({ tone = "doing", status, className, ...props }:
+  React.HTMLAttributes<HTMLSpanElement> & { tone?: keyof typeof TONES; status?: keyof typeof STATUS_TONE }) {
+  const t = status ? STATUS_TONE[status] : tone
+  return <span className={cn("inline-flex items-center gap-1 h-[var(--control-height-sm)] px-3 rounded-full border border-[var(--color-border)] text-[length:var(--text-sm)]", TONES[t], className)} {...props} />
 }
 ```

@@ -1,7 +1,7 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 import { Separator } from "@/components/ui/separator";
+import { NavItem } from "./nav-item";
 import { BottomNav } from "./bottom-nav";
 import { LanguageToggle } from "./language-toggle";
 import { LogoutButton } from "./logout-button";
@@ -24,13 +24,7 @@ export async function AppShell({ email, children }: { email: string; children: R
         <div className="px-2 text-lg font-semibold tracking-tight">orbit</div>
         <nav className="flex flex-col gap-1">
           {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              {t(item.key)}
-            </Link>
+            <NavItem key={item.href} href={item.href} label={t(item.key)} />
           ))}
         </nav>
         <div className="mt-auto flex flex-col gap-2">

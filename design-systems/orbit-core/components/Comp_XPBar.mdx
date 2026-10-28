@@ -23,7 +23,7 @@ track primary-soft + fill primary; đang gửi = fill indeterminate trượt (tr
 
 ## Trạng thái
 
-default · sending: thanh indeterminate — fill vector trượt trong bar, không spinner tròn · disabled: opacity .5 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
+default · sending: thanh indeterminate — fill vector trượt trong bar, không spinner tròn · disabled: mờ 0.7 · mặc định: theo quy ước chung của kho · đang gửi: theo quy ước chung của kho · bị vô hiệu: theo quy ước chung của kho
 
 ## Token dùng
 
@@ -53,9 +53,20 @@ default · sending: thanh indeterminate — fill vector trượt trong bar, khô
 
 <!-- EXPORT: components/ui/xpbar.tsx -->
 ```tsx
+// Standalone — deps: react
+import * as React from "react"
+
+const cn = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
+
 export function Comp_XPBar({ percent = 76, state = "default" }: { percent?: number; state?: "default" | "sending" | "disabled" }) {
-  return <div className="h-3 rounded-full border border-[var(--color-border)] bg-[var(--color-primary-soft)] overflow-hidden" style={badgeOpacity(state)}>
-    <span className={cn("block h-full bg-[var(--color-primary)]", state === "sending" && "w-2/5 animate-[indet_1.1s_ease-in-out_infinite]")} style={state === "default" ? { width: `${percent}%` } : undefined} />
-  </div>
+  const box = (s: string): React.CSSProperties => ({ opacity: s === "disabled" ? 0.7 : 1 })
+  return (
+    <div className="h-3 rounded-full border border-[var(--color-border)] bg-[var(--color-primary-soft)] overflow-hidden" style={box(state)} aria-busy={state === "sending" || undefined}>
+      <span className={cn("block h-full bg-[var(--color-primary)]", state === "sending" && "w-2/5 animate-[indet_1.1s_ease-in-out_infinite]")}
+        style={state === "default" ? fillStyle(percent) : undefined} />
+    </div>
+  )
 }
+
+const fillStyle = (percent: number): React.CSSProperties => ({ width: `${Math.min(percent, 100)}%` })
 ```

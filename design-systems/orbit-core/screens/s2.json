@@ -1,15 +1,14 @@
 {
   "components": [
     "Comp_Avatar",
+    "Comp_BottomNav",
     "Comp_Card",
     "Comp_NavItem",
     "Comp_StreakBadge",
     "Comp_XPBar"
   ],
   "id": "S2",
-  "patterns": [
-    "empty"
-  ],
+  "patterns": [],
   "personas": [
     "P-OWN"
   ],

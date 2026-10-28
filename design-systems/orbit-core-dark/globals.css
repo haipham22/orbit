@@ -31,6 +31,7 @@
   --color-accent-fg: #0E1512;
   --color-bg: #14171C;
   --color-border: #6B7484;
+  --color-border-soft: #333B47;
   --color-danger: #E5645C;
   --color-fg: #E9ECEF;
   --color-fg-muted: #A3ABB8;
@@ -39,11 +40,13 @@
   --color-primary: #3ECF8E;
   --color-primary-soft: #22403A;
   --color-success: #4CC38A;
+  --color-success-soft: #1C3328;
   --color-surface: #1C2027;
   --color-surface-raised: #242A33;
   --color-text: #E9ECEF;
   --color-text-muted: #A3ABB8;
   --color-warning: #D9A13B;
+  --color-warning-soft: #38301C;
   --control-height-lg: 44px;
   --control-height-md: 36px;
   --control-height-sm: 30px;
