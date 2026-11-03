@@ -37,7 +37,7 @@ Detailed personas + per-role capabilities + permission matrix: `context/PERSONAS
 
 ## 4. Priority — what this loop ships, where the rest lives
 
-Loop này ship hết AC-1..AC-5 (core PMS chạy được end-to-end, plan phases 3–8); AC-6 là phase 9 (opt-in). Màn UI tham chiếu prototype/gallery/screens s1–s5 (spec: `prototype/`, tokens LAW). Agent-ready deploy artifacts (Dockerfile, worker) ở phase 10. Tất cả Out-of-scope khác nằm ROADMAP.
+Loop này ship hết AC-1..AC-5 (core PMS chạy được end-to-end, plan phases 3–8); AC-6 là phase 9 (opt-in). Màn UI tham chiếu prototype/gallery/screens s1, s2, s3, s4, s5 (spec: `prototype/`, tokens LAW). Agent-ready deploy artifacts (Dockerfile, worker) ở phase 10. Tất cả Out-of-scope khác nằm ROADMAP.
 
 ## 5. Out-of-scope — definitely NOT done in this loop
 

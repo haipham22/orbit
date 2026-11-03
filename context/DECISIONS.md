@@ -2,7 +2,7 @@
 type: decisions
 tier: T0
 append_only: true
-last_reviewed: "2026-10-27"
+last_reviewed: "2026-11-03"
 ---
 
 # DECISIONS — orbit
