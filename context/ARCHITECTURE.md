@@ -28,7 +28,7 @@ Single-user personal tool → 1 persona (owner).
 
 | Experience | Persona | Exposed capability | Loop | Design system |
 |---|---|---|---|---|
-| orbit-web | owner (1 user) | dashboard, people, journal, tasks | MVP build-out | spec tại `prototype/` (tokens.json LAW + gallery) — DS v4 đã áp; facet = archive |
+| orbit-web | owner (1 user) | dashboard, people, journal, tasks, settings | MVP build-out | spec tại `prototype/` (tokens.json LAW + gallery) — DS v4 đã áp; facet = archive |
 
 ## 3. Frontend experiences — mobile
 
@@ -100,6 +100,7 @@ Conventions: uuid PK defaultRandom, timestamptz, pgEnum. `app_user` table chỉ 
 | `src/server/` | pure Node: auth providers, db, graphql builder, jobs providers | app + worker process | **import `next/*`** — ESLint `no-restricted-imports` error |
 | `src/server/jobs/` | JOBS_PROVIDER: none (default) \| temporal — lazy import | service layer | hard-depend Temporal khi none |
 | `src/components/ui/` | shadcn CLI-owned | mọi nơi | hand-edit |
+| `src/components/ui/ds/` | DS layer — file sinh từ gói thiết kế (giờ archive) + luật token | mọi nơi | sửa tay ngoài luồng consume |
 
 Ground rules that never change:
 - Only **one layer** touches the DB. The UI never queries directly.
@@ -122,3 +123,7 @@ Ground rules that never change:
 - i18n — BỎ CHỐT CŨ 2026-10-28: có i18n (next-intl, cookie locale, vi default + en); khung làm trong vòng DS, feature copy dịch dần
 - Microservices — 1 app + (optional) 1 worker process
 - Bắt buộc Temporal/Redis/Clerk cho OSS user — mọi thứ nặng là opt-in qua provider env
+
+## Change log
+
+- 2026-11-03: thêm settings vào experience row + `ui/ds/` vào §8 (DS v4 consume); i18n bỏ khỏi Deliberately-NOT (D8).

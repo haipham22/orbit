@@ -93,3 +93,9 @@ the real filled-in copy lives at `deployment/local/.env`; root `.env.local` is a
 - Control sizes sm/md/lg = 30/36/44px (--control-h-*).
 
 - Component registry bổ trợ: **ReUI** (`@reui` trong components.json, style radix-nova) — install-on-demand qua `npx shadcn add @reui/<name>`; chỉ dùng khi ui/ds không phủ.
+
+- i18n: **next-intl** không-routing (locale cookie `NEXT_LOCALE`, vi mặc định + en), catalog `src/messages/{vi,en}.json`, `NextIntlClientProvider` global trong root layout.
+
+## Change log
+
+- 2026-11-03: thêm dòng i18n (next-intl) — D8 có nhưng docs thiếu; token source chuyển về prototype/tokens.json (D12).
