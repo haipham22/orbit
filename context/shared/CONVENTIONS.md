@@ -107,6 +107,8 @@ Missing any of the three means not done (rule #8).
 
 #### Candidate rules
 
+<!-- cand: 2026-11-03 --> Component UI mới: tìm `src/components/ui/ds/` trước — hết mới cài qua registry `@reui` (shadcn CLI), restyle theo token law trước khi dùng.
+
 Rules observed in practice but not yet promoted. One line per rule:
 
 `<!-- cand: YYYY-MM-DD --> <the rule in one sentence>`
