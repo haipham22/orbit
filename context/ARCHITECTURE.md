@@ -28,7 +28,7 @@ Single-user personal tool → 1 persona (owner).
 
 | Experience | Persona | Exposed capability | Loop | Design system |
 |---|---|---|---|---|
-| orbit-web | owner (1 user) | dashboard, people, journal, tasks | MVP build-out | orbit-core v1 + orbit-core-dark v1 (source: orbit-facet, tag ds-*-v1) |
+| orbit-web | owner (1 user) | dashboard, people, journal, tasks | MVP build-out | spec tại `prototype/` (tokens.json LAW + gallery) — DS v4 đã áp; facet = archive |
 
 ## 3. Frontend experiences — mobile
 
